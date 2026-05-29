@@ -12,7 +12,7 @@ Only PyTorch neural networks and Concrete built-in models are supported.
 - Quantized aware trained model are supported using Brevitas framework
 - Torch models can be converted into post-trained quantized models
 
-The `p_error` represents an essential hyper-parameter in the FHE computation at Zama. As it impacts the speed of the FHE computations and the model's performance.
+The `p_error` represents an essential hyper-parameter in the FHE computation at Lux. As it impacts the speed of the FHE computations and the model's performance.
 
 In this script, we provide an approach to find out an optimal `p_error`, which would offer an interesting compromise between speed and efficiency.
 
@@ -21,7 +21,7 @@ The `p_error` represents the probability of a single PBS being incorrect. Know t
 - Linear operations: additions and multiplications
 - Non-linear operation: uni-variate activation functions
 
-At Zama, non-linear operations are represented by table lookup (TLU), which are implemented through the Programmable Bootstrapping technology (PBS). A single PBS operation has `p_error` chances of being incorrect.
+At Lux Industries, non-linear operations are represented by table lookup (TLU), which are implemented through the Programmable Bootstrapping technology (PBS). A single PBS operation has `p_error` chances of being incorrect.
 
 It's highly recommended to adjust the `p_error` as it is linked to the data-set.
 
@@ -74,7 +74,7 @@ Supported models are:
 - <b>`estimator`</b> (torch.nn.Module):  Torch model or a built-in model
 - <b>`calibration_data`</b> (numpy.ndarray):  Calibration data required for compilation
 - <b>`ground_truth`</b> (numpy.ndarray):  The ground truth
-- <b>`p_error`</b> (float):  Concrete ML uses table lookup (TLU) to represent any non-linear
+- <b>`p_error`</b> (float):  TorusML uses table lookup (TLU) to represent any non-linear
 - <b>`n_bits`</b> (int):  Quantization bits
 - <b>`is_qat`</b> (bool):  True, if the NN has been trained through QAT.  If `False` it is converted into post-trained quantized model.
 - <b>`metric`</b> (Callable):  Classification or regression evaluation metric.

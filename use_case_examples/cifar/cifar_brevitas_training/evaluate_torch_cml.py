@@ -39,10 +39,10 @@ def evaluate(torch_model, cml_model, device, num_workers):
         # Compute Torch output
         torch_output = torch_model(input)
 
-        # Concrete ML inference only handles Numpy inputs
+        # TorusML inference only handles Numpy inputs
         numpy_input = input.detach().cpu().numpy()
 
-        # Compute Concrete ML output using simulation
+        # Compute TorusML output using simulation
         concrete_output_simulated = cml_model.forward(numpy_input, fhe="simulate")
 
         concrete_output_simulated = torch.tensor(concrete_output_simulated).to(device)
@@ -53,17 +53,17 @@ def evaluate(torch_model, cml_model, device, num_workers):
         torch_top_1_batches.append(torch_top_1.item())
         torch_top_5_batches.append(torch_top_5.item())
 
-        # Compute Concrete ML top accuracies
+        # Compute TorusML top accuracies
         concrete_top_1, concrete_top_5 = accuracy(concrete_output_simulated, target, topk=(1, 5))
 
         concrete_top_1_batches.append(concrete_top_1.item())
         concrete_top_5_batches.append(concrete_top_5.item())
 
     print("Torch accuracy top1:", np.mean(torch_top_1_batches))
-    print("Concrete ML accuracy top1:", np.mean(concrete_top_1_batches))
+    print("TorusML accuracy top1:", np.mean(concrete_top_1_batches))
 
     print("Torch accuracy top5:", np.mean(torch_top_5_batches))
-    print("Concrete ML accuracy top5:", np.mean(concrete_top_5_batches))
+    print("TorusML accuracy top5:", np.mean(concrete_top_5_batches))
 
 
 def main(args):
@@ -73,13 +73,13 @@ def main(args):
 
     # Add MPS (for macOS with Apple Silicon or AMD GPUs) support when error is fixed. For now, we
     # observe a decrease in torch's top1 accuracy when using MPS devices
-    # FIXME: https://github.com/zama-ai/concrete-ml-internal/issues/3953
+    # FIXME: https://github.com/luxfhe/torus-ml-internal/issues/3953
     device = "cuda" if torch.cuda.is_available() else "cpu"
     compilation_device = "cuda" if concrete.compiler.check_gpu_available() else "cpu"
 
     print("Torch device in use:", device)
     print(
-        "To leverage the CUDA backend, follow the GPU setup guide to install the Concrete ML compiler."
+        "To leverage the CUDA backend, follow the GPU setup guide to install the TorusML compiler."
     )
     print("GPU Enabled:", concrete.compiler.check_gpu_enabled())
     print("GPU Available:", concrete.compiler.check_gpu_available())
@@ -139,7 +139,7 @@ def main(args):
             quantized_numpy_module.fhe_circuit.graph.maximum_integer_bit_width(),
         )
 
-        # Evaluate torch and Concrete ML model
+        # Evaluate torch and TorusML model
         evaluate(model, quantized_numpy_module, device, args.num_workers)
 
 

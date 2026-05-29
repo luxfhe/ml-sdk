@@ -60,8 +60,8 @@
 
 ## Classes
 
-- [`decoder.ConcreteDecoder`](./concrete.ml.common.serialization.decoder.md#class-concretedecoder): Custom json decoder to handle non-native types found in serialized Concrete ML objects.
-- [`encoder.ConcreteEncoder`](./concrete.ml.common.serialization.encoder.md#class-concreteencoder): Custom json encoder to handle non-native types found in serialized Concrete ML objects.
+- [`decoder.ConcreteDecoder`](./concrete.ml.common.serialization.decoder.md#class-concretedecoder): Custom json decoder to handle non-native types found in serialized TorusML objects.
+- [`encoder.ConcreteEncoder`](./concrete.ml.common.serialization.encoder.md#class-concreteencoder): Custom json encoder to handle non-native types found in serialized TorusML objects.
 - [`utils.CiphertextFormat`](./concrete.ml.common.utils.md#class-ciphertextformat): Type of ciphertext used as input/output for a model.
 - [`utils.FheMode`](./concrete.ml.common.utils.md#class-fhemode): Enum representing the execution mode.
 - [`utils.HybridFHEMode`](./concrete.ml.common.utils.md#class-hybridfhemode): Simple enum for different modes of execution of HybridModel.
@@ -125,7 +125,7 @@
 - [`base_quantized_op.QuantizedOpUnivariateOfEncrypted`](./concrete.ml.quantization.base_quantized_op.md#class-quantizedopunivariateofencrypted): An univariate operator of an encrypted value.
 - [`linear_op_glwe_backend.GLWELinearLayerExecutor`](./concrete.ml.quantization.linear_op_glwe_backend.md#class-glwelinearlayerexecutor): GLWE execution helper for pure linear layers.
 - [`post_training.CalibrationMode`](./concrete.ml.quantization.post_training.md#class-calibrationmode): Simple enum for different modes of execution of HybridModel.
-- [`post_training.ONNXConverter`](./concrete.ml.quantization.post_training.md#class-onnxconverter): Base ONNX to Concrete ML computation graph conversion class.
+- [`post_training.ONNXConverter`](./concrete.ml.quantization.post_training.md#class-onnxconverter): Base ONNX to TorusML computation graph conversion class.
 - [`post_training.PostTrainingAffineQuantization`](./concrete.ml.quantization.post_training.md#class-posttrainingaffinequantization): Post-training Affine Quantization.
 - [`post_training.PostTrainingQATImporter`](./concrete.ml.quantization.post_training.md#class-posttrainingqatimporter): Converter of Quantization Aware Training networks.
 - [`quantized_module.QuantizedModule`](./concrete.ml.quantization.quantized_module.md#class-quantizedmodule): Inference for a quantized model.
@@ -195,8 +195,8 @@
 - [`quantizers.UniformQuantizationParameters`](./concrete.ml.quantization.quantizers.md#class-uniformquantizationparameters): Quantization parameters for uniform quantization.
 - [`quantizers.UniformQuantizer`](./concrete.ml.quantization.quantizers.md#class-uniformquantizer): Uniform quantizer.
 - [`p_error_search.BinarySearch`](./concrete.ml.search_parameters.p_error_search.md#class-binarysearch): Class for `p_error` hyper-parameter search for classification and regression tasks.
-- [`base.BaseClassifier`](./concrete.ml.sklearn.base.md#class-baseclassifier): Base class for linear and tree-based classifiers in Concrete ML.
-- [`base.BaseEstimator`](./concrete.ml.sklearn.base.md#class-baseestimator): Base class for all estimators in Concrete ML.
+- [`base.BaseClassifier`](./concrete.ml.sklearn.base.md#class-baseclassifier): Base class for linear and tree-based classifiers in TorusML.
+- [`base.BaseEstimator`](./concrete.ml.sklearn.base.md#class-baseestimator): Base class for all estimators in TorusML.
 - [`base.BaseTreeClassifierMixin`](./concrete.ml.sklearn.base.md#class-basetreeclassifiermixin): Mixin class for tree-based classifiers.
 - [`base.BaseTreeEstimatorMixin`](./concrete.ml.sklearn.base.md#class-basetreeestimatormixin): Mixin class for tree-based estimators.
 - [`base.BaseTreeRegressorMixin`](./concrete.ml.sklearn.base.md#class-basetreeregressormixin): Mixin class for tree-based regressors.
@@ -251,11 +251,11 @@
 - [`custom_assert.assert_not_reached`](./concrete.ml.common.debugging.custom_assert.md#function-assert_not_reached): Provide a custom assert to check that a piece of code is never reached.
 - [`custom_assert.assert_true`](./concrete.ml.common.debugging.custom_assert.md#function-assert_true): Provide a custom assert to check that the condition is True.
 - [`decoder.object_hook`](./concrete.ml.common.serialization.decoder.md#function-object_hook): Define a custom object hook that enables loading any supported serialized values.
-- [`dumpers.dump`](./concrete.ml.common.serialization.dumpers.md#function-dump): Dump any Concrete ML object in a file.
+- [`dumpers.dump`](./concrete.ml.common.serialization.dumpers.md#function-dump): Dump any TorusML object in a file.
 - [`dumpers.dumps`](./concrete.ml.common.serialization.dumpers.md#function-dumps): Dump any object as a string.
 - [`encoder.dump_name_and_value`](./concrete.ml.common.serialization.encoder.md#function-dump_name_and_value): Dump the value into a custom dict format.
-- [`loaders.load`](./concrete.ml.common.serialization.loaders.md#function-load): Load any Concrete ML object that provide a `load_dict` method.
-- [`loaders.loads`](./concrete.ml.common.serialization.loaders.md#function-loads): Load any Concrete ML object that provide a `dump_dict` method.
+- [`loaders.load`](./concrete.ml.common.serialization.loaders.md#function-load): Load any TorusML object that provide a `load_dict` method.
+- [`loaders.loads`](./concrete.ml.common.serialization.loaders.md#function-loads): Load any TorusML object that provide a `dump_dict` method.
 - [`utils.all_values_are_floats`](./concrete.ml.common.utils.md#function-all_values_are_floats): Indicate if all unpacked values are of a supported float dtype.
 - [`utils.all_values_are_integers`](./concrete.ml.common.utils.md#function-all_values_are_integers): Indicate if all unpacked values are of a supported integer dtype.
 - [`utils.all_values_are_of_dtype`](./concrete.ml.common.utils.md#function-all_values_are_of_dtype): Indicate if all unpacked values are of the specified dtype(s).
@@ -383,12 +383,12 @@
 - [`utils.check_serialization`](./concrete.ml.pytest.utils.md#function-check_serialization): Check that the given object can properly be serialized.
 - [`utils.data_calibration_processing`](./concrete.ml.pytest.utils.md#function-data_calibration_processing): Reduce size of the given data-set.
 - [`utils.get_random_samples`](./concrete.ml.pytest.utils.md#function-get_random_samples): Select `n_sample` random elements from a 2D NumPy array.
-- [`utils.get_sklearn_all_models_and_datasets`](./concrete.ml.pytest.utils.md#function-get_sklearn_all_models_and_datasets): Get the pytest parameters to use for testing all models available in Concrete ML.
+- [`utils.get_sklearn_all_models_and_datasets`](./concrete.ml.pytest.utils.md#function-get_sklearn_all_models_and_datasets): Get the pytest parameters to use for testing all models available in TorusML.
 - [`utils.get_sklearn_linear_models_and_datasets`](./concrete.ml.pytest.utils.md#function-get_sklearn_linear_models_and_datasets): Get the pytest parameters to use for testing linear models.
 - [`utils.get_sklearn_neighbors_models_and_datasets`](./concrete.ml.pytest.utils.md#function-get_sklearn_neighbors_models_and_datasets): Get the pytest parameters to use for testing neighbor models.
 - [`utils.get_sklearn_neural_net_models_and_datasets`](./concrete.ml.pytest.utils.md#function-get_sklearn_neural_net_models_and_datasets): Get the pytest parameters to use for testing neural network models.
 - [`utils.get_sklearn_tree_models_and_datasets`](./concrete.ml.pytest.utils.md#function-get_sklearn_tree_models_and_datasets): Get the pytest parameters to use for testing tree-based models.
-- [`utils.instantiate_model_generic`](./concrete.ml.pytest.utils.md#function-instantiate_model_generic): Instantiate any Concrete ML model type.
+- [`utils.instantiate_model_generic`](./concrete.ml.pytest.utils.md#function-instantiate_model_generic): Instantiate any TorusML model type.
 - [`utils.load_torch_model`](./concrete.ml.pytest.utils.md#function-load_torch_model): Load an object saved with torch.save() from a file or dict.
 - [`utils.pandas_dataframe_are_equal`](./concrete.ml.pytest.utils.md#function-pandas_dataframe_are_equal): Determine if both data-frames are identical.
 - [`utils.values_are_equal`](./concrete.ml.pytest.utils.md#function-values_are_equal): Indicate if two values are equal.

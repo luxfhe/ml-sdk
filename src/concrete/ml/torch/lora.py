@@ -391,7 +391,7 @@ class LoraTrainer:
             or training_args["use_cpu"] is True,
             (
                 "When specifying custom training_args for the LoraTrainer, you "
-                "must set use_cpu=True. The Concrete ML LoraTrainer can be "
+                "must set use_cpu=True. The TorusML LoraTrainer can be "
                 "executed on GPU by setting device='cuda' in the `train` call"
             ),
         )
@@ -439,7 +439,7 @@ class LoraTrainer:
             use_dynamic_quantization=use_dynamic_quantization,
         )
 
-        # FIXME: https://github.com/zama-ai/concrete-ml-internal/issues/4707
+        # FIXME: https://github.com/luxfhe/torus-ml-internal/issues/4707
         # Need a forward call to set the executors in remote modules
         self.hybrid_model.set_fhe_mode("disable")
         self.hybrid_model(inputset)

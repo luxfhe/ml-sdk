@@ -313,7 +313,7 @@ def enforce_gpu_determinism():
 
 
 # Method is not ideal as some MLIR can contain TLUs but not the associated graph
-# FIXME: https://github.com/zama-ai/concrete-ml-internal/issues/2381
+# FIXME: https://github.com/luxfhe/torus-ml-internal/issues/2381
 def check_graph_input_has_no_tlu_impl(graph: CPGraph):
     """Check that the graph's input node does not contain a TLU."""
     succ = list(graph.graph.successors(graph.input_nodes[0]))
@@ -322,7 +322,7 @@ def check_graph_input_has_no_tlu_impl(graph: CPGraph):
 
 
 # Method is not ideal as some MLIR can contain TLUs but not the associated graph
-# FIXME: https://github.com/zama-ai/concrete-ml-internal/issues/2381
+# FIXME: https://github.com/luxfhe/torus-ml-internal/issues/2381
 def check_graph_output_has_no_tlu_impl(graph: CPGraph):
     """Check that the graph's output node does not contain a TLU."""
     if graph.output_nodes[0].converted_to_table_lookup:
@@ -330,7 +330,7 @@ def check_graph_output_has_no_tlu_impl(graph: CPGraph):
 
 
 # Method is not ideal as some MLIR can contain TLUs but not the associated graph
-# FIXME: https://github.com/zama-ai/concrete-ml-internal/issues/2381
+# FIXME: https://github.com/luxfhe/torus-ml-internal/issues/2381
 def check_graph_has_no_input_output_tlu_impl(graph: CPGraph):
     """Check that the graph's input and output nodes do not contain a TLU."""
     check_graph_input_has_no_tlu_impl(graph)
@@ -338,7 +338,7 @@ def check_graph_has_no_input_output_tlu_impl(graph: CPGraph):
 
 
 # To update when the feature becomes available Concrete
-# FIXME: https://github.com/zama-ai/concrete-numpy-internal/issues/1714
+# FIXME: https://github.com/luxfhe/torus-numpy-internal/issues/1714
 def check_circuit_has_no_tlu_impl(circuit: Circuit):
     """Check a circuit has no TLU."""
     if "apply_" in circuit.mlir and "_lookup_table" in circuit.mlir:
@@ -489,7 +489,7 @@ def load_data():
         For classifier, scikit-learn's make_classification() method is directly called.
 
         Args:
-            model_class (Callable): The Concrete ML model class to generate the data for.
+            model_class (Callable): The TorusML model class to generate the data for.
             *args: Positional arguments to consider for generating the data.
             random_state (int): Determines random number generation for data-set creation.
             **kwargs: Keyword arguments to consider for generating the data.
@@ -534,7 +534,7 @@ def load_data():
             return tuple(generated_regression)
 
         raise ValueError(
-            "Model class type is unsupported. Expected a Concrete ML regressor or classifier, or "
+            "Model class type is unsupported. Expected a TorusML regressor or classifier, or "
             f"a functool.partial version of it, but got {model_class}."
         )
 
@@ -556,7 +556,7 @@ def check_is_good_execution_for_cml_vs_circuit():
         Args:
             inputs (tuple, numpy.ndarray): inputs for the model.
             model (Callable, QuantizedModule, QuantizedTorchEstimatorMixin): either the
-                Concrete ML sklearn built-in model or a quantized module.
+                TorusML sklearn built-in model or a quantized module.
             simulate (bool): whether to run the execution in FHE or in simulated mode.
             n_allowed_runs (int): in case of FHE execution randomness can make the output slightly
                 different this allows to run the evaluation multiple times
@@ -596,7 +596,7 @@ def check_is_good_execution_for_cml_vs_circuit():
                     # tests), especially since these results are tested in other tests such as the
                     # `check_subfunctions_in_fhe`
                     # For KNN `predict_proba` is not supported for now
-                    # FIXME: https://github.com/zama-ai/concrete-ml-internal/issues/3962
+                    # FIXME: https://github.com/luxfhe/torus-ml-internal/issues/3962
                     if is_classifier_or_partial_classifier(model) and not isinstance(
                         model, SklearnKNeighborsMixin
                     ):

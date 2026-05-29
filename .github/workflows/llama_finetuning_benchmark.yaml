@@ -10,7 +10,7 @@ on:
         required: true
         type: string
       alternative-cp-wheel-artifact-id:
-        description: Alternative Concrete-Python Wheel Artifact-ID (see https://github.com/zama-ai/concrete/actions/workflows/concrete_python_release.yml)
+        description: Alternative Concrete-Python Wheel Artifact-ID (see https://github.com/luxfhe/torus/actions/workflows/concrete_python_release.yml)
         default: "none"
         required: true
         type: string
@@ -195,7 +195,7 @@ jobs:
             pip install -r requirements.txt
           fi
           
-          # Install concrete-ml requirements
+          # Install torus-ml requirements
           pip install -e .
 
       - name: Alternative Concrete Python Wheel Download
@@ -206,7 +206,7 @@ jobs:
           -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
           -H "X-GitHub-Api-Version: 2022-11-28" \
           -o concrete-python.whl.zip \
-          https://api.github.com/repos/zama-ai/concrete/actions/artifacts/${{ github.event.inputs.alternative-cp-wheel-artifact-id }}/zip
+          https://api.github.com/repos/luxfhe/torus/actions/artifacts/${{ github.event.inputs.alternative-cp-wheel-artifact-id }}/zip
 
       - name: Alternative Concrete Python Wheel Install
         if: github.event_name == 'workflow_dispatch' && github.event.inputs.alternative-cp-wheel-artifact-id != 'none'
@@ -221,7 +221,7 @@ jobs:
         with:
           persist-credentials: 'false'
           path: concrete
-          repository: zama-ai/concrete
+          repository: luxfhe/torus
           ref: ${{ github.event.inputs.alternative-cp-branch }}
 
       - name: Alternative Concrete Python Branch Source Install

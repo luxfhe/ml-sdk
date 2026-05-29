@@ -147,7 +147,7 @@ get_sklearn_all_models_and_datasets(
 ) → List
 ```
 
-Get the pytest parameters to use for testing all models available in Concrete ML.
+Get the pytest parameters to use for testing all models available in TorusML.
 
 **Args:**
 
@@ -159,7 +159,7 @@ Get the pytest parameters to use for testing all models available in Concrete ML
 
 **Returns:**
 
-- <b>`List`</b>:  The pytest parameters to use for testing all models available in Concrete ML.
+- <b>`List`</b>:  The pytest parameters to use for testing all models available in TorusML.
 
 ______________________________________________________________________
 
@@ -171,7 +171,7 @@ ______________________________________________________________________
 instantiate_model_generic(model_class, n_bits, **parameters)
 ```
 
-Instantiate any Concrete ML model type.
+Instantiate any TorusML model type.
 
 **Args:**
 
@@ -278,7 +278,7 @@ check_serialization(
 
 Check that the given object can properly be serialized.
 
-This function serializes all objects using the `dump`, `dumps`, `load` and `loads` functions from Concrete ML. If the given object provides a `dump` and `dumps` method, they are also serialized using these.
+This function serializes all objects using the `dump`, `dumps`, `load` and `loads` functions from TorusML. If the given object provides a `dump` and `dumps` method, they are also serialized using these.
 
 **Args:**
 

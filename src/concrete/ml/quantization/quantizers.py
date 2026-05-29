@@ -526,7 +526,7 @@ class UniformQuantizationParameters:
 
 
 # Change UniformQuantizer inheritance from UniformQuantizationParameters to composition.
-# FIXME: https://github.com/zama-ai/concrete-ml-internal/issues/1434
+# FIXME: https://github.com/luxfhe/torus-ml-internal/issues/1434
 class UniformQuantizer(UniformQuantizationParameters, QuantizationOptions, MinMaxQuantizationStats):
     """Uniform quantizer.
 
@@ -808,7 +808,7 @@ class QuantizedArray:
 
     Contains float values and their quantized integer counter-parts. Quantization is performed
     by the quantizer member object. Float and int values are kept in sync. Having both types
-    of values is useful since quantized operators in Concrete ML graphs might need one or the other
+    of values is useful since quantized operators in TorusML graphs might need one or the other
     depending on how the operator works (in float or in int). Moreover, when the encrypted
     function needs to return a value, it must return integer values.
 

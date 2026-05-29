@@ -12,7 +12,7 @@ This repository contains Python code illustrating how to apply GPT-2, a Large La
 
 You will need Python 3 and the following dependencies to use the code from this repository:
 
-- concrete-ml
+- torus-ml
 - transformers
 
 You can install these dependencies with the following command:
@@ -75,7 +75,7 @@ The evaluation details are also available in the [QGPT2Evaluate.ipynb](./QGPT2Ev
 
 The multi-head attention (MHA) and single-head variants now use a rounding approach, significantly improving their execution times in Fully Homomorphic Encryption (FHE) mode.
 
-See [rounded table lookup](https://docs.zama.ai/concrete/v/main-1/tutorials/rounded_table_lookups) from the Concrete library for more details.
+See [rounded table lookup](https://docs.luxfhe.com/torus/v/main-1/tutorials/rounded_table_lookups) from the Torus library for more details.
 
 For the single-head model, the execution time is 166.38 seconds on a single 196 cores CPU machine (an hp7c from AWS). The multi-head attention model, which is a full attention block from GPT-2, now runs in about 862.97 seconds (~14 minutes) under the same conditions. All these timings are actual FHE execution on encrypted data.
 

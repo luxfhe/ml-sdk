@@ -36,7 +36,7 @@ ______________________________________________________________________
 
 Get the FHE circuit.
 
-The FHE circuit combines computational graph, mlir, client and server into a single object. More information available in Concrete documentation (https://docs.zama.ai/concrete/get-started/terminology) Is None if the model is not fitted.
+The FHE circuit combines computational graph, mlir, client and server into a single object. More information available in Concrete documentation (https://docs.luxfhe.com/torus/get-started/terminology) Is None if the model is not fitted.
 
 **Returns:**
 
@@ -152,7 +152,7 @@ ______________________________________________________________________
 
 Get the FHE circuit.
 
-The FHE circuit combines computational graph, mlir, client and server into a single object. More information available in Concrete documentation (https://docs.zama.ai/concrete/get-started/terminology) Is None if the model is not fitted.
+The FHE circuit combines computational graph, mlir, client and server into a single object. More information available in Concrete documentation (https://docs.luxfhe.com/torus/get-started/terminology) Is None if the model is not fitted.
 
 **Returns:**
 
@@ -253,7 +253,7 @@ For more details on some of these arguments please refer to: https://scikit-lear
 
 - <b>`X`</b> (Data):  The training data, as a Numpy array, Torch tensor, Pandas DataFrame or List.
 - <b>`y`</b> (Target):  The target data, as a Numpy array, Torch tensor, Pandas DataFrame, Pandas  Series or List.
-- <b>`fhe`</b> (Optional\[Union\[str, FheMode\]\]):  The mode to use for FHE training.  Can be FheMode.DISABLE for Concrete ML Python (quantized) training,  FheMode.SIMULATE for FHE simulation and FheMode.EXECUTE for actual FHE execution.  Can also be the string representation of any of these values. If None, training is  done in floating points in the clear through scikit-learn. Default to None.
+- <b>`fhe`</b> (Optional\[Union\[str, FheMode\]\]):  The mode to use for FHE training.  Can be FheMode.DISABLE for TorusML Python (quantized) training,  FheMode.SIMULATE for FHE simulation and FheMode.EXECUTE for actual FHE execution.  Can also be the string representation of any of these values. If None, training is  done in floating points in the clear through scikit-learn. Default to None.
 - <b>`coef_init`</b> (Optional\[numpy.ndarray\]):  The initial coefficients to warm-start the  optimization. Default to None.
 - <b>`intercept_init`</b> (Optional\[numpy.ndarray\]):  The initial intercept to warm-start the  optimization. Default to None.
 - <b>`sample_weight`</b> (Optional\[numpy.ndarray\]):  Weights applied to individual samples (1. for  unweighted). It is currently not supported for FHE training. Default to None.
@@ -310,7 +310,7 @@ This function does one iteration of SGD training. Looping n_times over this func
 
 - <b>`X`</b> (Data):  The training data, as a Numpy array, Torch tensor, Pandas DataFrame or List.
 - <b>`y`</b> (Target):  The target data, as a Numpy array, Torch tensor, Pandas DataFrame, Pandas  Series or List.
-- <b>`fhe`</b> (Optional\[Union\[str, FheMode\]\]):  The mode to use for FHE training.  Can be FheMode.DISABLE for Concrete ML Python (quantized) training,  FheMode.SIMULATE for FHE simulation and FheMode.EXECUTE for actual FHE execution.  Can also be the string representation of any of these values. If None, training is  done in floating points in the clear through scikit-learn. Default to None.
+- <b>`fhe`</b> (Optional\[Union\[str, FheMode\]\]):  The mode to use for FHE training.  Can be FheMode.DISABLE for TorusML Python (quantized) training,  FheMode.SIMULATE for FHE simulation and FheMode.EXECUTE for actual FHE execution.  Can also be the string representation of any of these values. If None, training is  done in floating points in the clear through scikit-learn. Default to None.
 - <b>`classes`</b> (Optional\[numpy.ndarray\]):  The classes in the dataset.  It needs to be provided in the first call to `partial_fit`.  If provided in following calls it should match the classes  provided in the first call
 
 **Raises:**
@@ -404,7 +404,7 @@ ______________________________________________________________________
 
 Get the FHE circuit.
 
-The FHE circuit combines computational graph, mlir, client and server into a single object. More information available in Concrete documentation (https://docs.zama.ai/concrete/get-started/terminology) Is None if the model is not fitted.
+The FHE circuit combines computational graph, mlir, client and server into a single object. More information available in Concrete documentation (https://docs.luxfhe.com/torus/get-started/terminology) Is None if the model is not fitted.
 
 **Returns:**
 
@@ -505,7 +505,7 @@ ______________________________________________________________________
 
 Get the FHE circuit.
 
-The FHE circuit combines computational graph, mlir, client and server into a single object. More information available in Concrete documentation (https://docs.zama.ai/concrete/get-started/terminology) Is None if the model is not fitted.
+The FHE circuit combines computational graph, mlir, client and server into a single object. More information available in Concrete documentation (https://docs.luxfhe.com/torus/get-started/terminology) Is None if the model is not fitted.
 
 **Returns:**
 
@@ -605,7 +605,7 @@ ______________________________________________________________________
 
 Get the FHE circuit.
 
-The FHE circuit combines computational graph, mlir, client and server into a single object. More information available in Concrete documentation (https://docs.zama.ai/concrete/get-started/terminology) Is None if the model is not fitted.
+The FHE circuit combines computational graph, mlir, client and server into a single object. More information available in Concrete documentation (https://docs.luxfhe.com/torus/get-started/terminology) Is None if the model is not fitted.
 
 **Returns:**
 
@@ -703,7 +703,7 @@ ______________________________________________________________________
 
 Get the FHE circuit.
 
-The FHE circuit combines computational graph, mlir, client and server into a single object. More information available in Concrete documentation (https://docs.zama.ai/concrete/get-started/terminology) Is None if the model is not fitted.
+The FHE circuit combines computational graph, mlir, client and server into a single object. More information available in Concrete documentation (https://docs.luxfhe.com/torus/get-started/terminology) Is None if the model is not fitted.
 
 **Returns:**
 
@@ -808,7 +808,7 @@ ______________________________________________________________________
 
 Get the FHE circuit.
 
-The FHE circuit combines computational graph, mlir, client and server into a single object. More information available in Concrete documentation (https://docs.zama.ai/concrete/get-started/terminology) Is None if the model is not fitted.
+The FHE circuit combines computational graph, mlir, client and server into a single object. More information available in Concrete documentation (https://docs.luxfhe.com/torus/get-started/terminology) Is None if the model is not fitted.
 
 **Returns:**
 

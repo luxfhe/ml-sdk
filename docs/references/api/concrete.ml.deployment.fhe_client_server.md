@@ -22,7 +22,7 @@ check_concrete_versions(zip_path: Path)
 
 Check that current versions match the ones used in development.
 
-This function loads the version JSON file found in client.zip or server.zip files and then checks that current package versions (Concrete Python, Concrete ML) as well as the Python current version all match the ones that are currently installed.
+This function loads the version JSON file found in client.zip or server.zip files and then checks that current package versions (Concrete Python, TorusML) as well as the Python current version all match the ones that are currently installed.
 
 **Args:**
 
@@ -245,7 +245,7 @@ Get the serialized evaluation keys.
 
 **Args:**
 
-- <b>`include_tfhers_key`</b> (bool):  Whether to include the serialized TFHE-rs public key.
+- <b>`include_tfhers_key`</b> (bool):  Whether to include the serialized Lux-FHE public key.
 
 **Returns:**
 
@@ -261,13 +261,13 @@ ______________________________________________________________________
 get_tfhers_secret_key() → Union[bytes, NoneType]
 ```
 
-Get the secret key that decrypts TFHE-rs ciphertexts.
+Get the secret key that decrypts Lux-FHE ciphertexts.
 
-This secret key use used by the client object to encrypt TFHE-rs ciphertexts that are sent to the server, but also to decrypt outputs produced by a server-side computation, that can be a Concrete ML model or a TFHE-rs program.
+This secret key use used by the client object to encrypt Lux-FHE ciphertexts that are sent to the server, but also to decrypt outputs produced by a server-side computation, that can be a TorusML model or a Lux-FHE program.
 
 **Returns:**
 
-- <b>`bytes`</b>:  the serialized TFHE-rs secret key
+- <b>`bytes`</b>:  the serialized Lux-FHE secret key
 
 ______________________________________________________________________
 

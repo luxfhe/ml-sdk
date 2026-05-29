@@ -45,9 +45,9 @@ USE_OLD_VL = False
 # Debug option for testing round PBS optimization
 # Setting this option to true will make quantizers "round half up"
 # For example: 0.5 -> 1, 1.5 -> 2 instead of "round half to even"
-# When the option is set to false, Concrete ML uses numpy.rint
+# When the option is set to false, TorusML uses numpy.rint
 # which has the same behavior as torch.round -> Brevitas nets
-# should be exact compared to their Concrete ML QuantizedModule
+# should be exact compared to their TorusML QuantizedModule
 QUANT_ROUND_LIKE_ROUND_PBS = False
 
 # Enable input ciphertext compression
@@ -108,7 +108,7 @@ class CiphertextFormat(str, enum.Enum):
     """Type of ciphertext used as input/output for a model."""
 
     CONCRETE = "concrete"
-    TFHE_RS = "tfhe-rs"
+    TFHE_RS = "Lux-FHE"
 
     @staticmethod
     def is_valid(ct_format: Union["CiphertextFormat", str]) -> bool:
@@ -216,7 +216,7 @@ def manage_parameters_for_pbs_errors(
     """Return (p_error, global_p_error) that we want to give to Concrete.
 
     The returned (p_error, global_p_error) depends on user's parameters and the way we want to
-    manage defaults in Concrete ML, which may be different from the way defaults are managed in
+    manage defaults in TorusML, which may be different from the way defaults are managed in
     Concrete.
 
     Principle:
@@ -760,7 +760,7 @@ def check_compilation_device_is_valid_and_is_cuda(device: str) -> bool:
     if os.environ.get("CML_USE_GPU", False) == "1" and not device == "cuda":  # pragma: no cover
         if not check_gpu_enabled():
             raise ValueError(
-                "CUDA FHE execution was requested with CML_USE_GPU but the Concrete runtime "
+                "CUDA FHE execution was requested with CML_USE_GPU but the Torus runtime "
                 "that is installed on this system does not support CUDA. Please"
                 "install a GPU-enabled Concrete-Python package."
             )
@@ -774,7 +774,7 @@ def check_compilation_device_is_valid_and_is_cuda(device: str) -> bool:
     if is_cuda:
         if not check_gpu_enabled():
             raise ValueError(
-                "CUDA FHE execution was requested but the Concrete runtime "
+                "CUDA FHE execution was requested but the Torus runtime "
                 "that is installed on this system does not support CUDA. Please"
                 "install a GPU-enabled Concrete-Python package."
             )

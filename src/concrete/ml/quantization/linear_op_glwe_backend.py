@@ -18,7 +18,7 @@ def has_glwe_backend():
         bool: True if the GLWE backend is installed, False otherwise.
     """
     try:
-        __import__("concrete_ml_extensions")
+        __import__("torus_ml_extensions")
         return True
     except ImportError:  # pragma: no cover
         return False  # pragma: no cover
@@ -42,7 +42,7 @@ class GLWELinearLayerExecutor:
         """
         assert has_glwe_backend(), "GLWE backend not installed"
 
-        import concrete_ml_extensions as fhext
+        import torus_ml_extensions as fhext
 
         self.fhext = fhext
 
@@ -297,7 +297,7 @@ class GLWELinearLayerExecutor:
         _, quantized_layer = next(iter(q_module.quant_layers_dict.items()))
         device = x.device
 
-        # FIXME: https://github.com/zama-ai/concrete-ml-internal/issues/4711
+        # FIXME: https://github.com/luxfhe/torus-ml-internal/issues/4711
         # Static per-channel weight quantization.
         weight_q, weight_scale, weight_zp, sum_w = self._per_channel_weight_quantization(
             weight, q_module, device
@@ -429,7 +429,7 @@ class GLWELinearLayerExecutor:
 
         device = x.device
 
-        # FIXME: https://github.com/zama-ai/concrete-ml-internal/issues/4711
+        # FIXME: https://github.com/luxfhe/torus-ml-internal/issues/4711
         # Dynamic quantization for weights and input.
         weight_q, weight_scale, weight_zp, sum_w = self._per_channel_weight_quantization(
             weight, q_module, device

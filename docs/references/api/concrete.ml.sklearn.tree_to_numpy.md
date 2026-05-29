@@ -48,7 +48,7 @@ workaround_squeeze_node_xgboost(onnx_model: ModelProto)
 
 Workaround to fix torch issue that does not export the proper axis in the ONNX squeeze node.
 
-FIXME: https://github.com/zama-ai/concrete-ml-internal/issues/2778 The squeeze ops does not have the proper dimensions. remove the following workaround when the issue is fixed Add the axis attribute to the Squeeze node
+FIXME: https://github.com/luxfhe/torus-ml-internal/issues/2778 The squeeze ops does not have the proper dimensions. remove the following workaround when the issue is fixed Add the axis attribute to the Squeeze node
 
 **Args:**
 

@@ -130,8 +130,8 @@ class QuantizedModule:
         )
 
         # Set base attributes for API consistency. This could be avoided if an abstract base class
-        # is created for both Concrete ML models and QuantizedModule
-        # FIXME: https://github.com/zama-ai/concrete-ml-internal/issues/2899
+        # is created for both TorusML models and QuantizedModule
+        # FIXME: https://github.com/luxfhe/torus-ml-internal/issues/2899
         self.input_quantizers: List[UniformQuantizer] = []
         self.output_quantizers: List[UniformQuantizer] = []
         self.fhe_circuit: Optional[Circuit] = None
@@ -157,7 +157,7 @@ class QuantizedModule:
         if self._preprocessing_module is not None:
             assert_true(self._preprocessing_module.onnx_preprocessing is None)
 
-    # FIXME: https://github.com/zama-ai/concrete-ml-internal/issues/4127
+    # FIXME: https://github.com/luxfhe/torus-ml-internal/issues/4127
     def set_reduce_sum_copy(self):
         """Set reduce sum to copy or not the inputs.
 
@@ -330,7 +330,7 @@ class QuantizedModule:
         return output_quantizers
 
     # Remove this once we handle the re-quantization step in post-training only
-    # FIXME: https://github.com/zama-ai/concrete-ml-internal/issues/4472
+    # FIXME: https://github.com/luxfhe/torus-ml-internal/issues/4472
     def _add_requant_for_composition(self, composition_mapping: Optional[Dict]):
         """Trigger a re-quantization step for outputs using an input-output mapping for quantizers.
 
@@ -430,11 +430,11 @@ class QuantizedModule:
         Args:
             *x (numpy.ndarray): Input float values to consider.
             fhe (Union[FheMode, str]): The mode to use for prediction. Can be FheMode.DISABLE for
-                Concrete ML Python inference, FheMode.SIMULATE for FHE simulation and
+                TorusML Python inference, FheMode.SIMULATE for FHE simulation and
                 FheMode.EXECUTE for actual FHE execution. Can also be the string representation of
                 any of these values. Default to FheMode.DISABLE.
             debug (bool): In debug mode, returns quantized intermediary values of the computation.
-                This is useful when a model's intermediary values in Concrete ML need to be
+                This is useful when a model's intermediary values in TorusML need to be
                 compared with the intermediary values obtained in pytorch/onnx. When set, the
                 second return value is a dictionary containing ONNX operation names as keys and,
                 as values, their input QuantizedArray or ndarray. The use can thus extract the
@@ -493,7 +493,7 @@ class QuantizedModule:
         Args:
             *q_x (numpy.ndarray): Input integer values to consider.
             fhe (Union[FheMode, str]): The mode to use for prediction. Can be FheMode.DISABLE for
-                Concrete ML Python inference, FheMode.SIMULATE for FHE simulation and
+                TorusML Python inference, FheMode.SIMULATE for FHE simulation and
                 FheMode.EXECUTE for actual FHE execution. Can also be the string representation of
                 any of these values. Default to FheMode.DISABLE.
 
@@ -589,7 +589,7 @@ class QuantizedModule:
         )
 
         # Remove this once we handle the re-quantization step in post-training only
-        # FIXME: https://github.com/zama-ai/concrete-ml-internal/issues/4472
+        # FIXME: https://github.com/luxfhe/torus-ml-internal/issues/4472
         if self._composition_mapping is not None:
             mismatch_shapes = list(
                 f"Output {output_i}: {q_results[output_i].shape} "
@@ -672,7 +672,7 @@ class QuantizedModule:
                 # If the virtual library method should be used
                 # For now, use the virtual library when simulating
                 # circuits that use CRT  encoding because the official simulation is too slow
-                # FIXME: https://github.com/zama-ai/concrete-ml-internal/issues/4391
+                # FIXME: https://github.com/luxfhe/torus-ml-internal/issues/4391
                 if USE_OLD_VL or is_crt_encoding:
                     predict_method = partial(
                         self.fhe_circuit.graph, p_error=self.fhe_circuit.p_error

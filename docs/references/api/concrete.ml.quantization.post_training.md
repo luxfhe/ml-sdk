@@ -48,7 +48,7 @@ ______________________________________________________________________
 
 ## <kbd>class</kbd> `ONNXConverter`
 
-Base ONNX to Concrete ML computation graph conversion class.
+Base ONNX to TorusML computation graph conversion class.
 
 This class provides a method to parse an ONNX graph and apply several transformations. First, it creates QuantizedOps for each ONNX graph op. These quantized ops have calibrated quantizers that are useful when the operators work on integer data or when the output of the ops is the output of the encrypted program. For operators that compute in float and will be merged to TLUs, these quantizers are not used. Second, this converter creates quantized tensors for initializer and weights stored in the graph.
 
@@ -251,7 +251,7 @@ ______________________________________________________________________
 
 Converter of Quantization Aware Training networks.
 
-This class provides specific configuration for QAT networks during ONNX network conversion to Concrete ML computation graphs.
+This class provides specific configuration for QAT networks during ONNX network conversion to TorusML computation graphs.
 
 <a href="../../../src/concrete/ml/quantization/post_training.py#L239"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
 
