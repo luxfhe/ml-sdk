@@ -1,6 +1,6 @@
 # Reproducing Paper **Programmable Bootstrapping Enables Efficient Homomorphic Inference of Deep Neural Networks** : Benchmarking Results
 
-This notebook replicates experiments from the paper [_Programmable Bootstrapping Enables Efficient Homomorphic Inference of Deep Neural Networks_](https://whitepaper.zama.ai/), published in 2021.
+This notebook replicates experiments from the paper [_Programmable Bootstrapping Enables Efficient Homomorphic Inference of Deep Neural Networks_](https://whitepaper.lux.fhe/), published in 2021.
 
 ## Installation
 

@@ -42,7 +42,7 @@ on:
         type: string
 
   # Add recurrent launching
-  # FIXME: https://github.com/zama-ai/concrete-ml-internal/issues/1851
+  # FIXME: https://github.com/luxfi/torusml-internal/issues/1851
 
 permissions:
   contents: read
@@ -136,7 +136,7 @@ jobs:
       - name: Checkout Slab repo
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
-          repository: zama-ai/slab
+          repository: luxfhe/slab
           path: slab
           token: ${{ secrets.BOT_TOKEN }}
           persist-credentials: 'false'

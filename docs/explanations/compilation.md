@@ -2,13 +2,13 @@
 
 Compilation of a model produces machine code that executes the model on encrypted data. In some cases, notably in the client/server setting, the compilation can be done by the server when loading the model for serving.
 
-As FHE execution is much slower than execution on non-encrypted data, Concrete ML has a simulation mode which can help to quickly evaluate the impact of FHE execution on models.
+As FHE execution is much slower than execution on non-encrypted data, TorusML has a simulation mode which can help to quickly evaluate the impact of FHE execution on models.
 
 ## Compilation to FHE
 
-Concrete ML implements model inference using Concrete as a backend. In order to execute in FHE, a numerical program written in Concrete needs to be compiled. This functionality is [described here](https://docs.zama.ai/concrete/get-started/quick_start), and Concrete ML hides away most of the complexity of this step, completing the entire compilation process itself.
+TorusML implements model inference using Concrete as a backend. In order to execute in FHE, a numerical program written in Concrete needs to be compiled. This functionality is [described here](https://docs.lux.network/torus/get-started/quick_start), and TorusML hides away most of the complexity of this step, completing the entire compilation process itself.
 
-From the perspective of the Concrete ML user, the compilation process performed by Concrete can be broken up into 3 steps:
+From the perspective of the TorusML user, the compilation process performed by Concrete can be broken up into 3 steps:
 
 1. tracing the NumPy program and creating a Concrete op-graph
 1. checking the op-graph for FHE compatibility
@@ -28,7 +28,7 @@ Compilation is performed for built-in models with the `compile` method :
 
 ### scikit-learn pipelines
 
-When using a pipeline, the Concrete ML model can predict with FHE during the pipeline execution, but it needs to be compiled beforehand. The compile function must be called on the Concrete ML model:
+When using a pipeline, the TorusML model can predict with FHE during the pipeline execution, but it needs to be compiled beforehand. The compile function must be called on the TorusML model:
 
 ```python
 import numpy
@@ -60,7 +60,7 @@ model_pca = Pipeline(
 
 model_pca.fit(X_train, y_train)
 
-# Compile the Concrete ML model
+# Compile the TorusML model
 model_pca["cml_model"].compile(X_train)
 
 model_pca.predict(X_test[[0]], fhe="execute")
@@ -78,14 +78,14 @@ For custom models, with one of the `compile_brevitas_qat_model` (for Brevitas mo
 
 ## FHE simulation
 
-The first step in the list above takes a Python function implemented using the Concrete [supported operation set](https://docs.zama.ai/concrete/getting-started/compatibility) and transforms it into an executable operation graph.
+The first step in the list above takes a Python function implemented using the Concrete [supported operation set](https://docs.lux.network/torus/getting-started/compatibility) and transforms it into an executable operation graph.
 
 The result of this single step of the compilation pipeline allows the:
 
 - execution of the op-graph, which includes TLUs, on clear non-encrypted data. This is not secure, but it is much faster than executing in FHE. This mode is useful for debugging, especially when looking for appropriate model hyper-parameters
 - verification of the maximum bit-width of the op-graph and the intermediary bit-widths of model layers, to evaluate their impact on FHE execution latency
 
-Simulation is enabled for all Concrete ML models once they are compiled as shown above. Obtaining the simulated predictions of the models is done by setting the `fhe="simulate"` argument to prediction methods:
+Simulation is enabled for all TorusML models once they are compiled as shown above. Obtaining the simulated predictions of the models is done by setting the `fhe="simulate"` argument to prediction methods:
 
 <!--pytest-codeblocks:skip-->
 
@@ -103,13 +103,13 @@ Moreover, the maximum accumulator bit-width is determined as follows:
 
 ## A simple Concrete example
 
-While Concrete ML hides away all the Concrete code that performs model inference, it can be useful to understand how Concrete code works. Here is a toy example for a simple linear regression model on integers to illustrate compilation concepts. Generally, it is recommended to use the [built-in models](../built-in-models/linear.md), which provide linear regression out of the box.
+While TorusML hides away all the Concrete code that performs model inference, it can be useful to understand how Concrete code works. Here is a toy example for a simple linear regression model on integers to illustrate compilation concepts. Generally, it is recommended to use the [built-in models](../built-in-models/linear.md), which provide linear regression out of the box.
 
 ```python
 import numpy
 from concrete.fhe import compiler
 
-# Assume Quantization has been applied and we are left with integers only. This is essentially the work of Concrete ML
+# Assume Quantization has been applied and we are left with integers only. This is essentially the work of TorusML
 
 # Some parameters (weight and bias) for our model taking a single feature
 w = [2]

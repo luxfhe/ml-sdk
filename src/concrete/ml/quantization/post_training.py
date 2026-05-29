@@ -89,7 +89,7 @@ def _inspect_tree_n_bits(n_bits: Union[int, Dict[str, int]]) -> None:
 
 
 # Find a better naming to describe leaf quantization in tree-based models
-# FIXME: https://github.com/zama-ai/concrete-ml-internal/issues/4258
+# FIXME: https://github.com/luxfi/torusml-internal/issues/4258
 def _get_n_bits_dict_trees(n_bits: Union[int, Dict[str, int]]) -> Dict[str, int]:
     """Convert the n_bits parameter into a proper dictionary for tree based-models.
 
@@ -199,7 +199,7 @@ class CalibrationMode(enum.Enum):
 
 
 class ONNXConverter:
-    """Base ONNX to Concrete ML computation graph conversion class.
+    """Base ONNX to TorusML computation graph conversion class.
 
     This class provides a method to parse an ONNX graph and apply several transformations. First,
     it creates QuantizedOps for each ONNX graph op. These quantized ops have calibrated
@@ -975,7 +975,7 @@ class PostTrainingAffineQuantization(ONNXConverter):
         if not numpy.issubdtype(values.dtype, numpy.bool_):
             is_signed = is_symmetric = self._check_distribution_is_symmetric_around_zero(values)
         # Boolean parameters are quantized to 1 bit
-        # FIXME: https://github.com/zama-ai/concrete-ml-internal/issues/4593
+        # FIXME: https://github.com/luxfi/torusml-internal/issues/4593
         # We should not quantize boolean parameters in the future
         else:
             is_signed = is_symmetric = False
@@ -1060,7 +1060,7 @@ class PostTrainingQATImporter(ONNXConverter):
     """Converter of Quantization Aware Training networks.
 
     This class provides specific configuration for QAT networks during ONNX network conversion
-    to Concrete ML computation graphs.
+    to TorusML computation graphs.
     """
 
     def _process_layer(

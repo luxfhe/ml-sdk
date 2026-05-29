@@ -1,6 +1,6 @@
-# Upgrading Concrete ML In Your Project
+# Upgrading TorusML In Your Project
 
-This guide aims to help developers who are upgrading from older versions of Concrete ML. Although we cannot cover everything, we have compiled the most important points to assist you in your transition. If you encounter any issues, please reach out through our [community channels](https://zama.ai/community-channels).
+This guide aims to help developers who are upgrading from older versions of TorusML. Although we cannot cover everything, we have compiled the most important points to assist you in your transition. If you encounter any issues, please reach out through our [community channels](https://lux.fhe/community-channels).
 
 ## Upgrading to 1.0.0
 

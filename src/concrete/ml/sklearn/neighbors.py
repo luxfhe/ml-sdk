@@ -66,7 +66,7 @@ class KNeighborsClassifier(SklearnKNeighborsClassifierMixin):
 
         metadata: Dict[str, Any] = {}
 
-        # Concrete ML
+        # TorusML
         metadata["n_bits"] = self.n_bits
         metadata["sklearn_model"] = self.sklearn_model
         metadata["_is_fitted"] = self._is_fitted
@@ -97,7 +97,7 @@ class KNeighborsClassifier(SklearnKNeighborsClassifierMixin):
         # Instantiate the model
         obj = cls(n_bits=metadata["n_bits"])
 
-        # Concrete ML
+        # TorusML
         obj.sklearn_model = metadata["sklearn_model"]
         obj._is_fitted = metadata["_is_fitted"]
         obj._is_compiled = metadata["_is_compiled"]
@@ -121,7 +121,7 @@ class KNeighborsClassifier(SklearnKNeighborsClassifierMixin):
         return obj
 
     # KNeighborsClassifier does not provide a predict_proba method for now
-    # FIXME: https://github.com/zama-ai/concrete-ml-internal/issues/3962
+    # FIXME: https://github.com/luxfi/torusml-internal/issues/3962
     def predict_proba(self, X: Data, fhe: Union[FheMode, str] = FheMode.DISABLE) -> numpy.ndarray:
         """Predict class probabilities.
 
@@ -129,7 +129,7 @@ class KNeighborsClassifier(SklearnKNeighborsClassifierMixin):
             X (Data): The input values to predict, as a Numpy array, Torch tensor, Pandas DataFrame
                 or List.
             fhe (Union[FheMode, str]): The mode to use for prediction.
-                Can be FheMode.DISABLE for Concrete ML Python inference,
+                Can be FheMode.DISABLE for TorusML Python inference,
                 FheMode.SIMULATE for FHE simulation and FheMode.EXECUTE for actual FHE execution.
                 Can also be the string representation of any of these values.
                 Default to FheMode.DISABLE.
@@ -144,7 +144,7 @@ class KNeighborsClassifier(SklearnKNeighborsClassifierMixin):
         )
 
     # KNeighborsClassifier does not provide a kneighbors method
-    # FIXME: https://github.com/zama-ai/concrete-ml-internal/issues/4080
+    # FIXME: https://github.com/luxfi/torusml-internal/issues/4080
     def kneighbors(self, X: Data) -> numpy.ndarray:
         """Return the knearest distances and their respective indices for each query point.
 

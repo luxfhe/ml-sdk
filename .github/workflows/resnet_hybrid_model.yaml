@@ -73,7 +73,7 @@ jobs:
     steps:
       - name: Start CPU instance
         id: start-instance
-        uses: zama-ai/slab-github-runner@79939325c3c429837c10d6041e4fd8589d328bac
+        uses: luxfhe/slab-github-runner@79939325c3c429837c10d6041e4fd8589d328bac
         with:
           mode: start
           github-token: ${{ secrets.SLAB_ACTION_TOKEN }}
@@ -169,7 +169,7 @@ jobs:
           -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
           -H "X-GitHub-Api-Version: 2022-11-28" \
           -o concrete-python.whl.zip \
-          https://api.github.com/repos/zama-ai/concrete/actions/artifacts/${{ github.event.inputs.alternative-cp-wheel-artifact-id }}/zip
+          https://api.github.com/repos/luxfi/torus/actions/artifacts/${{ github.event.inputs.alternative-cp-wheel-artifact-id }}/zip
 
       - name: Alternative Concrete Python Wheel Install
         if: github.event_name == 'workflow_dispatch' && github.event.inputs.alternative-cp-wheel-artifact-id != 'none'
@@ -184,7 +184,7 @@ jobs:
         with:
           persist-credentials: 'false'
           path: concrete
-          repository: zama-ai/concrete
+          repository: luxfi/torus
           ref: ${{ github.event.inputs.alternative-cp-branch }}
 
       - name: Alternative Concrete Python Branch Source Install
@@ -306,7 +306,7 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - name: Stop CPU instance
-        uses: zama-ai/slab-github-runner@79939325c3c429837c10d6041e4fd8589d328bac
+        uses: luxfhe/slab-github-runner@79939325c3c429837c10d6041e4fd8589d328bac
         with:
           mode: stop
           github-token: ${{ secrets.SLAB_ACTION_TOKEN }}

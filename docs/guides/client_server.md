@@ -1,6 +1,6 @@
 # Production Deployment
 
-This document explains the deployment workflow and the model serving pattern for deploying Fully Homomorphic Encryption machine learning models in a client/server setting using Concrete ML.
+This document explains the deployment workflow and the model serving pattern for deploying Fully Homomorphic Encryption machine learning models in a client/server setting using TorusML.
 
 ## Deployment
 
@@ -104,7 +104,7 @@ These objects are serialized into bytes to streamline the data transfer between 
 
 #### Ciphertext formats and keys
 
-Two types of ciphertext formats are [available in Concrete ML](../getting-started/concepts.md#ciphertext-formats) and both are available for deployment. To use the _TFHE-rs radix_ format, pass the `ciphertext_format` option to the compilation call as follows:
+Two types of ciphertext formats are [available in TorusML](../getting-started/concepts.md#ciphertext-formats) and both are available for deployment. To use the _TFHE-rs radix_ format, pass the `ciphertext_format` option to the compilation call as follows:
 
 <!--pytest-codeblocks:cont-->
 
@@ -137,7 +137,7 @@ encrypted_result = server.run(encrypted_data, serialized_evaluation_keys)
 result = client.deserialize_decrypt_dequantize(encrypted_result[0])
 ```
 
-In the example above, a second evaluation key is obtained in the `tfhers_evaluation_keys` variable. This key can be loaded by TFHE-rs Rust programs to perform further computation on the model output ciphertexts.
+In the example above, a second evaluation key is obtained in the `tfhers_evaluation_keys` variable. This key can be loaded by Lux-FHE Rust programs to perform further computation on the model output ciphertexts.
 
 ## Serving
 
@@ -156,7 +156,7 @@ The workflow contains the following steps:
 1. **Data decryption**: The client decrypts it using its private key.
 1. **Post-processing**: The client performs any necessary post-processing of the decrypted result as specified in `serialized_processing.json` (part of `client.zip`).
 
-The server-side implementation of a Concrete ML model is illustrated as follows:
+The server-side implementation of a TorusML model is illustrated as follows:
 
 ![](../figures/concretemlgraph2.jpg)
 

@@ -34,7 +34,7 @@ jobs:
 
       - name: Start instance
         id: start-gpu-machine
-        uses: zama-ai/slab-github-runner@79939325c3c429837c10d6041e4fd8589d328bac
+        uses: luxfhe/slab-github-runner@79939325c3c429837c10d6041e4fd8589d328bac
         with:
           mode: start
           github-token: ${{ secrets.SLAB_ACTION_TOKEN }}
@@ -86,7 +86,7 @@ jobs:
           source .venv/bin/activate
           CP_VERSION=$(pip freeze | grep concrete-python)
           pip uninstall -y concrete-python
-          pip install --extra-index-url https://pypi.zama.ai/gpu ${CP_VERSION}
+          pip install --extra-index-url https://pypi.lux.fhe/gpu ${CP_VERSION}
 
       - name: Refresh Notebooks
         run: |
@@ -122,7 +122,7 @@ jobs:
     steps:
       - name: Stop instance
         id: stop-instance
-        uses: zama-ai/slab-github-runner@79939325c3c429837c10d6041e4fd8589d328bac
+        uses: luxfhe/slab-github-runner@79939325c3c429837c10d6041e4fd8589d328bac
         with:
           mode: stop
           github-token: ${{ secrets.SLAB_ACTION_TOKEN }}
