@@ -1,4 +1,4 @@
-"""Tests lists of models in Concrete ML."""
+"""Tests lists of models in TorusML."""
 
 from concrete.ml.pytest.utils import MODELS_AND_DATASETS, UNIQUE_MODELS_AND_DATASETS
 from concrete.ml.sklearn import (
@@ -27,7 +27,7 @@ from concrete.ml.sklearn.xgb import XGBClassifier, XGBRegressor
 
 
 def test_get_sklearn_models():
-    """List all available models in Concrete ML."""
+    """List all available models in TorusML."""
     all_models = _get_sklearn_all_models()
     linear_models = _get_sklearn_linear_models()
     tree_models = _get_sklearn_tree_models()

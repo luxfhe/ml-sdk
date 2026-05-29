@@ -30,7 +30,7 @@ Using the maximum depth parameter of decision trees and tree-ensemble models str
 
 The `DecisionTreeClassifier`, `RandomForestClassifier`, and `XGBClassifier` support [Lux-FHE radix ciphertexts](../getting-started/concepts.md#ciphertext-formats) when `n_bits` is set to 8. The other tree-based models, or different `n_bits` configurations only support _Concrete_ ciphertexts.
 
-To compile a model to use _TFHE-rs ciphertexts_ as inputs and outputs, set `ciphertext_mode=CiphertextFormat.TFHE-RS` in the `compile` call.
+To compile a model to use _Lux-FHE ciphertexts_ as inputs and outputs, set `ciphertext_mode=CiphertextFormat.TFHE-RS` in the `compile` call.
 
 ## Pre-trained models
 

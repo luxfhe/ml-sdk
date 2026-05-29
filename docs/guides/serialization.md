@@ -1,6 +1,6 @@
 # Serializing Built-In Models
 
-This document explains how to serialize build-in models in Concrete ML.
+This document explains how to serialize build-in models in TorusML.
 
 ## Introduction
 
@@ -56,7 +56,7 @@ with dumped_model_path.open("w") as f:
     model.dump(f)
 ```
 
-Alternatively, Concrete ML provides two equivalent global functions:
+Alternatively, TorusML provides two equivalent global functions:
 
 <!--pytest-codeblocks:cont-->
 

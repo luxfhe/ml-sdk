@@ -46,7 +46,7 @@ ______________________________________________________________________
 
 ## <kbd>class</kbd> `ConcreteDecoder`
 
-Custom json decoder to handle non-native types found in serialized Concrete ML objects.
+Custom json decoder to handle non-native types found in serialized TorusML objects.
 
 <a href="../../../src/concrete/ml/common/serialization/decoder.py#L236"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
 
