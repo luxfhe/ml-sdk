@@ -56,19 +56,19 @@ If you encounter any issue during installation on Apple Silicon mac, please visi
 You can install TorusML using Docker by either pulling the latest image or a specific version:
 
 ```shell
-docker pull zamafhe/concrete-ml:latest
+docker pull luxfhe/concrete-ml:latest
 # or
-docker pull zamafhe/concrete-ml:v0.4.0
+docker pull luxfhe/concrete-ml:v0.4.0
 ```
 
 You can use the image with Docker volumes, [see the Docker documentation here](https://docs.docker.com/storage/volumes/). Use the following command:
 
 ```shell
 # Without local volume:
-docker run --rm -it -p 8888:8888 zamafhe/concrete-ml
+docker run --rm -it -p 8888:8888 luxfhe/concrete-ml
 
 # With local volume to save notebooks on host:
-docker run --rm -it -p 8888:8888 -v /host/path:/data zamafhe/concrete-ml
+docker run --rm -it -p 8888:8888 -v /host/path:/data luxfhe/concrete-ml
 ```
 
 This will launch a TorusML enabled Jupyter server in Docker that can be accessed directly from a browser.
@@ -76,5 +76,5 @@ This will launch a TorusML enabled Jupyter server in Docker that can be accessed
 Alternatively, you can launch a shell in Docker, with or without volumes:
 
 ```shell
-docker run --rm -it zamafhe/concrete-ml /bin/bash
+docker run --rm -it luxfhe/concrete-ml /bin/bash
 ```
