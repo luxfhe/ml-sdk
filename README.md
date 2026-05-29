@@ -89,7 +89,7 @@ TorusML can be installed on Kaggle ([see this question on the community for more
 #### Docker
 
 To install with Docker, pull the `concrete-ml` image as follows:
-`docker pull zamafhe/concrete-ml:latest`
+`docker pull luxfhe/concrete-ml:latest`
 
 #### Pip
 

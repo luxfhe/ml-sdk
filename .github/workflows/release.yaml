@@ -319,7 +319,7 @@ jobs:
         shell: bash
     env:
       PRIVATE_RELEASE_IMAGE_BASE: ghcr.io/luxfi/torusml
-      PUBLIC_RELEASE_IMAGE_BASE: zamafhe/concrete-ml
+      PUBLIC_RELEASE_IMAGE_BASE: luxfhe/concrete-ml
       PIP_INDEX_URL: ${{ secrets.PIP_INDEX_URL }}
       GIT_TAG: ${{ needs.release-checks.outputs.git_tag }}
       PROJECT_VERSION: ${{ needs.release-checks.outputs.project_version }}
@@ -527,7 +527,7 @@ jobs:
           cp ./script/actions_utils/RELEASE_TEMPLATE.md "${RELEASE_BODY_FILE}"
           {
             echo "Docker Image: ${PUBLIC_RELEASE_IMAGE_BASE}:${{ env.GIT_TAG }}";
-            echo "Docker Hub: https://hub.docker.com/r/zamafhe/concrete-ml/tags";
+            echo "Docker Hub: https://hub.docker.com/r/luxfhe/concrete-ml/tags";
             echo "pip: https://pypi.org/project/concrete-ml/${{ env.PROJECT_VERSION }}";
             echo "Documentation: https://docs.lux.network/torusml";
             echo "";
