@@ -16,7 +16,7 @@ ______________________________________________________________________
 loads(content: Union[str, bytes]) → Any
 ```
 
-Load any Concrete ML object that provide a `dump_dict` method.
+Load any TorusML object that provide a `dump_dict` method.
 
 **Arguments:**
 
@@ -36,7 +36,7 @@ ______________________________________________________________________
 load(file: Union[IO[str], IO[bytes]])
 ```
 
-Load any Concrete ML object that provide a `load_dict` method.
+Load any TorusML object that provide a `load_dict` method.
 
 **Arguments:**
 

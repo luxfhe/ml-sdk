@@ -241,7 +241,7 @@ jobs:
       # (src, codeblocks, ...) when some changes are detected in them. For example, if some
       # dependencies were changed, 'tests', 'determinism', 'codeblocks' and 'determinism' acronyms
       # will be affected. We use the license MD5 file for that because it is built on the
-      # poetry.lock as well as the Concrete Python version, which can be installed manually in the
+      # poetry.lock as well as the Torus Python version, which can be installed manually in the
       # makefile.
       # For codeblocks, 'make pytest_codeblocks' runs the `make_utils/pytest_codeblocks.sh` script,
       # which executes a find and grep command to find them. In the following section, we manually

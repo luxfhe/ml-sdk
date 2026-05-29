@@ -19,7 +19,7 @@ from concrete.ml.sklearn import DecisionTreeClassifier as ConcreteDecisionTreeCl
 
 
 def ml_check(args, keyring_dir_as_str):
-    """Test about Concrete ML functions"""
+    """Test about TorusML functions"""
 
     is_fast = args.fast
 

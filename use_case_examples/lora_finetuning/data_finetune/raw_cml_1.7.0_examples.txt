@@ -348,7 +348,7 @@ param_grid = {
     "max_depth": [2, 3],
     "n_estimators": [10, 20, 50],
 }
-# Instantiate GridSearchCV with the Concrete ML model
+# Instantiate GridSearchCV with the TorusML model
 grid_search = GridSearchCV(
     ConcreteXGBClassifier(),
     param_grid,
