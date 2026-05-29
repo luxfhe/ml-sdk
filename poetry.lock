@@ -836,32 +836,32 @@ traitlets = ">=4"
 test = ["pytest"]
 
 [[package]]
-name = "concrete-ml-extensions"
+name = "torus-ml-extensions"
 version = "0.1.9"
 description = "Private matrix multiplication library using fully homomorphic encryption"
 optional = false
 python-versions = ">=3.7"
 files = [
-    {file = "concrete_ml_extensions-0.1.9-cp310-cp310-macosx_10_12_x86_64.whl", hash = "sha256:9531fa4648f928927c9073b95500461f01e1c102dce37adedb9c8c1fc7c7f56a"},
-    {file = "concrete_ml_extensions-0.1.9-cp310-cp310-macosx_11_0_arm64.whl", hash = "sha256:9b4670fdc37881db6cf611aa231dab588a3ecf5f5fd41abc18b69640f622573d"},
-    {file = "concrete_ml_extensions-0.1.9-cp310-cp310-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:892934f658a81d93eca5f29b3e89b0c7ae2cde6e8422db158163ad459728092d"},
-    {file = "concrete_ml_extensions-0.1.9-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:9555dc615e0de0a7017040273d6a0e32b839981abb5ec764c9699372bd7dafb3"},
-    {file = "concrete_ml_extensions-0.1.9-cp311-cp311-macosx_10_12_x86_64.whl", hash = "sha256:7c216d48856524f0a72747a03524c4f185d1ec7056689e07de37d28a9011878e"},
-    {file = "concrete_ml_extensions-0.1.9-cp311-cp311-macosx_11_0_arm64.whl", hash = "sha256:694a0736b7f3e1870affd0f71ff4b8fbb32694ee171ca176b679ddb7fe21ff88"},
-    {file = "concrete_ml_extensions-0.1.9-cp311-cp311-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:5a88f608684317b10d0c120933ac0f777c4f5b444bc093fcaaf5a61e89764df7"},
-    {file = "concrete_ml_extensions-0.1.9-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:58198eb4316f5420f870af8e8922bf85a8833f8f34bcad43e43a5af9cea87617"},
-    {file = "concrete_ml_extensions-0.1.9-cp312-cp312-macosx_10_12_x86_64.whl", hash = "sha256:21f6aa84fab6e343cd0f226dce25c3122374801565556ca80ba308075fb865b7"},
-    {file = "concrete_ml_extensions-0.1.9-cp312-cp312-macosx_11_0_arm64.whl", hash = "sha256:8d5056de065c7f3c65e2661c6a9ea8a945da2205987c5aa0c415b640b5fbba35"},
-    {file = "concrete_ml_extensions-0.1.9-cp312-cp312-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:53f2ef47f37e02bfd316d85757c3c2b4189ef093177222fef1f04ffdce079737"},
-    {file = "concrete_ml_extensions-0.1.9-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:045e604a6fac27eb4148e5c5a66bce10a1520e56916a3ce7a5dc857065889b4c"},
-    {file = "concrete_ml_extensions-0.1.9-cp38-cp38-macosx_10_12_x86_64.whl", hash = "sha256:b40bc182fa08fea796432add35150a41d2db5f0c0e0850cac1efdbd8bae124a6"},
-    {file = "concrete_ml_extensions-0.1.9-cp38-cp38-macosx_11_0_arm64.whl", hash = "sha256:021b6bf7be8088e535e3b0fc0a3ac4ece72178def028a728d69bf92682ae59e7"},
-    {file = "concrete_ml_extensions-0.1.9-cp38-cp38-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:d245567a80b568482a82ba8767f16a741a25930ad8c8e7640741679195e1621c"},
-    {file = "concrete_ml_extensions-0.1.9-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:3339ce00f66018f9ce4949b11f6a38e5f578d34d360c5c3db49a417491d54fb4"},
-    {file = "concrete_ml_extensions-0.1.9-cp39-cp39-macosx_10_12_x86_64.whl", hash = "sha256:b223c1f3d00cd4edad99c3fdc8f207e9552881041fd527238ce589553fdcc796"},
-    {file = "concrete_ml_extensions-0.1.9-cp39-cp39-macosx_11_0_arm64.whl", hash = "sha256:69f2beaa3fb2b24b45671d39e0c3db7a00e7ecff7cd837c4938154e21d70719b"},
-    {file = "concrete_ml_extensions-0.1.9-cp39-cp39-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:2420a4f8a47e5ad8c39b04605b92219ea68b4a47ef966c570e6ace6ff5036cb7"},
-    {file = "concrete_ml_extensions-0.1.9-cp39-cp39-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:c16d4a21dd47def34b6df2c3648ff6d2704f031762b7700561da5bd9464116af"},
+    {file = "torus_ml_extensions-0.1.9-cp310-cp310-macosx_10_12_x86_64.whl", hash = "sha256:9531fa4648f928927c9073b95500461f01e1c102dce37adedb9c8c1fc7c7f56a"},
+    {file = "torus_ml_extensions-0.1.9-cp310-cp310-macosx_11_0_arm64.whl", hash = "sha256:9b4670fdc37881db6cf611aa231dab588a3ecf5f5fd41abc18b69640f622573d"},
+    {file = "torus_ml_extensions-0.1.9-cp310-cp310-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:892934f658a81d93eca5f29b3e89b0c7ae2cde6e8422db158163ad459728092d"},
+    {file = "torus_ml_extensions-0.1.9-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:9555dc615e0de0a7017040273d6a0e32b839981abb5ec764c9699372bd7dafb3"},
+    {file = "torus_ml_extensions-0.1.9-cp311-cp311-macosx_10_12_x86_64.whl", hash = "sha256:7c216d48856524f0a72747a03524c4f185d1ec7056689e07de37d28a9011878e"},
+    {file = "torus_ml_extensions-0.1.9-cp311-cp311-macosx_11_0_arm64.whl", hash = "sha256:694a0736b7f3e1870affd0f71ff4b8fbb32694ee171ca176b679ddb7fe21ff88"},
+    {file = "torus_ml_extensions-0.1.9-cp311-cp311-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:5a88f608684317b10d0c120933ac0f777c4f5b444bc093fcaaf5a61e89764df7"},
+    {file = "torus_ml_extensions-0.1.9-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:58198eb4316f5420f870af8e8922bf85a8833f8f34bcad43e43a5af9cea87617"},
+    {file = "torus_ml_extensions-0.1.9-cp312-cp312-macosx_10_12_x86_64.whl", hash = "sha256:21f6aa84fab6e343cd0f226dce25c3122374801565556ca80ba308075fb865b7"},
+    {file = "torus_ml_extensions-0.1.9-cp312-cp312-macosx_11_0_arm64.whl", hash = "sha256:8d5056de065c7f3c65e2661c6a9ea8a945da2205987c5aa0c415b640b5fbba35"},
+    {file = "torus_ml_extensions-0.1.9-cp312-cp312-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:53f2ef47f37e02bfd316d85757c3c2b4189ef093177222fef1f04ffdce079737"},
+    {file = "torus_ml_extensions-0.1.9-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:045e604a6fac27eb4148e5c5a66bce10a1520e56916a3ce7a5dc857065889b4c"},
+    {file = "torus_ml_extensions-0.1.9-cp38-cp38-macosx_10_12_x86_64.whl", hash = "sha256:b40bc182fa08fea796432add35150a41d2db5f0c0e0850cac1efdbd8bae124a6"},
+    {file = "torus_ml_extensions-0.1.9-cp38-cp38-macosx_11_0_arm64.whl", hash = "sha256:021b6bf7be8088e535e3b0fc0a3ac4ece72178def028a728d69bf92682ae59e7"},
+    {file = "torus_ml_extensions-0.1.9-cp38-cp38-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:d245567a80b568482a82ba8767f16a741a25930ad8c8e7640741679195e1621c"},
+    {file = "torus_ml_extensions-0.1.9-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:3339ce00f66018f9ce4949b11f6a38e5f578d34d360c5c3db49a417491d54fb4"},
+    {file = "torus_ml_extensions-0.1.9-cp39-cp39-macosx_10_12_x86_64.whl", hash = "sha256:b223c1f3d00cd4edad99c3fdc8f207e9552881041fd527238ce589553fdcc796"},
+    {file = "torus_ml_extensions-0.1.9-cp39-cp39-macosx_11_0_arm64.whl", hash = "sha256:69f2beaa3fb2b24b45671d39e0c3db7a00e7ecff7cd837c4938154e21d70719b"},
+    {file = "torus_ml_extensions-0.1.9-cp39-cp39-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:2420a4f8a47e5ad8c39b04605b92219ea68b4a47ef966c570e6ace6ff5036cb7"},
+    {file = "torus_ml_extensions-0.1.9-cp39-cp39-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:c16d4a21dd47def34b6df2c3648ff6d2704f031762b7700561da5bd9464116af"},
 ]
 
 [[package]]
@@ -903,8 +903,8 @@ full = ["matplotlib (>=3.7)", "pillow (>=10.2)", "pygraphviz (>=1.11)"]
 
 [package.source]
 type = "legacy"
-url = "https://pypi.zama.ai/cpu"
-reference = "zama-pypi-cpu"
+url = "https://pypi.lux.ai/cpu"
+reference = "luxfhe-pypi-cpu"
 
 [[package]]
 name = "contourpy"
