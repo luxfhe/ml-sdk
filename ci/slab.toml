@@ -1,4 +1,4 @@
-# This file is parsed by Slab Zama's CI bot to handle AWS EC2 resources.
+# This file is parsed by Slab Lux Industries' CI bot to handle AWS EC2 resources.
 [profile.m6i]
 region = "eu-west-3"
 image_id = "ami-0be33931bc16f7a85"

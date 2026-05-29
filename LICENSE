@@ -1,7 +1,15 @@
 BSD 3-Clause Clear License
 
-Copyright © 2024 ZAMA.
+Copyright © 2024 ZAMA. (original work)
+Copyright © 2026 Lux Industries Inc. (modifications: rebranding to
+TorusML, Python module rename to torus.fhe / torus.ml, kernel routing
+through luxcpp/gpu + lux-private/gpu-kernels).
 All rights reserved.
+
+The original copyright is retained per BSD-3-Clause-Clear §1-§2. Per §3,
+no name of ZAMA or its contributors is used to endorse this derived
+work; the derived product is marketed exclusively under the Lux
+Industries and TorusML brands.
 
 Redistribution and use in source and binary forms, with or without modification,
 are permitted provided that the following conditions are met:

@@ -81,7 +81,7 @@ Take a model in torch or ONNX, turn it to numpy, quantize its inputs / weights /
 
 - <b>`model`</b> (Union\[torch.nn.Module, onnx.ModelProto\]):  The model to quantize, either in torch or  in ONNX.
 - <b>`torch_inputset`</b> (Dataset):  the calibration input-set, can contain either torch  tensors or numpy.ndarray
-- <b>`import_qat`</b> (bool):  Flag to signal that the network being imported contains quantizers in  in its computation graph and that Concrete ML should not re-quantize it
+- <b>`import_qat`</b> (bool):  Flag to signal that the network being imported contains quantizers in  in its computation graph and that TorusML should not re-quantize it
 - <b>`n_bits`</b>:  the number of bits for the quantization
 - <b>`rounding_threshold_bits`</b> (Union\[None, int, Dict\[str, Union\[str, int\]\]\]):  Defines precision  rounding for model accumulators. Accepts None, an int, or a dict.  The dict can specify 'method' (fhe.Exactness.EXACT or fhe.Exactness.APPROXIMATE)  and 'n_bits' ('auto' or int)
 - <b>`reduce_sum_copy`</b> (bool):  if the inputs of QuantizedReduceSum should be copied to avoid  bit-width propagation
@@ -176,7 +176,7 @@ Take a model in torch, turn it to numpy, quantize its inputs / weights / outputs
 
 - <b>`onnx_model`</b> (onnx.ModelProto):  the model to quantize
 - <b>`torch_inputset`</b> (Dataset):  the calibration input-set, can contain either torch  tensors or numpy.ndarray.
-- <b>`import_qat`</b> (bool):  Flag to signal that the network being imported contains quantizers in  in its computation graph and that Concrete ML should not re-quantize it.
+- <b>`import_qat`</b> (bool):  Flag to signal that the network being imported contains quantizers in  in its computation graph and that TorusML should not re-quantize it.
 - <b>`configuration`</b> (Configuration):  Configuration object to use  during compilation
 - <b>`artifacts`</b> (DebugArtifacts):  Artifacts object to fill  during compilation
 - <b>`show_mlir`</b> (bool):  if set, the MLIR produced by the converter and which is going  to be sent to the compiler backend is shown on the screen, e.g., for debugging or demo
@@ -228,7 +228,7 @@ The torch_model parameter is a subclass of torch.nn.Module that uses quantized o
 
 - <b>`torch_model`</b> (torch.nn.Module):  the model to quantize
 - <b>`torch_inputset`</b> (Dataset):  the calibration input-set, can contain either torch  tensors or numpy.ndarray.
-- <b>`n_bits`</b> (Optional\[Union\[int, dict\]):  the number of bits for the quantization. By default,  for most models, a value of None should be given, which instructs Concrete ML to use the  bit-widths configured using Brevitas quantization options. For some networks, that  perform a non-linear operation on an input on an output, if None is given, a default  value of 8 bits is used for the input/output quantization. For such models the user can  also specify a dictionary with model_inputs/model_outputs keys to override  the 8-bit default or a single integer for both values.
+- <b>`n_bits`</b> (Optional\[Union\[int, dict\]):  the number of bits for the quantization. By default,  for most models, a value of None should be given, which instructs TorusML to use the  bit-widths configured using Brevitas quantization options. For some networks, that  perform a non-linear operation on an input on an output, if None is given, a default  value of 8 bits is used for the input/output quantization. For such models the user can  also specify a dictionary with model_inputs/model_outputs keys to override  the 8-bit default or a single integer for both values.
 - <b>`configuration`</b> (Configuration):  Configuration object to use  during compilation
 - <b>`artifacts`</b> (DebugArtifacts):  Artifacts object to fill  during compilation
 - <b>`show_mlir`</b> (bool):  if set, the MLIR produced by the converter and which is going  to be sent to the compiler backend is shown on the screen, e.g., for debugging or demo

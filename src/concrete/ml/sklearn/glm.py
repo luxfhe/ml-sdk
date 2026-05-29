@@ -83,7 +83,7 @@ class _GeneralizedLinearRegressor(SklearnLinearRegressorMixin):
 
         metadata: Dict[str, Any] = {}
 
-        # Concrete ML
+        # TorusML
         metadata["n_bits"] = self.n_bits
         metadata["sklearn_model"] = self.sklearn_model
         metadata["_is_fitted"] = self._is_fitted
@@ -113,7 +113,7 @@ class _GeneralizedLinearRegressor(SklearnLinearRegressorMixin):
         # Instantiate the model
         obj = cls(n_bits=metadata["n_bits"])
 
-        # Concrete ML
+        # TorusML
         obj.n_bits = metadata["n_bits"]
         obj.sklearn_model = metadata["sklearn_model"]
         obj.onnx_model_ = metadata["onnx_model_"]
@@ -139,10 +139,10 @@ class _GeneralizedLinearRegressor(SklearnLinearRegressorMixin):
 
     def get_sklearn_params(self, deep: bool = True) -> dict:
         # Here, the `get_params` method is the `BaseEstimator.get_params` method from scikit-learn
-        # FIXME: https://github.com/zama-ai/concrete-ml-internal/issues/3373
+        # FIXME: https://github.com/luxfhe/torus-ml-internal/issues/3373
         params = super().get_params(deep=deep)  # type: ignore[misc]
 
-        # Remove the parameters added by Concrete ML
+        # Remove the parameters added by TorusML
         params.pop("n_bits", None)
         # Remove sklearn 1.5 parameter when using sklearn 1.1
         if "1.1." in sklearn.__version__:
@@ -327,7 +327,7 @@ class TweedieRegressor(_GeneralizedLinearRegressor):
 
         metadata: Dict[str, Any] = {}
 
-        # Concrete ML
+        # TorusML
         metadata["n_bits"] = self.n_bits
         metadata["sklearn_model"] = self.sklearn_model
         metadata["_is_fitted"] = self._is_fitted
@@ -358,7 +358,7 @@ class TweedieRegressor(_GeneralizedLinearRegressor):
         # Instantiate the model
         obj = cls(n_bits=metadata["n_bits"])
 
-        # Concrete ML
+        # TorusML
         obj.sklearn_model = metadata["sklearn_model"]
         obj.onnx_model_ = metadata["onnx_model_"]
         obj._is_fitted = metadata["_is_fitted"]

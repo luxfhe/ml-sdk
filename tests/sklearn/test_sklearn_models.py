@@ -9,7 +9,7 @@ Generic tests test:
   - grid search
   - hyper parameters
   - offset
-  - correctness (with accuracy and r2) of Concrete ML vs scikit-learn in clear
+  - correctness (with accuracy and r2) of TorusML vs scikit-learn in clear
   - correctness tests with fhe = "disable", "simulate" and "execute", depending on
   limits (see N_BITS_THRESHOLD* constants) which are either due to execution time or limits of
   the compiler or minimal number of bits for precise computations
@@ -96,7 +96,7 @@ N_BITS_THRESHOLD_FOR_SKLEARN_CORRECTNESS_TESTS = 26
 N_BITS_THRESHOLD_TO_FORCE_EXECUTION_NOT_IN_FHE = 17
 
 # If n_bits >= N_BITS_THRESHOLD_FOR_SKLEARN_EQUIVALENCE_TESTS, we check that the two models
-# returned by fit_benchmark (the Concrete ML model and the scikit-learn model) are equivalent
+# returned by fit_benchmark (the TorusML model and the scikit-learn model) are equivalent
 N_BITS_THRESHOLD_FOR_SKLEARN_EQUIVALENCE_TESTS = 16
 
 # There is a risk that no cryptographic parameters are available for high precision linear
@@ -164,7 +164,7 @@ def get_n_bits_non_correctness(model_class):
     """Get the number of bits to use for non correctness related tests."""
 
     # KNN can only be compiled with small quantization bit numbers for now
-    # FIXME: https://github.com/zama-ai/concrete-ml-internal/issues/3979
+    # FIXME: https://github.com/luxfhe/torus-ml-internal/issues/3979
     if get_model_name(model_class) == "KNeighborsClassifier":
         n_bits = 2
     else:
@@ -191,7 +191,7 @@ def check_correctness_with_sklearn(
     fhe="disable",
     hyper_parameters=None,
 ):
-    """Check that Concrete ML and scikit-learn models are 'equivalent'."""
+    """Check that TorusML and scikit-learn models are 'equivalent'."""
 
     if hyper_parameters is None:
         hyper_parameters = {}
@@ -206,7 +206,7 @@ def check_correctness_with_sklearn(
 
     # If the model is a classifier
     # KNeighborsClassifier does not provide a predict_proba method for now
-    # FIXME: https://github.com/zama-ai/concrete-ml-internal/issues/3962
+    # FIXME: https://github.com/luxfhe/torus-ml-internal/issues/3962
     if (
         is_classifier_or_partial_classifier(model)
         and get_model_name(model_class) != "KNeighborsClassifier"
@@ -219,7 +219,7 @@ def check_correctness_with_sklearn(
 
             assert y_scores_sklearn.shape == y_scores_fhe.shape, (
                 "Method 'decision_function' outputs different shapes between scikit-learn and "
-                f"Concrete ML in FHE (fhe={fhe})"
+                f"TorusML in FHE (fhe={fhe})"
             )
 
             check_r2_score(y_scores_sklearn, y_scores_fhe, acceptance_score=acceptance_r2score)
@@ -234,7 +234,7 @@ def check_correctness_with_sklearn(
 
             assert y_proba_sklearn.shape == y_proba_fhe.shape, (
                 "Method 'decision_function' outputs different shapes between scikit-learn and "
-                f"Concrete ML in FHE (fhe={fhe})"
+                f"TorusML in FHE (fhe={fhe})"
             )
             check_r2_score(y_proba_sklearn, y_proba_fhe, acceptance_score=acceptance_r2score)
 
@@ -244,7 +244,7 @@ def check_correctness_with_sklearn(
 
     assert y_pred_sklearn.shape == y_pred_fhe.shape, (
         "Method 'predict' outputs different shapes between scikit-learn and "
-        f"Concrete ML in FHE (fhe={fhe})"
+        f"TorusML in FHE (fhe={fhe})"
     )
 
     # If the model is a classifier, check that accuracies are similar
@@ -263,7 +263,7 @@ def check_double_fit(model_class, n_bits, x_1, x_2, y_1, y_2):
     """Check double fit."""
 
     if get_model_name(model_class) == "KNeighborsClassifier":
-        # FIXME: https://github.com/zama-ai/concrete-ml-internal/issues/4014
+        # FIXME: https://github.com/luxfhe/torus-ml-internal/issues/4014
         pytest.skip(
             "Given that KNN is not accurate and the test data-set is small"
             "the y_pred1 and y_pred2 can be equal."
@@ -373,11 +373,11 @@ def check_serialization_dump_load(model, x, use_dump_method):
         temp_dump.seek(0)
         serialized_model_dict: Dict = json.load(temp_dump)
 
-        # Load the model from the file using Concrete ML's method
+        # Load the model from the file using TorusML's method
         temp_dump.seek(0)
         loaded_model = load(file=temp_dump)
 
-        # Dump the loaded model into the file using Concrete ML's method
+        # Dump the loaded model into the file using TorusML's method
         temp_dump.seek(0)
         temp_dump.truncate(0)
         if use_dump_method:
@@ -420,7 +420,7 @@ def check_serialization_dump_load(model, x, use_dump_method):
         assert numpy.array_equal(y_pred_sklearn_model, y_pred_loaded_sklearn_model)
 
         # Add a test to check that graphs before and after the serialization are identical
-        # FIME: https://github.com/zama-ai/concrete-ml-internal/issues/4175
+        # FIME: https://github.com/luxfhe/torus-ml-internal/issues/4175
 
 
 def check_serialization_dumps_loads(model, x, use_dump_method):
@@ -476,7 +476,7 @@ def check_serialization_dumps_loads(model, x, use_dump_method):
     assert numpy.array_equal(y_pred_sklearn_model, y_pred_loaded_sklearn_model)
 
     # Add a test to check that graphs before and after the serialization are identical
-    # FIME: https://github.com/zama-ai/concrete-ml-internal/issues/4175
+    # FIME: https://github.com/luxfhe/torus-ml-internal/issues/4175
 
 
 def check_offset(model_class, n_bits, x, y):
@@ -502,7 +502,7 @@ def check_inference_methods(model, model_class, x, check_float_array_equal):
     # method accessible by anyone, without having any FHE implementation. As this could create some
     # confusion, a NotImplementedError is raised. This issue could be fixed by making these classes
     # not inherit from skorch.
-    # FIXME: https://github.com/zama-ai/concrete-ml-internal/issues/3373
+    # FIXME: https://github.com/luxfhe/torus-ml-internal/issues/3373
     if get_model_name(model) == "NeuralNetRegressor":
         with pytest.raises(
             NotImplementedError,
@@ -514,7 +514,7 @@ def check_inference_methods(model, model_class, x, check_float_array_equal):
             model.predict_proba(x)
 
     # KNeighborsClassifier does not provide a predict_proba method for now
-    # FIXME: https://github.com/zama-ai/concrete-ml-internal/issues/3962
+    # FIXME: https://github.com/luxfhe/torus-ml-internal/issues/3962
     elif get_model_name(model) == "KNeighborsClassifier":
         with pytest.raises(
             NotImplementedError,
@@ -526,7 +526,7 @@ def check_inference_methods(model, model_class, x, check_float_array_equal):
             model.predict_proba(x)
 
         # KNeighborsClassifier does not provide a kneighbors method
-        # FIXME: https://github.com/zama-ai/concrete-ml-internal/issues/4080
+        # FIXME: https://github.com/luxfhe/torus-ml-internal/issues/4080
         with pytest.raises(
             NotImplementedError,
             match=(
@@ -551,7 +551,7 @@ def check_inference_methods(model, model_class, x, check_float_array_equal):
             y_scores_simulated = model.decision_function(x, fhe="simulate")
 
             assert y_scores_clear.shape == y_scores_simulated.shape, (
-                "Method 'decision_function' from Concrete ML outputs different shapes when executed"
+                "Method 'decision_function' from TorusML outputs different shapes when executed"
                 "in the clear and with simulation."
             )
             check_float_array_equal(y_scores_clear, y_scores_simulated)
@@ -563,7 +563,7 @@ def check_inference_methods(model, model_class, x, check_float_array_equal):
             y_proba_simulated = model.predict_proba(x, fhe="simulate")
 
             assert y_proba_clear.shape == y_proba_simulated.shape, (
-                "Method 'predict_proba' from Concrete ML outputs different shapes when executed"
+                "Method 'predict_proba' from TorusML outputs different shapes when executed"
                 "in the clear and with simulation."
             )
             check_float_array_equal(y_proba_clear, y_proba_simulated)
@@ -574,7 +574,7 @@ def check_inference_methods(model, model_class, x, check_float_array_equal):
         y_pred_simulated = model.predict(x, fhe="simulate")
 
         assert y_pred_clear.shape == y_pred_simulated.shape, (
-            "Method 'predict' from Concrete ML outputs different shapes when executed in the clear "
+            "Method 'predict' from TorusML outputs different shapes when executed in the clear "
             "and with simulation."
         )
         check_float_array_equal(y_pred_clear, y_pred_simulated)
@@ -628,7 +628,7 @@ def check_separated_inference(model, fhe_circuit, x, check_float_array_equal):
     y_pred = model.post_processing(y_pred)
 
     # KNeighborsClassifier does not provide a predict_proba method for now
-    # FIXME: https://github.com/zama-ai/concrete-ml-internal/issues/3962
+    # FIXME: https://github.com/luxfhe/torus-ml-internal/issues/3962
     if (
         is_classifier_or_partial_classifier(model)
         and get_model_name(model) != "KNeighborsClassifier"
@@ -705,7 +705,7 @@ def check_input_support(model_class, n_bits, default_configuration, x, y, input_
 
     # Similarly, we test `predict_proba` for classifiers
     # KNeighborsClassifier does not provide a predict_proba method for now
-    # FIXME: https://github.com/zama-ai/concrete-ml-internal/issues/3962
+    # FIXME: https://github.com/luxfhe/torus-ml-internal/issues/3962
     if (
         is_classifier_or_partial_classifier(model)
         and get_model_name(model_class) != "KNeighborsClassifier"
@@ -719,7 +719,7 @@ def check_input_support(model_class, n_bits, default_configuration, x, y, input_
 
     # Similarly, we test `predict_proba` for classifiers
     # KNeighborsClassifier does not provide a predict_proba method for now
-    # FIXME: https://github.com/zama-ai/concrete-ml-internal/issues/3962
+    # FIXME: https://github.com/luxfhe/torus-ml-internal/issues/3962
     if (
         is_classifier_or_partial_classifier(model)
         and get_model_name(model_class) != "KNeighborsClassifier"
@@ -797,7 +797,7 @@ def check_grid_search(model_class, x, y, scoring):
         warnings.simplefilter("ignore", category=UndefinedMetricWarning)
 
         # KNeighborsClassifier does not provide a predict_proba method for now
-        # FIXME: https://github.com/zama-ai/concrete-ml-internal/issues/3962
+        # FIXME: https://github.com/luxfhe/torus-ml-internal/issues/3962
         if get_model_name(model_class) == "KNeighborsClassifier" and scoring in [
             "roc_auc",
             "average_precision",
@@ -932,7 +932,7 @@ def check_fitted_compiled_error_raises(model_class, n_bits, x, y):
             model.predict(x)
 
     # KNeighborsClassifier does not provide a predict_proba method for now
-    # FIXME: https://github.com/zama-ai/concrete-ml-internal/issues/3962
+    # FIXME: https://github.com/luxfhe/torus-ml-internal/issues/3962
     if (
         is_classifier_or_partial_classifier(model_class)
         and get_model_name(model) != "KNeighborsClassifier"
@@ -997,7 +997,7 @@ def check_class_mapping(model, x, y):
     # Compute the predictions
     y_pred_shuffled = model.predict(x)
 
-    # Check that the mapping of labels was kept by Concrete ML
+    # Check that the mapping of labels was kept by TorusML
     numpy.array_equal(classes[y_pred], y_pred_shuffled)
 
 
@@ -1010,7 +1010,7 @@ def check_exposition_of_sklearn_attributes(model, x, y):
     # not fitted
     with pytest.raises(
         AttributeError,
-        match=f".* {training_attribute} cannot be found in the Concrete ML.*",
+        match=f".* {training_attribute} cannot be found in the TorusML.*",
     ):
         getattr(model, training_attribute)
 
@@ -1022,15 +1022,15 @@ def check_exposition_of_sklearn_attributes(model, x, y):
                 model, name
             ), f"Training attribute {name} is not exposed in {get_model_name(model)} model."
 
-    wrong_training_attribute_1 = "concrete_ml"
+    wrong_training_attribute_1 = "torus_ml"
     # Check that accessing an unknown attribute properly raises an Attribute error
     with pytest.raises(
         AttributeError,
-        match=f".* {wrong_training_attribute_1} cannot be found in the Concrete ML.*",
+        match=f".* {wrong_training_attribute_1} cannot be found in the TorusML.*",
     ):
         getattr(model, wrong_training_attribute_1)
 
-    wrong_training_attribute_2 = "concrete_ml_"
+    wrong_training_attribute_2 = "torus_ml_"
     # Check that accessing an unknown attribute that almost follows scikit-learn's naming
     # convention for training attributes by ending with two underscores properly raises an
     # Attribute error
@@ -1040,13 +1040,13 @@ def check_exposition_of_sklearn_attributes(model, x, y):
     ):
         getattr(model, wrong_training_attribute_2)
 
-    wrong_training_attribute_3 = "concrete_ml__"
+    wrong_training_attribute_3 = "torus_ml__"
     # Check that accessing an unknown attribute that almost follows scikit-learn's naming
     # convention for training attributes by ending with two underscores properly raises an
     # Attribute error
     with pytest.raises(
         AttributeError,
-        match=f".* {wrong_training_attribute_3} cannot be found in the Concrete ML.*",
+        match=f".* {wrong_training_attribute_3} cannot be found in the TorusML.*",
     ):
         getattr(model, wrong_training_attribute_3)
 
@@ -1059,19 +1059,19 @@ def check_exposition_structural_methods_decision_trees(model, x, y):
     # not fitted
     with pytest.raises(
         AttributeError,
-        match=".* get_n_leaves cannot be found in the Concrete ML.*",
+        match=".* get_n_leaves cannot be found in the TorusML.*",
     ):
         model.get_n_leaves()
 
     with pytest.raises(
         AttributeError,
-        match=".* get_depth cannot be found in the Concrete ML.*",
+        match=".* get_depth cannot be found in the TorusML.*",
     ):
         model.get_depth()
 
     model.fit(x, y)
 
-    # Get the number of leaves from both the scikit-learn and Concrete ML models
+    # Get the number of leaves from both the scikit-learn and TorusML models
     concrete_value = model.get_n_leaves()
     sklearn_value = model.sklearn_model.get_n_leaves()
 
@@ -1082,7 +1082,7 @@ def check_exposition_structural_methods_decision_trees(model, x, y):
         f"scikit-learn equivalent. Got {concrete_value}, expected {sklearn_value}."
     )
 
-    # Get the tree depth from both the scikit-learn and Concrete ML models
+    # Get the tree depth from both the scikit-learn and TorusML models
     concrete_value = model.get_depth()
     sklearn_value = model.sklearn_model.get_depth()
 
@@ -1121,7 +1121,7 @@ def test_load_fitted_sklearn_tree_models(
 
         assert issubclass(model_class, BaseTreeEstimatorMixin)
         concrete_model = instantiate_model_generic(model_class, n_bits=min(N_BITS_REGULAR_BUILDS))
-        # Fit the model and retrieve both the Concrete ML and the scikit-learn models
+        # Fit the model and retrieve both the TorusML and the scikit-learn models
         with warnings.catch_warnings():
             # Sometimes, we miss convergence, which is not a problem for our test
             warnings.simplefilter("ignore", category=ConvergenceWarning)
@@ -1140,7 +1140,7 @@ def test_load_fitted_sklearn_tree_models(
                 (max_n_bits, 1e-1, 1e-7),
                 (reasonable_n_bits, 6e-2, 6e-2),
             ]:
-                # Load a Concrete ML model from the fitted scikit-learn one
+                # Load a TorusML model from the fitted scikit-learn one
                 loaded_from_threshold = model_class.from_sklearn_model(
                     sklearn_model,
                     X=None,
@@ -1153,7 +1153,7 @@ def test_load_fitted_sklearn_tree_models(
                     n_bits=n_bits,
                 )
 
-                # Compile both the initial Concrete ML model and the loaded one
+                # Compile both the initial TorusML model and the loaded one
                 concrete_model.compile(x)
                 mode = "disable"
                 if n_bits <= reasonable_n_bits:
@@ -1232,7 +1232,7 @@ def test_load_fitted_sklearn_tree_models(
                 (max_n_bits, 0.8, 1e-5),
                 (reasonable_n_bits, 1.8, 1.8),
             ]:
-                # Load a Concrete ML model from the fitted scikit-learn one
+                # Load a TorusML model from the fitted scikit-learn one
                 loaded_from_threshold = model_class.from_sklearn_model(
                     sklearn_model,
                     n_bits=n_bits,
@@ -1244,7 +1244,7 @@ def test_load_fitted_sklearn_tree_models(
                     n_bits=n_bits,
                 )
 
-                # Compile both the initial Concrete ML model and the loaded one
+                # Compile both the initial TorusML model and the loaded one
                 concrete_model.compile(x)
                 mode = "disable"
                 if n_bits <= reasonable_n_bits:
@@ -1289,7 +1289,7 @@ def test_load_fitted_sklearn_tree_models(
                         f"({value=}>={sklearn_tolerance=})"
                     )
 
-                # Compare with Concrete ML
+                # Compare with TorusML
                 with subtests.test(
                     msg="Regression CML vs Threshold", n_bits=n_bits, tolerance=cml_tolerance
                 ):
@@ -1311,20 +1311,20 @@ def check_load_fitted_sklearn_linear_models(model_class, n_bits, x, y, check_flo
 
     model = instantiate_model_generic(model_class, n_bits=n_bits)
 
-    # Fit the model and retrieve both the Concrete ML and the scikit-learn models
+    # Fit the model and retrieve both the TorusML and the scikit-learn models
     concrete_model, sklearn_model = model.fit_benchmark(x, y)
 
     # This step is needed in order to handle partial classes
     model_class = get_model_class(model_class)
 
-    # Load a Concrete ML model from the fitted scikit-learn one
+    # Load a TorusML model from the fitted scikit-learn one
     loaded_concrete_model = model_class.from_sklearn_model(
         sklearn_model,
         X=x,
         n_bits=n_bits,
     )
 
-    # Compile both the initial Concrete ML model and the loaded one
+    # Compile both the initial TorusML model and the loaded one
     concrete_model.compile(x)
     loaded_concrete_model.compile(x)
 
@@ -1347,7 +1347,7 @@ def check_rounding_consistency(
     predict_method,
     metric,
 ):
-    """Test that Concrete ML without and with rounding are 'equivalent'."""
+    """Test that TorusML without and with rounding are 'equivalent'."""
 
     # Check that rounding is enabled
     assert os.environ.get("TREES_USE_ROUNDING") == "1", "'TREES_USE_ROUNDING' is not enabled"
@@ -1384,7 +1384,7 @@ def check_rounding_consistency(
 
         # Check that the maximum bit-width of the circuit with rounding is at most:
         # maximum bit-width (of the circuit without rounding) + 2
-        # FIXME: https://github.com/zama-ai/concrete-ml-internal/issues/4178
+        # FIXME: https://github.com/luxfhe/torus-ml-internal/issues/4178
 
 
 def check_sum_for_tree_based_models(
@@ -1394,7 +1394,7 @@ def check_sum_for_tree_based_models(
     predict_method,
     is_weekly_option,
 ):
-    """Test that Concrete ML without and with FHE sum are 'equivalent'."""
+    """Test that TorusML without and with FHE sum are 'equivalent'."""
 
     fhe_samples = 5
     fhe_test = get_random_samples(x, n_sample=fhe_samples)
@@ -1454,7 +1454,7 @@ def test_correctness_with_sklearn(
     is_weekly_option,
     verbose=True,
 ):
-    """Test that Concrete ML and scikit-learn models are 'equivalent'."""
+    """Test that TorusML and scikit-learn models are 'equivalent'."""
 
     n_bits = N_BITS_THRESHOLD_FOR_SKLEARN_CORRECTNESS_TESTS
 
@@ -1706,7 +1706,7 @@ def test_inference_methods(
 
 # Pipeline test sometimes fails with RandomForest models. This bug may come from Hummingbird
 # and needs further investigations
-# FIXME: https://github.com/zama-ai/concrete-ml-internal/issues/2779
+# FIXME: https://github.com/luxfhe/torus-ml-internal/issues/2779
 @pytest.mark.parametrize(
     "model_class, parameters",
     get_sklearn_all_models_and_datasets(ignore="RandomForest"),
@@ -1773,7 +1773,7 @@ def test_predict_correctness(
     """Test prediction correctness between clear quantized and FHE simulation or execution."""
 
     # KNN can only be compiled with small quantization bit numbers for now
-    # FIXME: https://github.com/zama-ai/concrete-ml-internal/issues/3979
+    # FIXME: https://github.com/luxfhe/torus-ml-internal/issues/3979
     if n_bits > 5 and get_model_name(model_class) == "KNeighborsClassifier":
         pytest.skip("KNeighborsClassifier models can only run with 5 bits at most.")
 
@@ -1817,7 +1817,7 @@ def test_separated_inference(
     n_bits = min(N_BITS_REGULAR_BUILDS)
 
     # KNN can only be compiled with small quantization bit numbers for now
-    # FIXME: https://github.com/zama-ai/concrete-ml-internal/issues/3979
+    # FIXME: https://github.com/luxfhe/torus-ml-internal/issues/3979
     if n_bits > 5 and get_model_name(model_class) == "KNeighborsClassifier":
         pytest.skip("KNeighborsClassifier models can only run with 5 bits at most.")
 
@@ -1862,7 +1862,7 @@ def test_fitted_compiled_error_raises(
     check_fitted_compiled_error_raises(model_class, n_bits, x, y)
 
 
-# FIXME: https://github.com/zama-ai/concrete-ml-internal/issues/4169
+# FIXME: https://github.com/luxfhe/torus-ml-internal/issues/4169
 @pytest.mark.flaky
 @pytest.mark.parametrize("model_class, parameters", MODELS_AND_DATASETS)
 @pytest.mark.parametrize(
@@ -1898,7 +1898,7 @@ def test_p_error_simulation(
         """Detect divergence between simulated/FHE execution and clear run."""
 
         # KNeighborsClassifier does not provide a predict_proba method for now
-        # FIXME: https://github.com/zama-ai/concrete-ml-internal/issues/3962
+        # FIXME: https://github.com/luxfhe/torus-ml-internal/issues/3962
         predict_function = (
             model.predict_proba
             if is_classifier_or_partial_classifier(model)
@@ -1921,7 +1921,7 @@ def test_p_error_simulation(
 
     # Skip the following if model is linear
     # Simulation and FHE differs with very high p_error on leveled circuit
-    # FIXME https://github.com/zama-ai/concrete-ml-internal/issues/4343
+    # FIXME https://github.com/luxfhe/torus-ml-internal/issues/4343
     if is_linear_model:
         pytest.skip("Skipping test for linear models")
 
@@ -2063,7 +2063,7 @@ def test_linear_models_have_no_tlu(
 
 # This test does not check rounding at level 2
 # Additional tests for this purpose should be added in future updates
-# FIXME: https://github.com/zama-ai/concrete-ml-internal/issues/4179
+# FIXME: https://github.com/luxfhe/torus-ml-internal/issues/4179
 @pytest.mark.parametrize("model_class, parameters", get_sklearn_tree_models_and_datasets())
 @pytest.mark.parametrize("n_bits", [2, 5, 8])
 def test_rounding_consistency_for_regular_models(
@@ -2075,7 +2075,7 @@ def test_rounding_consistency_for_regular_models(
     is_weekly_option,
     verbose=True,
 ):
-    """Test that Concrete ML without and with rounding are 'equivalent'."""
+    """Test that TorusML without and with rounding are 'equivalent'."""
 
     if verbose:
         print("Run check_rounding_consistency")
@@ -2139,7 +2139,7 @@ def test_sum_for_tree_based_models(
 
 
 # This test should be extended to all built-in models.
-# FIXME: https://github.com/zama-ai/concrete-ml-internal/issues/4234
+# FIXME: https://github.com/luxfhe/torus-ml-internal/issues/4234
 @pytest.mark.parametrize(
     "n_bits, error_message",
     [
@@ -2168,7 +2168,7 @@ def test_invalid_n_bits_setting(model_class, n_bits, error_message):
 
 
 # This test should be extended to all built-in models.
-# FIXME: https://github.com/zama-ai/concrete-ml-internal/issues/4234
+# FIXME: https://github.com/luxfhe/torus-ml-internal/issues/4234
 @pytest.mark.parametrize("n_bits", [5, {"op_inputs": 5}, {"op_inputs": 2, "op_leaves": 1}])
 @pytest.mark.parametrize("model_class, parameters", get_sklearn_tree_models_and_datasets())
 def test_valid_n_bits_setting(
@@ -2230,7 +2230,7 @@ def test_error_raise_unsupported_pandas_values(model_class, bad_value, expected_
 
 
 # Add QNNs in this test
-# FIXME: https://github.com/zama-ai/concrete-ml-internal/issues/4436
+# FIXME: https://github.com/luxfhe/torus-ml-internal/issues/4436
 @pytest.mark.parametrize(
     "model_class, parameters",
     get_sklearn_linear_models_and_datasets()
@@ -2242,12 +2242,12 @@ def test_initialization_variables_and_defaults_match(
 ):
     """Test CML models init parameters and default values vs scikit-learn models.
 
-    Concrete ML currently implements sklearn 1.4 API so skip this test of the
+    TorusML currently implements sklearn 1.4 API so skip this test of the
     sklearn version differs.
     """
     if "1.1." in sklearn.__version__:
         pytest.skip(
-            "Concrete ML currently implements sklearn 1.5 API"
+            "TorusML currently implements sklearn 1.5 API"
             f" skipping this test on version {sklearn.__version__}"
         )
 
@@ -2380,7 +2380,7 @@ def test_xgb_serialization_errors(model_class, param, error_message):
 )
 @pytest.mark.parametrize("n_bits", [4, 8, 12])
 def test_tfhers_inputs_outputs_trees(model_class, parameters, n_bits, load_data, get_device):
-    """Check that 8b tree-based classifiers work with TFHE-rs inputs/outputs."""
+    """Check that 8b tree-based classifiers work with Lux-FHE inputs/outputs."""
 
     x, y = get_dataset(model_class, parameters, n_bits, load_data, True)
 
@@ -2399,22 +2399,22 @@ def test_tfhers_inputs_outputs_trees(model_class, parameters, n_bits, load_data,
         return
 
     # Check that we can first compile to Concrete, then to
-    # TFHE-rs input/outputs then to concrete again
+    # Lux-FHE input/outputs then to concrete again
     model.compile(x, device=get_device)
 
     y_pred_concrete = model.predict(fhe_test_data, fhe="execute")
 
     model.compile(x, ciphertext_format=CiphertextFormat.TFHE_RS, device=get_device)
 
-    with pytest.raises(ValueError, match="Simulation with TFHE-rs ciphertext.*"):
+    with pytest.raises(ValueError, match="Simulation with Lux-FHE ciphertext.*"):
         model.predict(fhe_test_data, fhe="simulate")
 
-    # Run the model in FHE for TFHE-rs inputs/outputs
+    # Run the model in FHE for Lux-FHE inputs/outputs
     y_pred_tfhers = model.predict(fhe_test_data, fhe="execute")
 
     model.compile(x, device=get_device)
 
-    # Check correctness with TFHE-rs inputs/outputs
+    # Check correctness with Lux-FHE inputs/outputs
     assert numpy.all(y_pred_tfhers == y_pred_concrete)
 
 
@@ -2422,7 +2422,7 @@ def test_tfhers_inputs_outputs_trees(model_class, parameters, n_bits, load_data,
     "model_class, parameters", get_sklearn_tree_models_and_datasets(True, True)
 )
 def test_tfhers_trees_non_8b_not_working(model_class, parameters, load_data):
-    """Check that non-supported configs for tree models for TFHE-rs inputs raise an exception."""
+    """Check that non-supported configs for tree models for Lux-FHE inputs raise an exception."""
     n_bits = 4
 
     x, y = get_dataset(model_class, parameters, n_bits, load_data, True)
@@ -2438,7 +2438,7 @@ def test_tfhers_trees_non_8b_not_working(model_class, parameters, load_data):
     get_sklearn_linear_models_and_datasets() + get_sklearn_neural_net_models_and_datasets(),
 )
 def test_tfhers_cml_models_not_working(model_class, parameters, load_data):
-    """Check that models that don't support TFHE-rs inputs raise an exception."""
+    """Check that models that don't support Lux-FHE inputs raise an exception."""
     n_bits = 8
 
     x, y = get_dataset(model_class, parameters, n_bits, load_data, True)

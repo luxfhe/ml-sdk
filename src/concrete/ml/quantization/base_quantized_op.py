@@ -201,7 +201,7 @@ class QuantizedOp:
         if self.can_fuse():
             self.input_quant_opts.is_qat = False
 
-        # Set the operation's name, which is used to identify this op in the Concrete ML op graph
+        # Set the operation's name, which is used to identify this op in the TorusML op graph
         # with respect to the ONNX graph (usually we keep use ONNX op name)
         self.op_instance_name = op_instance_name
 
@@ -1059,7 +1059,7 @@ class QuantizedMixingOp(QuantizedOp, is_utility=True):
 
         if lsbs_value > 0:
             # Rounding to low bit-width with approximate can cause issues with overflow protection
-            # FIXME: https://github.com/zama-ai/concrete-ml-internal/issues/4345
+            # FIXME: https://github.com/luxfhe/torus-ml-internal/issues/4345
             x = fhe.round_bit_pattern(
                 x, lsbs_to_remove=lsbs_value, exactness=exactness, overflow_protection=False
             )

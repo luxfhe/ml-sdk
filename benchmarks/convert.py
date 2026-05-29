@@ -107,7 +107,7 @@ def convert_to_new_postgres(
         experiment_representation["experiment_metadata"] = {
             "model_name": model_name,
             "dataset_name": dataset_name,
-            "cml_version": version("concrete-ml"),
+            "cml_version": version("torus-ml"),
             "cnp_version": version("concrete-python"),
         }
         experiment_representation["experiment_metadata"].update(hyper_args)

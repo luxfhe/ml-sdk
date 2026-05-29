@@ -37,7 +37,7 @@ except ImportError:  # For backward compatibility purposes
         except ImportError:
             from concrete.fhe import MAXIMUM_BIT_WIDTH as MAXIMUM_TLU_BIT_WIDTH
 
-# Hack to import all models currently implemented in Concrete ML
+# Hack to import all models currently implemented in TorusML
 # (but that might not be implemented in targeted version)
 # Since we can make no assumption about which models are
 # imported and that one model not existing would cause the
@@ -401,7 +401,7 @@ def train_and_test_regressor(
         time_current = time.time()
         print("Fit")
 
-    # We call fit_benchmark to both fit our Concrete ML regressors but also to return the sklearn
+    # We call fit_benchmark to both fit our TorusML regressors but also to return the sklearn
     # one that we would use if we were not using FHE. This regressor will be our baseline
     concrete_regressor, sklearn_regressor = concrete_regressor.fit_benchmark(x_train, y_train)
 
@@ -564,10 +564,10 @@ def train_and_test_classifier(
         time_current = time.time()
         print("Fit")
 
-    # Concrete ML classifiers follow the sklearn Estimator API but train differently than those
+    # TorusML classifiers follow the sklearn Estimator API but train differently than those
     # from sklearn. Our classifiers must work with quantized data or must determine data quantizers
     # after training the underlying sklearn classifier.
-    # We call fit_benchmark to both fit our Concrete ML classifiers but also to return the sklearn
+    # We call fit_benchmark to both fit our TorusML classifiers but also to return the sklearn
     # one that we would use if we were not using FHE. This classifier will be our baseline
     concrete_classifier, sklearn_classifier = concrete_classifier.fit_benchmark(x_train, y_train)
 
@@ -767,7 +767,7 @@ def benchmark_name_generator(
 # Add tests:
 # - Bijection between both functions
 # - The functions support all models
-# FIXME: https://github.com/zama-ai/concrete-ml-internal/issues/1866
+# FIXME: https://github.com/luxfhe/torus-ml-internal/issues/1866
 
 
 # pylint: disable-next=too-many-branches, redefined-outer-name

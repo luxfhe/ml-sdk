@@ -59,7 +59,7 @@ def run_hybrid_llm_test(
     if not transformers_installed:
         monkeypatch.setitem(sys.modules, "transformers", None)
     if not glwe_backend_installed:
-        monkeypatch.setitem(sys.modules, "concrete_ml_extensions", None)
+        monkeypatch.setitem(sys.modules, "torus_ml_extensions", None)
 
     # Initialize and compile the hybrid model
     hybrid_model = HybridFHEModel(model, module_names)

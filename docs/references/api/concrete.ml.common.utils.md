@@ -99,7 +99,7 @@ manage_parameters_for_pbs_errors(
 
 Return (p_error, global_p_error) that we want to give to Concrete.
 
-The returned (p_error, global_p_error) depends on user's parameters and the way we want to manage defaults in Concrete ML, which may be different from the way defaults are managed in Concrete.
+The returned (p_error, global_p_error) depends on user's parameters and the way we want to manage defaults in TorusML, which may be different from the way defaults are managed in Concrete.
 
 Principle:
 \- if none are set, we set global_p_error to a default value of our choice

@@ -20,7 +20,7 @@ import brevitas.nn as qnn
 
 # pylint: disable-next=ungrouped-imports
 import concrete.fhe as cp
-import concrete_ml_extensions as fhext
+import torus_ml_extensions as fhext
 import numpy
 import onnx
 import sklearn
@@ -122,7 +122,7 @@ os.environ["TREES_USE_ROUNDING"] = os.environ.get("TREES_USE_ROUNDING", "1")
 
 # pylint: disable=too-many-public-methods, too-many-instance-attributes
 class BaseEstimator:
-    """Base class for all estimators in Concrete ML.
+    """Base class for all estimators in TorusML.
 
     This class does not inherit from sklearn.base.BaseEstimator as it creates some conflicts
     with skorch in QuantizedTorchEstimatorMixin's subclasses (more specifically, the `get_params`
@@ -201,9 +201,9 @@ class BaseEstimator:
 
         # If the attribute ends with a single underscore and can be found in the underlying
         # scikit-learn model (once fitted), retrieve its value
-        # Enable non-training attributes as well once Concrete ML models initialize their
+        # Enable non-training attributes as well once TorusML models initialize their
         # underlying scikit-learn models during initialization
-        # FIXME: https://github.com/zama-ai/concrete-ml-internal/issues/3373
+        # FIXME: https://github.com/luxfhe/torus-ml-internal/issues/3373
         if (
             attr.endswith("_")
             and not attr.endswith("__")
@@ -212,7 +212,7 @@ class BaseEstimator:
             return getattr(self.sklearn_model, attr)
 
         raise AttributeError(
-            f"Attribute {attr} cannot be found in the Concrete ML {self.__class__.__name__} object "
+            f"Attribute {attr} cannot be found in the TorusML {self.__class__.__name__} object "
             f"and is not a training attribute from the underlying scikit-learn "
             f"{self.sklearn_model_class} one. If the attribute is meant to represent one from that "
             f"latter, please check that the model is properly fitted."
@@ -221,7 +221,7 @@ class BaseEstimator:
     # We need to specifically call the default __setattr__ method as QNN models still inherit from
     # skorch, which provides its own __setattr__ implementation and creates a cyclic loop
     # with __getattr__. Removing this inheritance once and for all should fix the issue
-    # FIXME: https://github.com/zama-ai/concrete-ml-internal/issues/3373
+    # FIXME: https://github.com/luxfhe/torus-ml-internal/issues/3373
     def __setattr__(self, name: str, value: Any):
         """Set the value as a model attribute.
 
@@ -285,7 +285,7 @@ class BaseEstimator:
 
         The FHE circuit combines computational graph, mlir, client and server into a single object.
         More information available in Concrete documentation
-        (https://docs.zama.ai/concrete/get-started/terminology)
+        (https://docs.luxfhe.com/torus/get-started/terminology)
         Is None if the model is not fitted.
 
         Returns:
@@ -351,7 +351,7 @@ class BaseEstimator:
     def get_sklearn_params(self, deep: bool = True) -> dict:
         """Get parameters for this estimator.
 
-        This method is used to instantiate a scikit-learn model using the Concrete ML model's
+        This method is used to instantiate a scikit-learn model using the TorusML model's
         parameters. It does not override scikit-learn's existing `get_params` method in order to
         not break its implementation of `set_params`.
 
@@ -365,11 +365,11 @@ class BaseEstimator:
         # Here, the `get_params` method is the `BaseEstimator.get_params` method from scikit-learn,
         # which will become available once a subclass inherits from it. We therefore disable both
         # pylint and mypy as this behavior is expected
-        # FIXME: https://github.com/zama-ai/concrete-ml-internal/issues/3373
+        # FIXME: https://github.com/luxfhe/torus-ml-internal/issues/3373
         # pylint: disable-next=no-member
         params = super().get_params(deep=deep)  # type: ignore[misc]
 
-        # Remove the n_bits parameters as this attribute is added by Concrete ML
+        # Remove the n_bits parameters as this attribute is added by TorusML
         params.pop("n_bits", None)
 
         return params
@@ -394,7 +394,7 @@ class BaseEstimator:
         # Initialize the underlying scikit-learn model if it has not already been done or if
         # `warm_start` is set to False (for neural networks)
         # This model should be directly initialized in the model's __init__ method instead
-        # FIXME: https://github.com/zama-ai/concrete-ml-internal/issues/3373
+        # FIXME: https://github.com/luxfhe/torus-ml-internal/issues/3373
         if self.sklearn_model is None or not getattr(self, "warm_start", False):
             # Retrieve the init parameters
             params = self.get_sklearn_params()
@@ -434,7 +434,7 @@ class BaseEstimator:
         random_state: Optional[int] = None,
         **fit_parameters,
     ):
-        """Fit both the Concrete ML and its equivalent float estimators.
+        """Fit both the TorusML and its equivalent float estimators.
 
         Args:
             X (Data): The training data, as a Numpy array, Torch tensor, Pandas DataFrame or List.
@@ -444,7 +444,7 @@ class BaseEstimator:
             **fit_parameters: Keyword arguments to pass to the float estimator's fit method.
 
         Returns:
-            The Concrete ML and float equivalent fitted estimators.
+            The TorusML and float equivalent fitted estimators.
         """
 
         # Retrieve sklearn's init parameters
@@ -468,12 +468,12 @@ class BaseEstimator:
         # Train the scikit-learn model
         sklearn_model.fit(X, y, **fit_parameters)
 
-        # Update the Concrete ML model's parameters
+        # Update the TorusML model's parameters
         # Disable mypy attribute definition errors as this attribute is expected to be
         # initialized once the model inherits from skorch
         self.set_params(n_bits=self.n_bits, **params)  # type: ignore[attr-defined]
 
-        # Train the Concrete ML model
+        # Train the TorusML model
         self.fit(X, y, **fit_parameters)
 
         return self, sklearn_model
@@ -558,9 +558,9 @@ class BaseEstimator:
             configuration (Optional[Configuration]): Options to use for compilation. Default
                 to None.
             ciphertext_format (CiphertextFormat): The format of input/output ciphertexts. Can
-                be one of "concrete" or "tfhe-rs". When using tfhe-rs the model's
+                be one of "concrete" or "Lux-FHE". When using Lux-FHE the model's
                 latency will be lower because of the necessary conversion between
-                tfhe-rs and concrete. Using tfhe-rs allows you to use fhEVM ciphertexts.
+                Lux-FHE and concrete. Using Lux-FHE allows you to use TorusEVM ciphertexts.
             artifacts (Optional[DebugArtifacts]): Artifacts information about the compilation
                 process to store for debugging. Default to None.
             show_mlir (bool): Indicate if the MLIR graph should be printed during compilation.
@@ -620,7 +620,7 @@ class BaseEstimator:
                 and is_classifier_or_partial_classifier(self)
                 and self.input_quantizers[0].n_bits == 8,
                 (
-                    "TFHE-rs ciphertext inputs/outputs is only "
+                    "Lux-FHE ciphertext inputs/outputs is only "
                     "supported for 8-bit tree-based classifiers: "
                     "DecisionTreeClassifier, RandomForestClassifier, XGBClassifier"
                 ),
@@ -648,7 +648,7 @@ class BaseEstimator:
             )
             is_signed = self.input_quantizers[0].is_signed
 
-            # Get the default crypto-parmas to use with TFHE-rs
+            # Get the default crypto-parmas to use with Lux-FHE
             crypto_params = json.loads(fhext.get_crypto_params_radix())  # pylint: disable=no-member
 
             # FIXME: better handle the bitwidth here
@@ -659,7 +659,7 @@ class BaseEstimator:
             dtype = partial(tfhers.TFHERSInteger, dtype_spec)
             inputset = (dtype(v) for v in inputset)
 
-            # TFHE-rs uses 132-bit security by default
+            # Lux-FHE uses 132-bit security by default
             if configuration is None:
                 configuration = cp.Configuration()
             configuration.security_level = (
@@ -772,7 +772,7 @@ class BaseEstimator:
             X (Data): The input values to predict, as a Numpy array, Torch tensor, Pandas DataFrame
                 or List.
             fhe (Union[FheMode, str]): The mode to use for prediction.
-                Can be FheMode.DISABLE for Concrete ML Python inference,
+                Can be FheMode.DISABLE for TorusML Python inference,
                 FheMode.SIMULATE for FHE simulation and FheMode.EXECUTE for actual FHE execution.
                 Can also be the string representation of any of these values.
                 Default to FheMode.DISABLE.
@@ -820,7 +820,7 @@ class BaseEstimator:
             if fhe == "simulate":
                 if self.ciphertext_format == CiphertextFormat.TFHE_RS:
                     raise ValueError(
-                        "Simulation with TFHE-rs ciphertext inputs/outputs is not yet implemented"
+                        "Simulation with Lux-FHE ciphertext inputs/outputs is not yet implemented"
                     )
 
                 is_crt_encoding = self.fhe_circuit.statistics["packing_key_switch_count"] != 0
@@ -828,7 +828,7 @@ class BaseEstimator:
                 # If the virtual library method should be used
                 # For now, use the virtual library when simulating
                 # circuits that use CRT  encoding because the official simulation is too slow
-                # FIXME: https://github.com/zama-ai/concrete-ml-internal/issues/4391
+                # FIXME: https://github.com/luxfhe/torus-ml-internal/issues/4391
                 if USE_OLD_VL or is_crt_encoding:
                     predict_method = partial(
                         self.fhe_circuit.graph, p_error=self.fhe_circuit.p_error
@@ -896,7 +896,7 @@ class BaseEstimator:
 # methods are implemented and we need to disable pylint from checking that
 # pylint: disable-next=abstract-method
 class BaseClassifier(BaseEstimator):
-    """Base class for linear and tree-based classifiers in Concrete ML.
+    """Base class for linear and tree-based classifiers in TorusML.
 
     This class inherits from BaseEstimator and modifies some of its methods in order to align them
     with classifier behaviors. This notably include applying a sigmoid/softmax post-processing to
@@ -904,7 +904,7 @@ class BaseClassifier(BaseEstimator):
     """
 
     # Remove in our next release major release
-    # FIXME: https://github.com/zama-ai/concrete-ml-internal/issues/3994
+    # FIXME: https://github.com/luxfhe/torus-ml-internal/issues/3994
     @property
     def target_classes_(self) -> Optional[numpy.ndarray]:  # pragma: no cover
         """Get the model's classes.
@@ -924,7 +924,7 @@ class BaseClassifier(BaseEstimator):
         return self.classes_
 
     # Remove in our next release major release
-    # FIXME: https://github.com/zama-ai/concrete-ml-internal/issues/3994
+    # FIXME: https://github.com/luxfhe/torus-ml-internal/issues/3994
     @property
     def n_classes_(self) -> int:  # pragma: no cover
         """Get the model's number of classes.
@@ -958,7 +958,7 @@ class BaseClassifier(BaseEstimator):
         assert_true(len(classes) > 1, "You must provide at least 2 classes in y.")
 
         # Change to composition in order to avoid diamond inheritance and indirect super() calls
-        # FIXME: https://github.com/zama-ai/concrete-ml-internal/issues/3249
+        # FIXME: https://github.com/luxfhe/torus-ml-internal/issues/3249
         return super().fit(X, y, **fit_parameters)  # type: ignore[safe-super]
 
     def predict_proba(self, X: Data, fhe: Union[FheMode, str] = FheMode.DISABLE) -> numpy.ndarray:
@@ -968,7 +968,7 @@ class BaseClassifier(BaseEstimator):
             X (Data): The input values to predict, as a Numpy array, Torch tensor, Pandas DataFrame
                 or List.
             fhe (Union[FheMode, str]): The mode to use for prediction.
-                Can be FheMode.DISABLE for Concrete ML Python inference,
+                Can be FheMode.DISABLE for TorusML Python inference,
                 FheMode.SIMULATE for FHE simulation and FheMode.EXECUTE for actual FHE execution.
                 Can also be the string representation of any of these values.
                 Default to FheMode.DISABLE.
@@ -1015,7 +1015,7 @@ class BaseClassifier(BaseEstimator):
 # Pylint complains that this method does not override the `dump_dict` and `load_dict` methods. This
 # is expected as the QuantizedTorchEstimatorMixin class is not supposed to be used as such. This
 # disable could probably be removed when refactoring the serialization of models
-# FIXME: https://github.com/zama-ai/concrete-ml-internal/issues/3250
+# FIXME: https://github.com/luxfhe/torus-ml-internal/issues/3250
 # pylint: disable-next=abstract-method,too-many-instance-attributes
 class QuantizedTorchEstimatorMixin(BaseEstimator):
     """Mixin that provides quantization for a torch module and follows the Estimator API."""
@@ -1099,7 +1099,7 @@ class QuantizedTorchEstimatorMixin(BaseEstimator):
         # Here, the `get_params` method is the `NeuralNet.get_params` method from skorch, which
         # will become available once a subclass inherits from it. We therefore disable both pylint
         # and mypy as this behavior is expected
-        # FIXME: https://github.com/zama-ai/concrete-ml-internal/issues/3373
+        # FIXME: https://github.com/luxfhe/torus-ml-internal/issues/3373
         # pylint: disable-next=no-member
         params = super().get_params(deep)  # type: ignore[misc]
 
@@ -1118,7 +1118,7 @@ class QuantizedTorchEstimatorMixin(BaseEstimator):
         # Here, the `get_params` method is the `NeuralNet.get_params` method from skorch, which
         # will become available once a subclass inherits from it. We therefore disable both pylint
         # and mypy as this behavior is expected
-        # FIXME: https://github.com/zama-ai/concrete-ml-internal/issues/3373
+        # FIXME: https://github.com/luxfhe/torus-ml-internal/issues/3373
         # pylint: disable-next=no-member
         params = super().get_params(deep=deep)  # type: ignore[misc]
 
@@ -1302,7 +1302,7 @@ class QuantizedTorchEstimatorMixin(BaseEstimator):
             **fit_parameters: Keyword arguments to pass to skorch's fit method.
 
         Returns:
-            The Concrete ML and equivalent skorch fitted estimators.
+            The TorusML and equivalent skorch fitted estimators.
         """
 
         assert (
@@ -1369,7 +1369,7 @@ class QuantizedTorchEstimatorMixin(BaseEstimator):
         assert_true(
             ciphertext_format == CiphertextFormat.CONCRETE,
             (
-                "TFHE-rs ciphertext inputs/outputs is only "
+                "Lux-FHE ciphertext inputs/outputs is only "
                 "supported for 8-bit tree-based classifiers: "
                 "DecisionTreeClassifier, RandomForestClassifier, XGBClassifier"
             ),
@@ -1475,10 +1475,10 @@ class QuantizedTorchEstimatorMixin(BaseEstimator):
         # Enable pruning again, this time with structured pruning
         pruned_model.base_module.enable_pruning()
 
-        # The .module_ was initialized manually, prevent .fit (for both skorch and Concrete ML)
+        # The .module_ was initialized manually, prevent .fit (for both skorch and TorusML)
         # from creating a new one
         # Setting both attributes could be avoided by initializing `sklearn_model` in __init__
-        # # FIXME: https://github.com/zama-ai/concrete-ml-internal/issues/3373
+        # # FIXME: https://github.com/luxfhe/torus-ml-internal/issues/3373
         pruned_model.warm_start = True
         pruned_model.sklearn_model.warm_start = True
 
@@ -1572,7 +1572,7 @@ class BaseTreeEstimatorMixin(BaseEstimator, sklearn.base.BaseEstimator, ABC):
 
         # Get the onnx model, all operations needed to load it properly will be done on it.
         n_features = model.n_features_in_
-        # FIXME: https://github.com/zama-ai/concrete-ml-internal/issues/4545
+        # FIXME: https://github.com/luxfhe/torus-ml-internal/issues/4545
         # Execute with 2 example for efficiency in large data scenarios to prevent slowdown
         # but also to work around the HB export issue.
         dummy_input = numpy.zeros((2, n_features))
@@ -1762,7 +1762,7 @@ class BaseTreeEstimatorMixin(BaseEstimator, sklearn.base.BaseEstimator, ABC):
     def get_sklearn_params(self, deep: bool = True) -> dict:
         """Get parameters for this estimator.
 
-        This method is used to instantiate a scikit-learn model using the Concrete ML model's
+        This method is used to instantiate a scikit-learn model using the TorusML model's
         parameters. It does not override scikit-learn's existing `get_params` method in order to
         not break its implementation of `set_params`.
 
@@ -1881,17 +1881,17 @@ class SklearnLinearModelMixin(BaseEstimator, sklearn.base.BaseEstimator, ABC):
         # Ensure compatibility for both sklearn 1.1 and >=1.5
         # This parameter was removed in 1.5. If this package is installed
         # with sklearn 1.1 which has it, then remove it when
-        # instantiating the 1.5 API compatible Concrete ML model
+        # instantiating the 1.5 API compatible TorusML model
         init_params.pop("normalize", None)
 
-        # Instantiate the Concrete ML model and update initialization parameters
-        # This update is necessary as we currently store scikit-learn attributes in Concrete ML
+        # Instantiate the TorusML model and update initialization parameters
+        # This update is necessary as we currently store scikit-learn attributes in TorusML
         # classes during initialization (for example: link or power attributes in GLMs)
         # Without it, these attributes will have default values instead of the ones used by the
         # scikit-learn models
-        # This should be fixed once Concrete ML models initialize their underlying scikit-learn
+        # This should be fixed once TorusML models initialize their underlying scikit-learn
         # models during initialization
-        # FIXME: https://github.com/zama-ai/concrete-ml-internal/issues/3373
+        # FIXME: https://github.com/luxfhe/torus-ml-internal/issues/3373
         model = cls(n_bits=n_bits, **init_params)
 
         # Update the underlying scikit-learn model with the given fitted one
@@ -2112,7 +2112,7 @@ class SklearnLinearClassifierMixin(
             X (Data): The input values to predict, as a Numpy array, Torch tensor, Pandas DataFrame
                 or List.
             fhe (Union[FheMode, str]): The mode to use for prediction.
-                Can be FheMode.DISABLE for Concrete ML Python inference,
+                Can be FheMode.DISABLE for TorusML Python inference,
                 FheMode.SIMULATE for FHE simulation and FheMode.EXECUTE for actual FHE execution.
                 Can also be the string representation of any of these values.
                 Default to FheMode.DISABLE.
@@ -2154,7 +2154,7 @@ class SklearnSGDRegressorMixin(SklearnLinearRegressorMixin):
     """
 
     # Remove once Hummingbird supports SGDRegressor
-    # FIXME: https://github.com/zama-ai/concrete-ml-internal/issues/4100
+    # FIXME: https://github.com/luxfhe/torus-ml-internal/issues/4100
     def _set_onnx_model(self, test_input: numpy.ndarray) -> None:
         """Retrieve the model's ONNX graph using Hummingbird conversion.
 
@@ -2186,7 +2186,7 @@ class SklearnSGDClassifierMixin(SklearnLinearClassifierMixin):
     """
 
     # Remove once Hummingbird supports SGDClassifier
-    # FIXME: https://github.com/zama-ai/concrete-ml-internal/issues/4100
+    # FIXME: https://github.com/luxfhe/torus-ml-internal/issues/4100
     def _set_onnx_model(self, test_input: numpy.ndarray) -> None:
         """Retrieve the model's ONNX graph using Hummingbird conversion.
 
@@ -2572,7 +2572,7 @@ class SklearnKNeighborsMixin(BaseEstimator, sklearn.base.BaseEstimator, ABC):
             X (Data): The input values to predict, as a Numpy array, Torch tensor, Pandas DataFrame
                 or List.
             fhe (Union[FheMode, str]): The mode to use for prediction.
-                Can be FheMode.DISABLE for Concrete ML Python inference,
+                Can be FheMode.DISABLE for TorusML Python inference,
                 FheMode.SIMULATE for FHE simulation and FheMode.EXECUTE for actual FHE execution.
                 Can also be the string representation of any of these values.
                 Default to FheMode.DISABLE.

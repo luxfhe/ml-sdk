@@ -18,7 +18,7 @@ ______________________________________________________________________
 
 ## <kbd>class</kbd> `BaseEstimator`
 
-Base class for all estimators in Concrete ML.
+Base class for all estimators in TorusML.
 
 This class does not inherit from sklearn.base.BaseEstimator as it creates some conflicts with skorch in QuantizedTorchEstimatorMixin's subclasses (more specifically, the `get_params` method is not properly inherited).
 
@@ -44,7 +44,7 @@ ______________________________________________________________________
 
 Get the FHE circuit.
 
-The FHE circuit combines computational graph, mlir, client and server into a single object. More information available in Concrete documentation (https://docs.zama.ai/concrete/get-started/terminology) Is None if the model is not fitted.
+The FHE circuit combines computational graph, mlir, client and server into a single object. More information available in Concrete documentation (https://docs.luxfhe.com/torus/get-started/terminology) Is None if the model is not fitted.
 
 **Returns:**
 
@@ -140,7 +140,7 @@ Compile the model.
 
 - <b>`X`</b> (Data):  A representative set of input values used for building cryptographic  parameters, as a Numpy array, Torch tensor, Pandas DataFrame or List. This is  usually the training data-set or a sub-set of it.
 - <b>`configuration`</b> (Optional\[Configuration\]):  Options to use for compilation. Default  to None.
-- <b>`ciphertext_format`</b> (CiphertextFormat):  The format of input/output ciphertexts. Can  be one of "concrete" or "tfhe-rs". When using tfhe-rs the model's  latency will be lower because of the necessary conversion between  tfhe-rs and concrete. Using tfhe-rs allows you to use fhEVM ciphertexts.
+- <b>`ciphertext_format`</b> (CiphertextFormat):  The format of input/output ciphertexts. Can  be one of "concrete" or "Lux-FHE". When using Lux-FHE the model's  latency will be lower because of the necessary conversion between  Lux-FHE and concrete. Using Lux-FHE allows you to use TorusEVM ciphertexts.
 - <b>`artifacts`</b> (Optional\[DebugArtifacts\]):  Artifacts information about the compilation  process to store for debugging. Default to None.
 - <b>`show_mlir`</b> (bool):  Indicate if the MLIR graph should be printed during compilation.  Default to False.
 - <b>`p_error`</b> (Optional\[float\]):  Probability of error of a single PBS. A p_error value cannot  be given if a global_p_error value is already set. Default to None, which sets this  error to a default value.
@@ -260,7 +260,7 @@ fit_benchmark(
 )
 ```
 
-Fit both the Concrete ML and its equivalent float estimators.
+Fit both the TorusML and its equivalent float estimators.
 
 **Args:**
 
@@ -270,7 +270,7 @@ Fit both the Concrete ML and its equivalent float estimators.
 - <b>`**fit_parameters`</b>:  Keyword arguments to pass to the float estimator's fit method.
 
 **Returns:**
-The Concrete ML and float equivalent fitted estimators.
+The TorusML and float equivalent fitted estimators.
 
 ______________________________________________________________________
 
@@ -284,7 +284,7 @@ get_sklearn_params(deep: 'bool' = True) → dict
 
 Get parameters for this estimator.
 
-This method is used to instantiate a scikit-learn model using the Concrete ML model's parameters. It does not override scikit-learn's existing `get_params` method in order to not break its implementation of `set_params`.
+This method is used to instantiate a scikit-learn model using the TorusML model's parameters. It does not override scikit-learn's existing `get_params` method in order to not break its implementation of `set_params`.
 
 **Args:**
 
@@ -356,7 +356,7 @@ Predict values for X, in FHE or in the clear.
 **Args:**
 
 - <b>`X`</b> (Data):  The input values to predict, as a Numpy array, Torch tensor, Pandas DataFrame  or List.
-- <b>`fhe`</b> (Union\[FheMode, str\]):  The mode to use for prediction.  Can be FheMode.DISABLE for Concrete ML Python inference,  FheMode.SIMULATE for FHE simulation and FheMode.EXECUTE for actual FHE execution.  Can also be the string representation of any of these values.  Default to FheMode.DISABLE.
+- <b>`fhe`</b> (Union\[FheMode, str\]):  The mode to use for prediction.  Can be FheMode.DISABLE for TorusML Python inference,  FheMode.SIMULATE for FHE simulation and FheMode.EXECUTE for actual FHE execution.  Can also be the string representation of any of these values.  Default to FheMode.DISABLE.
 
 **Returns:**
 
@@ -394,7 +394,7 @@ ______________________________________________________________________
 
 ## <kbd>class</kbd> `BaseClassifier`
 
-Base class for linear and tree-based classifiers in Concrete ML.
+Base class for linear and tree-based classifiers in TorusML.
 
 This class inherits from BaseEstimator and modifies some of its methods in order to align them with classifier behaviors. This notably include applying a sigmoid/softmax post-processing to the predicted values as well as handling a mapping of classes in case they are not ordered.
 
@@ -416,7 +416,7 @@ ______________________________________________________________________
 
 Get the FHE circuit.
 
-The FHE circuit combines computational graph, mlir, client and server into a single object. More information available in Concrete documentation (https://docs.zama.ai/concrete/get-started/terminology) Is None if the model is not fitted.
+The FHE circuit combines computational graph, mlir, client and server into a single object. More information available in Concrete documentation (https://docs.luxfhe.com/torus/get-started/terminology) Is None if the model is not fitted.
 
 **Returns:**
 
@@ -536,7 +536,7 @@ Compile the model.
 
 - <b>`X`</b> (Data):  A representative set of input values used for building cryptographic  parameters, as a Numpy array, Torch tensor, Pandas DataFrame or List. This is  usually the training data-set or a sub-set of it.
 - <b>`configuration`</b> (Optional\[Configuration\]):  Options to use for compilation. Default  to None.
-- <b>`ciphertext_format`</b> (CiphertextFormat):  The format of input/output ciphertexts. Can  be one of "concrete" or "tfhe-rs". When using tfhe-rs the model's  latency will be lower because of the necessary conversion between  tfhe-rs and concrete. Using tfhe-rs allows you to use fhEVM ciphertexts.
+- <b>`ciphertext_format`</b> (CiphertextFormat):  The format of input/output ciphertexts. Can  be one of "concrete" or "Lux-FHE". When using Lux-FHE the model's  latency will be lower because of the necessary conversion between  Lux-FHE and concrete. Using Lux-FHE allows you to use TorusEVM ciphertexts.
 - <b>`artifacts`</b> (Optional\[DebugArtifacts\]):  Artifacts information about the compilation  process to store for debugging. Default to None.
 - <b>`show_mlir`</b> (bool):  Indicate if the MLIR graph should be printed during compilation.  Default to False.
 - <b>`p_error`</b> (Optional\[float\]):  Probability of error of a single PBS. A p_error value cannot  be given if a global_p_error value is already set. Default to None, which sets this  error to a default value.
@@ -643,7 +643,7 @@ fit_benchmark(
 )
 ```
 
-Fit both the Concrete ML and its equivalent float estimators.
+Fit both the TorusML and its equivalent float estimators.
 
 **Args:**
 
@@ -653,7 +653,7 @@ Fit both the Concrete ML and its equivalent float estimators.
 - <b>`**fit_parameters`</b>:  Keyword arguments to pass to the float estimator's fit method.
 
 **Returns:**
-The Concrete ML and float equivalent fitted estimators.
+The TorusML and float equivalent fitted estimators.
 
 ______________________________________________________________________
 
@@ -667,7 +667,7 @@ get_sklearn_params(deep: 'bool' = True) → dict
 
 Get parameters for this estimator.
 
-This method is used to instantiate a scikit-learn model using the Concrete ML model's parameters. It does not override scikit-learn's existing `get_params` method in order to not break its implementation of `set_params`.
+This method is used to instantiate a scikit-learn model using the TorusML model's parameters. It does not override scikit-learn's existing `get_params` method in order to not break its implementation of `set_params`.
 
 **Args:**
 
@@ -738,7 +738,7 @@ Predict class probabilities.
 **Args:**
 
 - <b>`X`</b> (Data):  The input values to predict, as a Numpy array, Torch tensor, Pandas DataFrame  or List.
-- <b>`fhe`</b> (Union\[FheMode, str\]):  The mode to use for prediction.  Can be FheMode.DISABLE for Concrete ML Python inference,  FheMode.SIMULATE for FHE simulation and FheMode.EXECUTE for actual FHE execution.  Can also be the string representation of any of these values.  Default to FheMode.DISABLE.
+- <b>`fhe`</b> (Union\[FheMode, str\]):  The mode to use for prediction.  Can be FheMode.DISABLE for TorusML Python inference,  FheMode.SIMULATE for FHE simulation and FheMode.EXECUTE for actual FHE execution.  Can also be the string representation of any of these values.  Default to FheMode.DISABLE.
 
 **Returns:**
 
@@ -1012,7 +1012,7 @@ Values of dtype float64 are not supported and will be casted to float32.
 - <b>`**fit_parameters`</b>:  Keyword arguments to pass to skorch's fit method.
 
 **Returns:**
-The Concrete ML and equivalent skorch fitted estimators.
+The TorusML and equivalent skorch fitted estimators.
 
 ______________________________________________________________________
 
@@ -1094,7 +1094,7 @@ Predict values for X, in FHE or in the clear.
 **Args:**
 
 - <b>`X`</b> (Data):  The input values to predict, as a Numpy array, Torch tensor, Pandas DataFrame  or List.
-- <b>`fhe`</b> (Union\[FheMode, str\]):  The mode to use for prediction.  Can be FheMode.DISABLE for Concrete ML Python inference,  FheMode.SIMULATE for FHE simulation and FheMode.EXECUTE for actual FHE execution.  Can also be the string representation of any of these values.  Default to FheMode.DISABLE.
+- <b>`fhe`</b> (Union\[FheMode, str\]):  The mode to use for prediction.  Can be FheMode.DISABLE for TorusML Python inference,  FheMode.SIMULATE for FHE simulation and FheMode.EXECUTE for actual FHE execution.  Can also be the string representation of any of these values.  Default to FheMode.DISABLE.
 
 **Returns:**
 
@@ -1174,7 +1174,7 @@ ______________________________________________________________________
 
 Get the FHE circuit.
 
-The FHE circuit combines computational graph, mlir, client and server into a single object. More information available in Concrete documentation (https://docs.zama.ai/concrete/get-started/terminology) Is None if the model is not fitted.
+The FHE circuit combines computational graph, mlir, client and server into a single object. More information available in Concrete documentation (https://docs.luxfhe.com/torus/get-started/terminology) Is None if the model is not fitted.
 
 **Returns:**
 
@@ -1337,7 +1337,7 @@ fit_benchmark(
 )
 ```
 
-Fit both the Concrete ML and its equivalent float estimators.
+Fit both the TorusML and its equivalent float estimators.
 
 **Args:**
 
@@ -1347,7 +1347,7 @@ Fit both the Concrete ML and its equivalent float estimators.
 - <b>`**fit_parameters`</b>:  Keyword arguments to pass to the float estimator's fit method.
 
 **Returns:**
-The Concrete ML and float equivalent fitted estimators.
+The TorusML and float equivalent fitted estimators.
 
 ______________________________________________________________________
 
@@ -1388,7 +1388,7 @@ get_sklearn_params(deep: 'bool' = True) → dict
 
 Get parameters for this estimator.
 
-This method is used to instantiate a scikit-learn model using the Concrete ML model's parameters. It does not override scikit-learn's existing `get_params` method in order to not break its implementation of `set_params`.
+This method is used to instantiate a scikit-learn model using the TorusML model's parameters. It does not override scikit-learn's existing `get_params` method in order to not break its implementation of `set_params`.
 
 **Args:**
 
@@ -1483,7 +1483,7 @@ ______________________________________________________________________
 
 Get the FHE circuit.
 
-The FHE circuit combines computational graph, mlir, client and server into a single object. More information available in Concrete documentation (https://docs.zama.ai/concrete/get-started/terminology) Is None if the model is not fitted.
+The FHE circuit combines computational graph, mlir, client and server into a single object. More information available in Concrete documentation (https://docs.luxfhe.com/torus/get-started/terminology) Is None if the model is not fitted.
 
 **Returns:**
 
@@ -1646,7 +1646,7 @@ fit_benchmark(
 )
 ```
 
-Fit both the Concrete ML and its equivalent float estimators.
+Fit both the TorusML and its equivalent float estimators.
 
 **Args:**
 
@@ -1656,7 +1656,7 @@ Fit both the Concrete ML and its equivalent float estimators.
 - <b>`**fit_parameters`</b>:  Keyword arguments to pass to the float estimator's fit method.
 
 **Returns:**
-The Concrete ML and float equivalent fitted estimators.
+The TorusML and float equivalent fitted estimators.
 
 ______________________________________________________________________
 
@@ -1697,7 +1697,7 @@ get_sklearn_params(deep: 'bool' = True) → dict
 
 Get parameters for this estimator.
 
-This method is used to instantiate a scikit-learn model using the Concrete ML model's parameters. It does not override scikit-learn's existing `get_params` method in order to not break its implementation of `set_params`.
+This method is used to instantiate a scikit-learn model using the TorusML model's parameters. It does not override scikit-learn's existing `get_params` method in order to not break its implementation of `set_params`.
 
 **Args:**
 
@@ -1794,7 +1794,7 @@ ______________________________________________________________________
 
 Get the FHE circuit.
 
-The FHE circuit combines computational graph, mlir, client and server into a single object. More information available in Concrete documentation (https://docs.zama.ai/concrete/get-started/terminology) Is None if the model is not fitted.
+The FHE circuit combines computational graph, mlir, client and server into a single object. More information available in Concrete documentation (https://docs.luxfhe.com/torus/get-started/terminology) Is None if the model is not fitted.
 
 **Returns:**
 
@@ -1981,7 +1981,7 @@ fit_benchmark(
 )
 ```
 
-Fit both the Concrete ML and its equivalent float estimators.
+Fit both the TorusML and its equivalent float estimators.
 
 **Args:**
 
@@ -1991,7 +1991,7 @@ Fit both the Concrete ML and its equivalent float estimators.
 - <b>`**fit_parameters`</b>:  Keyword arguments to pass to the float estimator's fit method.
 
 **Returns:**
-The Concrete ML and float equivalent fitted estimators.
+The TorusML and float equivalent fitted estimators.
 
 ______________________________________________________________________
 
@@ -2032,7 +2032,7 @@ get_sklearn_params(deep: 'bool' = True) → dict
 
 Get parameters for this estimator.
 
-This method is used to instantiate a scikit-learn model using the Concrete ML model's parameters. It does not override scikit-learn's existing `get_params` method in order to not break its implementation of `set_params`.
+This method is used to instantiate a scikit-learn model using the TorusML model's parameters. It does not override scikit-learn's existing `get_params` method in order to not break its implementation of `set_params`.
 
 **Args:**
 
@@ -2103,7 +2103,7 @@ Predict class probabilities.
 **Args:**
 
 - <b>`X`</b> (Data):  The input values to predict, as a Numpy array, Torch tensor, Pandas DataFrame  or List.
-- <b>`fhe`</b> (Union\[FheMode, str\]):  The mode to use for prediction.  Can be FheMode.DISABLE for Concrete ML Python inference,  FheMode.SIMULATE for FHE simulation and FheMode.EXECUTE for actual FHE execution.  Can also be the string representation of any of these values.  Default to FheMode.DISABLE.
+- <b>`fhe`</b> (Union\[FheMode, str\]):  The mode to use for prediction.  Can be FheMode.DISABLE for TorusML Python inference,  FheMode.SIMULATE for FHE simulation and FheMode.EXECUTE for actual FHE execution.  Can also be the string representation of any of these values.  Default to FheMode.DISABLE.
 
 **Returns:**
 
@@ -2151,7 +2151,7 @@ ______________________________________________________________________
 
 Get the FHE circuit.
 
-The FHE circuit combines computational graph, mlir, client and server into a single object. More information available in Concrete documentation (https://docs.zama.ai/concrete/get-started/terminology) Is None if the model is not fitted.
+The FHE circuit combines computational graph, mlir, client and server into a single object. More information available in Concrete documentation (https://docs.luxfhe.com/torus/get-started/terminology) Is None if the model is not fitted.
 
 **Returns:**
 
@@ -2247,7 +2247,7 @@ Compile the model.
 
 - <b>`X`</b> (Data):  A representative set of input values used for building cryptographic  parameters, as a Numpy array, Torch tensor, Pandas DataFrame or List. This is  usually the training data-set or a sub-set of it.
 - <b>`configuration`</b> (Optional\[Configuration\]):  Options to use for compilation. Default  to None.
-- <b>`ciphertext_format`</b> (CiphertextFormat):  The format of input/output ciphertexts. Can  be one of "concrete" or "tfhe-rs". When using tfhe-rs the model's  latency will be lower because of the necessary conversion between  tfhe-rs and concrete. Using tfhe-rs allows you to use fhEVM ciphertexts.
+- <b>`ciphertext_format`</b> (CiphertextFormat):  The format of input/output ciphertexts. Can  be one of "concrete" or "Lux-FHE". When using Lux-FHE the model's  latency will be lower because of the necessary conversion between  Lux-FHE and concrete. Using Lux-FHE allows you to use TorusEVM ciphertexts.
 - <b>`artifacts`</b> (Optional\[DebugArtifacts\]):  Artifacts information about the compilation  process to store for debugging. Default to None.
 - <b>`show_mlir`</b> (bool):  Indicate if the MLIR graph should be printed during compilation.  Default to False.
 - <b>`p_error`</b> (Optional\[float\]):  Probability of error of a single PBS. A p_error value cannot  be given if a global_p_error value is already set. Default to None, which sets this  error to a default value.
@@ -2342,7 +2342,7 @@ fit_benchmark(
 )
 ```
 
-Fit both the Concrete ML and its equivalent float estimators.
+Fit both the TorusML and its equivalent float estimators.
 
 **Args:**
 
@@ -2352,7 +2352,7 @@ Fit both the Concrete ML and its equivalent float estimators.
 - <b>`**fit_parameters`</b>:  Keyword arguments to pass to the float estimator's fit method.
 
 **Returns:**
-The Concrete ML and float equivalent fitted estimators.
+The TorusML and float equivalent fitted estimators.
 
 ______________________________________________________________________
 
@@ -2393,7 +2393,7 @@ get_sklearn_params(deep: 'bool' = True) → dict
 
 Get parameters for this estimator.
 
-This method is used to instantiate a scikit-learn model using the Concrete ML model's parameters. It does not override scikit-learn's existing `get_params` method in order to not break its implementation of `set_params`.
+This method is used to instantiate a scikit-learn model using the TorusML model's parameters. It does not override scikit-learn's existing `get_params` method in order to not break its implementation of `set_params`.
 
 **Args:**
 
@@ -2465,7 +2465,7 @@ Predict values for X, in FHE or in the clear.
 **Args:**
 
 - <b>`X`</b> (Data):  The input values to predict, as a Numpy array, Torch tensor, Pandas DataFrame  or List.
-- <b>`fhe`</b> (Union\[FheMode, str\]):  The mode to use for prediction.  Can be FheMode.DISABLE for Concrete ML Python inference,  FheMode.SIMULATE for FHE simulation and FheMode.EXECUTE for actual FHE execution.  Can also be the string representation of any of these values.  Default to FheMode.DISABLE.
+- <b>`fhe`</b> (Union\[FheMode, str\]):  The mode to use for prediction.  Can be FheMode.DISABLE for TorusML Python inference,  FheMode.SIMULATE for FHE simulation and FheMode.EXECUTE for actual FHE execution.  Can also be the string representation of any of these values.  Default to FheMode.DISABLE.
 
 **Returns:**
 
@@ -2517,7 +2517,7 @@ ______________________________________________________________________
 
 Get the FHE circuit.
 
-The FHE circuit combines computational graph, mlir, client and server into a single object. More information available in Concrete documentation (https://docs.zama.ai/concrete/get-started/terminology) Is None if the model is not fitted.
+The FHE circuit combines computational graph, mlir, client and server into a single object. More information available in Concrete documentation (https://docs.luxfhe.com/torus/get-started/terminology) Is None if the model is not fitted.
 
 **Returns:**
 
@@ -2613,7 +2613,7 @@ Compile the model.
 
 - <b>`X`</b> (Data):  A representative set of input values used for building cryptographic  parameters, as a Numpy array, Torch tensor, Pandas DataFrame or List. This is  usually the training data-set or a sub-set of it.
 - <b>`configuration`</b> (Optional\[Configuration\]):  Options to use for compilation. Default  to None.
-- <b>`ciphertext_format`</b> (CiphertextFormat):  The format of input/output ciphertexts. Can  be one of "concrete" or "tfhe-rs". When using tfhe-rs the model's  latency will be lower because of the necessary conversion between  tfhe-rs and concrete. Using tfhe-rs allows you to use fhEVM ciphertexts.
+- <b>`ciphertext_format`</b> (CiphertextFormat):  The format of input/output ciphertexts. Can  be one of "concrete" or "Lux-FHE". When using Lux-FHE the model's  latency will be lower because of the necessary conversion between  Lux-FHE and concrete. Using Lux-FHE allows you to use TorusEVM ciphertexts.
 - <b>`artifacts`</b> (Optional\[DebugArtifacts\]):  Artifacts information about the compilation  process to store for debugging. Default to None.
 - <b>`show_mlir`</b> (bool):  Indicate if the MLIR graph should be printed during compilation.  Default to False.
 - <b>`p_error`</b> (Optional\[float\]):  Probability of error of a single PBS. A p_error value cannot  be given if a global_p_error value is already set. Default to None, which sets this  error to a default value.
@@ -2708,7 +2708,7 @@ fit_benchmark(
 )
 ```
 
-Fit both the Concrete ML and its equivalent float estimators.
+Fit both the TorusML and its equivalent float estimators.
 
 **Args:**
 
@@ -2718,7 +2718,7 @@ Fit both the Concrete ML and its equivalent float estimators.
 - <b>`**fit_parameters`</b>:  Keyword arguments to pass to the float estimator's fit method.
 
 **Returns:**
-The Concrete ML and float equivalent fitted estimators.
+The TorusML and float equivalent fitted estimators.
 
 ______________________________________________________________________
 
@@ -2759,7 +2759,7 @@ get_sklearn_params(deep: 'bool' = True) → dict
 
 Get parameters for this estimator.
 
-This method is used to instantiate a scikit-learn model using the Concrete ML model's parameters. It does not override scikit-learn's existing `get_params` method in order to not break its implementation of `set_params`.
+This method is used to instantiate a scikit-learn model using the TorusML model's parameters. It does not override scikit-learn's existing `get_params` method in order to not break its implementation of `set_params`.
 
 **Args:**
 
@@ -2831,7 +2831,7 @@ Predict values for X, in FHE or in the clear.
 **Args:**
 
 - <b>`X`</b> (Data):  The input values to predict, as a Numpy array, Torch tensor, Pandas DataFrame  or List.
-- <b>`fhe`</b> (Union\[FheMode, str\]):  The mode to use for prediction.  Can be FheMode.DISABLE for Concrete ML Python inference,  FheMode.SIMULATE for FHE simulation and FheMode.EXECUTE for actual FHE execution.  Can also be the string representation of any of these values.  Default to FheMode.DISABLE.
+- <b>`fhe`</b> (Union\[FheMode, str\]):  The mode to use for prediction.  Can be FheMode.DISABLE for TorusML Python inference,  FheMode.SIMULATE for FHE simulation and FheMode.EXECUTE for actual FHE execution.  Can also be the string representation of any of these values.  Default to FheMode.DISABLE.
 
 **Returns:**
 
@@ -2885,7 +2885,7 @@ ______________________________________________________________________
 
 Get the FHE circuit.
 
-The FHE circuit combines computational graph, mlir, client and server into a single object. More information available in Concrete documentation (https://docs.zama.ai/concrete/get-started/terminology) Is None if the model is not fitted.
+The FHE circuit combines computational graph, mlir, client and server into a single object. More information available in Concrete documentation (https://docs.luxfhe.com/torus/get-started/terminology) Is None if the model is not fitted.
 
 **Returns:**
 
@@ -3005,7 +3005,7 @@ Compile the model.
 
 - <b>`X`</b> (Data):  A representative set of input values used for building cryptographic  parameters, as a Numpy array, Torch tensor, Pandas DataFrame or List. This is  usually the training data-set or a sub-set of it.
 - <b>`configuration`</b> (Optional\[Configuration\]):  Options to use for compilation. Default  to None.
-- <b>`ciphertext_format`</b> (CiphertextFormat):  The format of input/output ciphertexts. Can  be one of "concrete" or "tfhe-rs". When using tfhe-rs the model's  latency will be lower because of the necessary conversion between  tfhe-rs and concrete. Using tfhe-rs allows you to use fhEVM ciphertexts.
+- <b>`ciphertext_format`</b> (CiphertextFormat):  The format of input/output ciphertexts. Can  be one of "concrete" or "Lux-FHE". When using Lux-FHE the model's  latency will be lower because of the necessary conversion between  Lux-FHE and concrete. Using Lux-FHE allows you to use TorusEVM ciphertexts.
 - <b>`artifacts`</b> (Optional\[DebugArtifacts\]):  Artifacts information about the compilation  process to store for debugging. Default to None.
 - <b>`show_mlir`</b> (bool):  Indicate if the MLIR graph should be printed during compilation.  Default to False.
 - <b>`p_error`</b> (Optional\[float\]):  Probability of error of a single PBS. A p_error value cannot  be given if a global_p_error value is already set. Default to None, which sets this  error to a default value.
@@ -3035,7 +3035,7 @@ Predict confidence scores.
 **Args:**
 
 - <b>`X`</b> (Data):  The input values to predict, as a Numpy array, Torch tensor, Pandas DataFrame  or List.
-- <b>`fhe`</b> (Union\[FheMode, str\]):  The mode to use for prediction.  Can be FheMode.DISABLE for Concrete ML Python inference,  FheMode.SIMULATE for FHE simulation and FheMode.EXECUTE for actual FHE execution.  Can also be the string representation of any of these values.  Default to FheMode.DISABLE.
+- <b>`fhe`</b> (Union\[FheMode, str\]):  The mode to use for prediction.  Can be FheMode.DISABLE for TorusML Python inference,  FheMode.SIMULATE for FHE simulation and FheMode.EXECUTE for actual FHE execution.  Can also be the string representation of any of these values.  Default to FheMode.DISABLE.
 
 **Returns:**
 
@@ -3124,7 +3124,7 @@ fit_benchmark(
 )
 ```
 
-Fit both the Concrete ML and its equivalent float estimators.
+Fit both the TorusML and its equivalent float estimators.
 
 **Args:**
 
@@ -3134,7 +3134,7 @@ Fit both the Concrete ML and its equivalent float estimators.
 - <b>`**fit_parameters`</b>:  Keyword arguments to pass to the float estimator's fit method.
 
 **Returns:**
-The Concrete ML and float equivalent fitted estimators.
+The TorusML and float equivalent fitted estimators.
 
 ______________________________________________________________________
 
@@ -3175,7 +3175,7 @@ get_sklearn_params(deep: 'bool' = True) → dict
 
 Get parameters for this estimator.
 
-This method is used to instantiate a scikit-learn model using the Concrete ML model's parameters. It does not override scikit-learn's existing `get_params` method in order to not break its implementation of `set_params`.
+This method is used to instantiate a scikit-learn model using the TorusML model's parameters. It does not override scikit-learn's existing `get_params` method in order to not break its implementation of `set_params`.
 
 **Args:**
 
@@ -3283,7 +3283,7 @@ ______________________________________________________________________
 
 Get the FHE circuit.
 
-The FHE circuit combines computational graph, mlir, client and server into a single object. More information available in Concrete documentation (https://docs.zama.ai/concrete/get-started/terminology) Is None if the model is not fitted.
+The FHE circuit combines computational graph, mlir, client and server into a single object. More information available in Concrete documentation (https://docs.luxfhe.com/torus/get-started/terminology) Is None if the model is not fitted.
 
 **Returns:**
 
@@ -3379,7 +3379,7 @@ Compile the model.
 
 - <b>`X`</b> (Data):  A representative set of input values used for building cryptographic  parameters, as a Numpy array, Torch tensor, Pandas DataFrame or List. This is  usually the training data-set or a sub-set of it.
 - <b>`configuration`</b> (Optional\[Configuration\]):  Options to use for compilation. Default  to None.
-- <b>`ciphertext_format`</b> (CiphertextFormat):  The format of input/output ciphertexts. Can  be one of "concrete" or "tfhe-rs". When using tfhe-rs the model's  latency will be lower because of the necessary conversion between  tfhe-rs and concrete. Using tfhe-rs allows you to use fhEVM ciphertexts.
+- <b>`ciphertext_format`</b> (CiphertextFormat):  The format of input/output ciphertexts. Can  be one of "concrete" or "Lux-FHE". When using Lux-FHE the model's  latency will be lower because of the necessary conversion between  Lux-FHE and concrete. Using Lux-FHE allows you to use TorusEVM ciphertexts.
 - <b>`artifacts`</b> (Optional\[DebugArtifacts\]):  Artifacts information about the compilation  process to store for debugging. Default to None.
 - <b>`show_mlir`</b> (bool):  Indicate if the MLIR graph should be printed during compilation.  Default to False.
 - <b>`p_error`</b> (Optional\[float\]):  Probability of error of a single PBS. A p_error value cannot  be given if a global_p_error value is already set. Default to None, which sets this  error to a default value.
@@ -3474,7 +3474,7 @@ fit_benchmark(
 )
 ```
 
-Fit both the Concrete ML and its equivalent float estimators.
+Fit both the TorusML and its equivalent float estimators.
 
 **Args:**
 
@@ -3484,7 +3484,7 @@ Fit both the Concrete ML and its equivalent float estimators.
 - <b>`**fit_parameters`</b>:  Keyword arguments to pass to the float estimator's fit method.
 
 **Returns:**
-The Concrete ML and float equivalent fitted estimators.
+The TorusML and float equivalent fitted estimators.
 
 ______________________________________________________________________
 
@@ -3525,7 +3525,7 @@ get_sklearn_params(deep: 'bool' = True) → dict
 
 Get parameters for this estimator.
 
-This method is used to instantiate a scikit-learn model using the Concrete ML model's parameters. It does not override scikit-learn's existing `get_params` method in order to not break its implementation of `set_params`.
+This method is used to instantiate a scikit-learn model using the TorusML model's parameters. It does not override scikit-learn's existing `get_params` method in order to not break its implementation of `set_params`.
 
 **Args:**
 
@@ -3597,7 +3597,7 @@ Predict values for X, in FHE or in the clear.
 **Args:**
 
 - <b>`X`</b> (Data):  The input values to predict, as a Numpy array, Torch tensor, Pandas DataFrame  or List.
-- <b>`fhe`</b> (Union\[FheMode, str\]):  The mode to use for prediction.  Can be FheMode.DISABLE for Concrete ML Python inference,  FheMode.SIMULATE for FHE simulation and FheMode.EXECUTE for actual FHE execution.  Can also be the string representation of any of these values.  Default to FheMode.DISABLE.
+- <b>`fhe`</b> (Union\[FheMode, str\]):  The mode to use for prediction.  Can be FheMode.DISABLE for TorusML Python inference,  FheMode.SIMULATE for FHE simulation and FheMode.EXECUTE for actual FHE execution.  Can also be the string representation of any of these values.  Default to FheMode.DISABLE.
 
 **Returns:**
 
@@ -3649,7 +3649,7 @@ ______________________________________________________________________
 
 Get the FHE circuit.
 
-The FHE circuit combines computational graph, mlir, client and server into a single object. More information available in Concrete documentation (https://docs.zama.ai/concrete/get-started/terminology) Is None if the model is not fitted.
+The FHE circuit combines computational graph, mlir, client and server into a single object. More information available in Concrete documentation (https://docs.luxfhe.com/torus/get-started/terminology) Is None if the model is not fitted.
 
 **Returns:**
 
@@ -3769,7 +3769,7 @@ Compile the model.
 
 - <b>`X`</b> (Data):  A representative set of input values used for building cryptographic  parameters, as a Numpy array, Torch tensor, Pandas DataFrame or List. This is  usually the training data-set or a sub-set of it.
 - <b>`configuration`</b> (Optional\[Configuration\]):  Options to use for compilation. Default  to None.
-- <b>`ciphertext_format`</b> (CiphertextFormat):  The format of input/output ciphertexts. Can  be one of "concrete" or "tfhe-rs". When using tfhe-rs the model's  latency will be lower because of the necessary conversion between  tfhe-rs and concrete. Using tfhe-rs allows you to use fhEVM ciphertexts.
+- <b>`ciphertext_format`</b> (CiphertextFormat):  The format of input/output ciphertexts. Can  be one of "concrete" or "Lux-FHE". When using Lux-FHE the model's  latency will be lower because of the necessary conversion between  Lux-FHE and concrete. Using Lux-FHE allows you to use TorusEVM ciphertexts.
 - <b>`artifacts`</b> (Optional\[DebugArtifacts\]):  Artifacts information about the compilation  process to store for debugging. Default to None.
 - <b>`show_mlir`</b> (bool):  Indicate if the MLIR graph should be printed during compilation.  Default to False.
 - <b>`p_error`</b> (Optional\[float\]):  Probability of error of a single PBS. A p_error value cannot  be given if a global_p_error value is already set. Default to None, which sets this  error to a default value.
@@ -3799,7 +3799,7 @@ Predict confidence scores.
 **Args:**
 
 - <b>`X`</b> (Data):  The input values to predict, as a Numpy array, Torch tensor, Pandas DataFrame  or List.
-- <b>`fhe`</b> (Union\[FheMode, str\]):  The mode to use for prediction.  Can be FheMode.DISABLE for Concrete ML Python inference,  FheMode.SIMULATE for FHE simulation and FheMode.EXECUTE for actual FHE execution.  Can also be the string representation of any of these values.  Default to FheMode.DISABLE.
+- <b>`fhe`</b> (Union\[FheMode, str\]):  The mode to use for prediction.  Can be FheMode.DISABLE for TorusML Python inference,  FheMode.SIMULATE for FHE simulation and FheMode.EXECUTE for actual FHE execution.  Can also be the string representation of any of these values.  Default to FheMode.DISABLE.
 
 **Returns:**
 
@@ -3888,7 +3888,7 @@ fit_benchmark(
 )
 ```
 
-Fit both the Concrete ML and its equivalent float estimators.
+Fit both the TorusML and its equivalent float estimators.
 
 **Args:**
 
@@ -3898,7 +3898,7 @@ Fit both the Concrete ML and its equivalent float estimators.
 - <b>`**fit_parameters`</b>:  Keyword arguments to pass to the float estimator's fit method.
 
 **Returns:**
-The Concrete ML and float equivalent fitted estimators.
+The TorusML and float equivalent fitted estimators.
 
 ______________________________________________________________________
 
@@ -3939,7 +3939,7 @@ get_sklearn_params(deep: 'bool' = True) → dict
 
 Get parameters for this estimator.
 
-This method is used to instantiate a scikit-learn model using the Concrete ML model's parameters. It does not override scikit-learn's existing `get_params` method in order to not break its implementation of `set_params`.
+This method is used to instantiate a scikit-learn model using the TorusML model's parameters. It does not override scikit-learn's existing `get_params` method in order to not break its implementation of `set_params`.
 
 **Args:**
 
@@ -4045,7 +4045,7 @@ ______________________________________________________________________
 
 Get the FHE circuit.
 
-The FHE circuit combines computational graph, mlir, client and server into a single object. More information available in Concrete documentation (https://docs.zama.ai/concrete/get-started/terminology) Is None if the model is not fitted.
+The FHE circuit combines computational graph, mlir, client and server into a single object. More information available in Concrete documentation (https://docs.luxfhe.com/torus/get-started/terminology) Is None if the model is not fitted.
 
 **Returns:**
 
@@ -4141,7 +4141,7 @@ Compile the model.
 
 - <b>`X`</b> (Data):  A representative set of input values used for building cryptographic  parameters, as a Numpy array, Torch tensor, Pandas DataFrame or List. This is  usually the training data-set or a sub-set of it.
 - <b>`configuration`</b> (Optional\[Configuration\]):  Options to use for compilation. Default  to None.
-- <b>`ciphertext_format`</b> (CiphertextFormat):  The format of input/output ciphertexts. Can  be one of "concrete" or "tfhe-rs". When using tfhe-rs the model's  latency will be lower because of the necessary conversion between  tfhe-rs and concrete. Using tfhe-rs allows you to use fhEVM ciphertexts.
+- <b>`ciphertext_format`</b> (CiphertextFormat):  The format of input/output ciphertexts. Can  be one of "concrete" or "Lux-FHE". When using Lux-FHE the model's  latency will be lower because of the necessary conversion between  Lux-FHE and concrete. Using Lux-FHE allows you to use TorusEVM ciphertexts.
 - <b>`artifacts`</b> (Optional\[DebugArtifacts\]):  Artifacts information about the compilation  process to store for debugging. Default to None.
 - <b>`show_mlir`</b> (bool):  Indicate if the MLIR graph should be printed during compilation.  Default to False.
 - <b>`p_error`</b> (Optional\[float\]):  Probability of error of a single PBS. A p_error value cannot  be given if a global_p_error value is already set. Default to None, which sets this  error to a default value.
@@ -4236,7 +4236,7 @@ fit_benchmark(
 )
 ```
 
-Fit both the Concrete ML and its equivalent float estimators.
+Fit both the TorusML and its equivalent float estimators.
 
 **Args:**
 
@@ -4246,7 +4246,7 @@ Fit both the Concrete ML and its equivalent float estimators.
 - <b>`**fit_parameters`</b>:  Keyword arguments to pass to the float estimator's fit method.
 
 **Returns:**
-The Concrete ML and float equivalent fitted estimators.
+The TorusML and float equivalent fitted estimators.
 
 ______________________________________________________________________
 
@@ -4260,7 +4260,7 @@ get_sklearn_params(deep: 'bool' = True) → dict
 
 Get parameters for this estimator.
 
-This method is used to instantiate a scikit-learn model using the Concrete ML model's parameters. It does not override scikit-learn's existing `get_params` method in order to not break its implementation of `set_params`.
+This method is used to instantiate a scikit-learn model using the TorusML model's parameters. It does not override scikit-learn's existing `get_params` method in order to not break its implementation of `set_params`.
 
 **Args:**
 
@@ -4288,7 +4288,7 @@ Return the K-nearest labels of each point.
 **Args:**
 
 - <b>`X`</b> (Data):  The input values to predict, as a Numpy array, Torch tensor, Pandas DataFrame  or List.
-- <b>`fhe`</b> (Union\[FheMode, str\]):  The mode to use for prediction.  Can be FheMode.DISABLE for Concrete ML Python inference,  FheMode.SIMULATE for FHE simulation and FheMode.EXECUTE for actual FHE execution.  Can also be the string representation of any of these values.  Default to FheMode.DISABLE.
+- <b>`fhe`</b> (Union\[FheMode, str\]):  The mode to use for prediction.  Can be FheMode.DISABLE for TorusML Python inference,  FheMode.SIMULATE for FHE simulation and FheMode.EXECUTE for actual FHE execution.  Can also be the string representation of any of these values.  Default to FheMode.DISABLE.
 
 **Returns:**
 
@@ -4409,7 +4409,7 @@ ______________________________________________________________________
 
 Get the FHE circuit.
 
-The FHE circuit combines computational graph, mlir, client and server into a single object. More information available in Concrete documentation (https://docs.zama.ai/concrete/get-started/terminology) Is None if the model is not fitted.
+The FHE circuit combines computational graph, mlir, client and server into a single object. More information available in Concrete documentation (https://docs.luxfhe.com/torus/get-started/terminology) Is None if the model is not fitted.
 
 **Returns:**
 
@@ -4505,7 +4505,7 @@ Compile the model.
 
 - <b>`X`</b> (Data):  A representative set of input values used for building cryptographic  parameters, as a Numpy array, Torch tensor, Pandas DataFrame or List. This is  usually the training data-set or a sub-set of it.
 - <b>`configuration`</b> (Optional\[Configuration\]):  Options to use for compilation. Default  to None.
-- <b>`ciphertext_format`</b> (CiphertextFormat):  The format of input/output ciphertexts. Can  be one of "concrete" or "tfhe-rs". When using tfhe-rs the model's  latency will be lower because of the necessary conversion between  tfhe-rs and concrete. Using tfhe-rs allows you to use fhEVM ciphertexts.
+- <b>`ciphertext_format`</b> (CiphertextFormat):  The format of input/output ciphertexts. Can  be one of "concrete" or "Lux-FHE". When using Lux-FHE the model's  latency will be lower because of the necessary conversion between  Lux-FHE and concrete. Using Lux-FHE allows you to use TorusEVM ciphertexts.
 - <b>`artifacts`</b> (Optional\[DebugArtifacts\]):  Artifacts information about the compilation  process to store for debugging. Default to None.
 - <b>`show_mlir`</b> (bool):  Indicate if the MLIR graph should be printed during compilation.  Default to False.
 - <b>`p_error`</b> (Optional\[float\]):  Probability of error of a single PBS. A p_error value cannot  be given if a global_p_error value is already set. Default to None, which sets this  error to a default value.
@@ -4600,7 +4600,7 @@ fit_benchmark(
 )
 ```
 
-Fit both the Concrete ML and its equivalent float estimators.
+Fit both the TorusML and its equivalent float estimators.
 
 **Args:**
 
@@ -4610,7 +4610,7 @@ Fit both the Concrete ML and its equivalent float estimators.
 - <b>`**fit_parameters`</b>:  Keyword arguments to pass to the float estimator's fit method.
 
 **Returns:**
-The Concrete ML and float equivalent fitted estimators.
+The TorusML and float equivalent fitted estimators.
 
 ______________________________________________________________________
 
@@ -4624,7 +4624,7 @@ get_sklearn_params(deep: 'bool' = True) → dict
 
 Get parameters for this estimator.
 
-This method is used to instantiate a scikit-learn model using the Concrete ML model's parameters. It does not override scikit-learn's existing `get_params` method in order to not break its implementation of `set_params`.
+This method is used to instantiate a scikit-learn model using the TorusML model's parameters. It does not override scikit-learn's existing `get_params` method in order to not break its implementation of `set_params`.
 
 **Args:**
 
@@ -4652,7 +4652,7 @@ Return the K-nearest labels of each point.
 **Args:**
 
 - <b>`X`</b> (Data):  The input values to predict, as a Numpy array, Torch tensor, Pandas DataFrame  or List.
-- <b>`fhe`</b> (Union\[FheMode, str\]):  The mode to use for prediction.  Can be FheMode.DISABLE for Concrete ML Python inference,  FheMode.SIMULATE for FHE simulation and FheMode.EXECUTE for actual FHE execution.  Can also be the string representation of any of these values.  Default to FheMode.DISABLE.
+- <b>`fhe`</b> (Union\[FheMode, str\]):  The mode to use for prediction.  Can be FheMode.DISABLE for TorusML Python inference,  FheMode.SIMULATE for FHE simulation and FheMode.EXECUTE for actual FHE execution.  Can also be the string representation of any of these values.  Default to FheMode.DISABLE.
 
 **Returns:**
 

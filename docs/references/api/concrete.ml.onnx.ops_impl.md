@@ -1354,7 +1354,7 @@ See: https://github.com/onnx/onnx/blob/main/docs/Operators.md#AveragePool
 - <b>`kernel_shape`</b> (Tuple\[int, ...\]):  The size of the kernel along each axis. Currently, only 2D  kernels are supported.
 - <b>`auto_pad`</b> (str):  Only the default "NOTSET" value is currently supported, which means  explicit padding is used.
 - <b>`ceil_mode`</b> (int):  Whether to use ONNX's ceil (1) or floor (0, the default) to compute the  output shape.
-- <b>`count_include_pad`</b> (int):  Whether include pad pixels when calculating values for the edges.  Currently, setting this parameter to 0 is not supported in Concrete ML.
+- <b>`count_include_pad`</b> (int):  Whether include pad pixels when calculating values for the edges.  Currently, setting this parameter to 0 is not supported in TorusML.
 - <b>`pads`</b> (Tuple\[int, ...\]):  Padding for the beginning and ending along each spatial axis.  Expected format is \[x1_begin, x2_begin...x1_end, x2_end, ...\] where xi_begin (resp.  xi_end) is the number of pixels added at the beginning (resp. end) of axis `i`.
 - <b>`strides`</b> (Tuple\[int, ...\]):  Stride along each spatial axis. If not present, the stride  defaults to 1 along each spatial axis.
 

@@ -72,17 +72,17 @@ class XGBClassifier(BaseTreeClassifierMixin):
         **kwargs,
     ):
         # base_score != 0.5 or None does not seem to not pass our tests
-        # FIXME: https://github.com/zama-ai/concrete-ml-internal/issues/474
+        # FIXME: https://github.com/luxfhe/torus-ml-internal/issues/474
         assert_true(
             base_score in [0.5, None],
             f"Currently, only 0.5 or None are supported for base_score. Got {base_score}",
         )
 
-        # See https://github.com/zama-ai/concrete-ml-internal/issues/503, there is currently
+        # See https://github.com/luxfhe/torus-ml-internal/issues/503, there is currently
         # an issue with n_jobs != 1 on macOS
         #
         # When it gets fixed, we'll remove this workaround
-        # FIXME: https://github.com/zama-ai/concrete-ml-internal/issues/2747
+        # FIXME: https://github.com/luxfhe/torus-ml-internal/issues/2747
         if platform.system() == "Darwin":
             if n_jobs != 1:  # pragma: no cover
                 warnings.warn(
@@ -137,7 +137,7 @@ class XGBClassifier(BaseTreeClassifierMixin):
     def dump_dict(self) -> Dict[str, Any]:
         metadata: Dict[str, Any] = {}
 
-        # Concrete ML
+        # TorusML
         metadata["n_bits"] = self.n_bits
         metadata["sklearn_model"] = self.sklearn_model
         metadata["_is_fitted"] = self._is_fitted
@@ -208,7 +208,7 @@ class XGBClassifier(BaseTreeClassifierMixin):
         # Instantiate the model
         obj = XGBClassifier(n_bits=metadata["n_bits"])
 
-        # Concrete ML
+        # TorusML
         obj.sklearn_model = metadata["sklearn_model"]
         obj._is_fitted = metadata["_is_fitted"]
         obj._is_compiled = metadata["_is_compiled"]
@@ -218,7 +218,7 @@ class XGBClassifier(BaseTreeClassifierMixin):
         obj.output_quantizers = metadata["output_quantizers"]
         obj._fhe_ensembling = metadata["_fhe_ensembling"]
 
-        # FIXME: https://github.com/zama-ai/concrete-ml-internal/issues/4545
+        # FIXME: https://github.com/luxfhe/torus-ml-internal/issues/4545
         # Execute with 2 example for efficiency in large data scenarios to prevent slowdown
         # but also to work around the HB export issue.
         obj._tree_inference = tree_to_numpy(
@@ -330,17 +330,17 @@ class XGBRegressor(BaseTreeRegressorMixin):
         **kwargs: Any,
     ):
         # base_score != 0.5 or None does not seem to not pass our tests
-        # FIXME: https://github.com/zama-ai/concrete-ml-internal/issues/474
+        # FIXME: https://github.com/luxfhe/torus-ml-internal/issues/474
         assert_true(
             base_score in [0.5, None],
             f"Currently, only 0.5 or None are supported for base_score. Got {base_score}",
         )
 
-        # See https://github.com/zama-ai/concrete-ml-internal/issues/503, there is currently
+        # See https://github.com/luxfhe/torus-ml-internal/issues/503, there is currently
         # an issue with n_jobs != 1 on macOS
         #
         # When it gets fixed, we'll remove this workaround
-        # FIXME: https://github.com/zama-ai/concrete-ml-internal/issues/2747
+        # FIXME: https://github.com/luxfhe/torus-ml-internal/issues/2747
         if platform.system() == "Darwin":
             if n_jobs != 1:  # pragma: no cover
                 warnings.warn(
@@ -393,7 +393,7 @@ class XGBRegressor(BaseTreeRegressorMixin):
     def fit(self, X, y, *args, **kwargs) -> Any:
 
         # Hummingbird and XGBoost don't properly manage multi-outputs cases
-        # FIXME: https://github.com/zama-ai/concrete-ml-internal/issues/1856
+        # FIXME: https://github.com/luxfhe/torus-ml-internal/issues/1856
 
         assert_true(
             (isinstance(y, list) and (not isinstance(y[0], list) or (len(y[0]) == 1)))
@@ -417,7 +417,7 @@ class XGBRegressor(BaseTreeRegressorMixin):
     def dump_dict(self) -> Dict[str, Any]:
         metadata: Dict[str, Any] = {}
 
-        # Concrete ML
+        # TorusML
         metadata["n_bits"] = self.n_bits
         metadata["sklearn_model"] = self.sklearn_model
         metadata["_is_fitted"] = self._is_fitted
@@ -487,7 +487,7 @@ class XGBRegressor(BaseTreeRegressorMixin):
         # Instantiate the model
         obj = XGBRegressor(n_bits=metadata["n_bits"])
 
-        # Concrete ML
+        # TorusML
         obj.sklearn_model = metadata["sklearn_model"]
         obj._is_fitted = metadata["_is_fitted"]
         obj._is_compiled = metadata["_is_compiled"]
@@ -497,7 +497,7 @@ class XGBRegressor(BaseTreeRegressorMixin):
         obj.output_quantizers = metadata["output_quantizers"]
         obj._fhe_ensembling = metadata["_fhe_ensembling"]
 
-        # FIXME: https://github.com/zama-ai/concrete-ml-internal/issues/4545
+        # FIXME: https://github.com/luxfhe/torus-ml-internal/issues/4545
         # Execute with 2 example for efficiency in large data scenarios to prevent slowdown
         # but also to work around the HB export issue.
         obj._tree_inference = tree_to_numpy(

@@ -36,7 +36,7 @@ ______________________________________________________________________
 dump(obj: Any, file: <class 'TextIO'>)
 ```
 
-Dump any Concrete ML object in a file.
+Dump any TorusML object in a file.
 
 **Arguments:**
 

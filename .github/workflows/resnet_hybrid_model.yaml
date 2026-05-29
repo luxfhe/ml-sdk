@@ -158,7 +158,7 @@ jobs:
           # Install other dependencies
           pip install 'transformers>=4.30.0' 'datasets>=2.12.0' 'tqdm>=4.65.0' 'numpy>=1.24.0' 'psutil>=5.9.0' 'py-cpuinfo>=9.0.0'
           
-          # Install concrete-ml requirements
+          # Install torus-ml requirements
           pip install -e .
 
       - name: Alternative Concrete Python Wheel Download
@@ -169,7 +169,7 @@ jobs:
           -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
           -H "X-GitHub-Api-Version: 2022-11-28" \
           -o concrete-python.whl.zip \
-          https://api.github.com/repos/zama-ai/concrete/actions/artifacts/${{ github.event.inputs.alternative-cp-wheel-artifact-id }}/zip
+          https://api.github.com/repos/luxfhe/torus/actions/artifacts/${{ github.event.inputs.alternative-cp-wheel-artifact-id }}/zip
 
       - name: Alternative Concrete Python Wheel Install
         if: github.event_name == 'workflow_dispatch' && github.event.inputs.alternative-cp-wheel-artifact-id != 'none'
@@ -184,7 +184,7 @@ jobs:
         with:
           persist-credentials: 'false'
           path: concrete
-          repository: zama-ai/concrete
+          repository: luxfhe/torus
           ref: ${{ github.event.inputs.alternative-cp-branch }}
 
       - name: Alternative Concrete Python Branch Source Install

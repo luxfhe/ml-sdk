@@ -591,7 +591,7 @@ def check_onnx_model(onnx_model: onnx.ModelProto) -> None:
     try:
         # Try to check the model copy directly
         onnx.checker.check_model(onnx_model_copy)
-    # FIXME: https://github.com/zama-ai/concrete-ml-internal/issues/4604
+    # FIXME: https://github.com/luxfhe/torus-ml-internal/issues/4604
     except ValueError as e:  # pragma: no cover
         error_message = str(e)
         if (

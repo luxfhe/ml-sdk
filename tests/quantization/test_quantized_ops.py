@@ -201,7 +201,7 @@ def test_univariate_ops_no_attrs(
 
 
 # Manage ranges/improve tests for exponential
-# FIXME: https://github.com/zama-ai/concrete-ml-internal/issues/229
+# FIXME: https://github.com/luxfhe/torus-ml-internal/issues/229
 @pytest.mark.parametrize(
     "n_bits",
     [pytest.param(n_bits) for n_bits in N_BITS_LIST],
@@ -789,7 +789,7 @@ def test_quantized_conv(
         input_padded = torch.nn.functional.pad(torch.Tensor(net_input.copy()), pads)
 
     # For Conv2d, torch uses padding  (padding_left, padding_right, padding_top, padding_bottom)
-    # While ONNX and Concrete ML use (padding_top, padding_left, padding_bottom, padding_right)
+    # While ONNX and TorusML use (padding_top, padding_left, padding_bottom, padding_right)
     else:
         input_padded = torch.nn.functional.pad(
             torch.Tensor(net_input.copy()), (pads[1], pads[3], pads[0], pads[2])
@@ -907,7 +907,7 @@ def test_quantized_avg_pool(params, n_bits, is_signed, check_r2_score, check_flo
     tinputs = torch.Tensor(net_input.copy())
 
     # Torch uses padding  (padding_left,padding_right, padding_top,padding_bottom)
-    # While ONNX and Concrete ML use (padding_top, padding_left, padding_bottom, padding_right)
+    # While ONNX and TorusML use (padding_top, padding_left, padding_bottom, padding_right)
     tx_pad = torch.nn.functional.pad(tinputs, (pads[1], pads[3], pads[0], pads[2]))
 
     # Compute the torch average pool
@@ -980,7 +980,7 @@ def test_quantized_avg_pool_args():
         )
 
     with pytest.raises(
-        AssertionError, match=r"The Average Pool operator in Concrete ML requires padding.*"
+        AssertionError, match=r"The Average Pool operator in TorusML requires padding.*"
     ):
         QuantizedAvgPool(
             n_bits,
@@ -1090,7 +1090,7 @@ def test_quantized_max_pool(params, n_bits, is_signed, check_r2_score, check_flo
     tinputs = torch.Tensor(net_input.copy())
 
     # Torch uses padding  (padding_left,padding_right, padding_top,padding_bottom)
-    # While ONNX and Concrete ML use (padding_top, padding_left, padding_bottom, padding_right)
+    # While ONNX and TorusML use (padding_top, padding_left, padding_bottom, padding_right)
     tx_pad = torch.nn.functional.pad(tinputs, (pads[1], pads[3], pads[0], pads[2]))
 
     # Compute the torch max pool
@@ -1477,7 +1477,7 @@ def test_batch_normalization(tensor_shape, n_bits, check_r2_score):
 @pytest.mark.parametrize(
     "keepdims", [pytest.param(keepdims, id=f"keepdims-{keepdims}") for keepdims in [0, 1]]
 )
-# In Concrete ML, we consider that all inputs' first dimension should be a batch size
+# In TorusML, we consider that all inputs' first dimension should be a batch size
 # even in single batch cases. This is why the following test parameters are considering axes that
 # are sometimes equal to the input size's dimension, as the batch size is added within the
 # test itself.
@@ -1685,7 +1685,7 @@ def test_brevitas_quant(check_r2_score, is_signed: bool, narrow: bool):
         )
 
     if not is_signed and narrow:
-        # FIXME: https://github.com/zama-ai/concrete-ml-internal/issues/4544
+        # FIXME: https://github.com/luxfhe/torus-ml-internal/issues/4544
         # Reinstate warning check when brevitas export is fixed
         pytest.skip("Skipping checking of invalid brevitas quant setting (signed=0,narrow=1)")
     #        with pytest.raises(AssertionError, match=r"Can not use narrow range.*"):
@@ -1967,7 +1967,7 @@ def make_single_function_onnx_and_run(onnx_op, op_args_dict, op_attrs_dict, inpu
     ],
 )
 def test_quantized_slice(starts, ends, steps, axes):
-    """Check that the Concrete ML Slice operator is equivalent to the ONNX slice operator."""
+    """Check that the TorusML Slice operator is equivalent to the ONNX slice operator."""
 
     # Cast all inputs to numpy arrays
     starts = numpy.asarray(starts)
@@ -2082,7 +2082,7 @@ def test_quantized_shape(shape):
     q_op = ONNXShape(8, "shape_op")
     result = q_op(q_input)
 
-    # Check that the Concrete ML op returns the shape
+    # Check that the TorusML op returns the shape
     assert np_input.shape == tuple(result)
 
     # Test the serialization of ONNXShape
@@ -2172,7 +2172,7 @@ def test_quantized_unfold(params, n_bits, is_signed, check_r2_score, check_float
     tinputs = torch.Tensor(net_input.copy())
 
     # Torch uses padding  (padding_left,padding_right, padding_top,padding_bottom)
-    # While ONNX and Concrete ML use (padding_top, padding_left, padding_bottom, padding_right)
+    # While ONNX and TorusML use (padding_top, padding_left, padding_bottom, padding_right)
     tx_pad = torch.nn.functional.pad(tinputs, (pads[1], pads[3], pads[0], pads[2]))
 
     # Compute the torch unfold
