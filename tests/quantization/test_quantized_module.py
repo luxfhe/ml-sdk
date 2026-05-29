@@ -56,7 +56,7 @@ N_BITS_LIST = [
         pytest.param(nn.GELU, id="GELU"),
         pytest.param(nn.LogSigmoid, id="LogSigmoid"),
         # Some issues are still encountered with some activations
-        # FIXME: https://github.com/zama-ai/concrete-ml-internal/issues/335
+        # FIXME: https://github.com/luxfi/torusml-internal/issues/335
         #
         # Other problems, certainly related to tests:
         # Required positional arguments: 'embed_dim' and 'num_heads' and fails with a partial
@@ -188,7 +188,7 @@ def test_intermediary_values(n_bits, model_class, input_shape, activation_functi
     # Execute the forward pass in the clear
     _, debug_values = quantized_model.forward(numpy_input, debug=True, fhe="disable")
 
-    # Count the number of Gemm/Conv layers in the Concrete ML debug values
+    # Count the number of Gemm/Conv layers in the TorusML debug values
     num_gemm_conv = 0
     for layer_name in debug_values:
         if "Gemm" not in layer_name and "Conv" not in layer_name:
@@ -203,7 +203,7 @@ def test_intermediary_values(n_bits, model_class, input_shape, activation_functi
             continue
         num_torch_gemm_conv += 1
 
-    # Make sure we have debug output for all conv/gemm layers in Concrete ML
+    # Make sure we have debug output for all conv/gemm layers in TorusML
     assert num_gemm_conv == num_torch_gemm_conv
 
 
@@ -352,11 +352,11 @@ def test_quantized_module_rounding_fhe(model_class, input_shape, default_configu
     # Execute the model with rounding in FHE execution mode
     quantized_model.forward(numpy_test, fhe="execute")
 
-    # FIXME: https://github.com/zama-ai/concrete-ml-internal/issues/3800
+    # FIXME: https://github.com/luxfi/torusml-internal/issues/3800
 
 
 # Extend this test with multi-input encryption status
-# FIXME: https://github.com/zama-ai/concrete-ml-internal/issues/4011
+# FIXME: https://github.com/luxfi/torusml-internal/issues/4011
 @pytest.mark.parametrize("model_class, input_shape", [pytest.param(FC, (100, 32 * 32 * 3))])
 def test_inputs_encryption_status(model_class, input_shape, default_configuration):
     """Check that giving inputs_encryption_status work properly."""

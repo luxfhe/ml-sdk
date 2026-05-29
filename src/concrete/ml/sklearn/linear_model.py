@@ -68,7 +68,7 @@ class LinearRegression(SklearnLinearRegressorMixin):
 
         metadata: Dict[str, Any] = {}
 
-        # Concrete ML
+        # TorusML
         metadata["n_bits"] = self.n_bits
         metadata["sklearn_model"] = self.sklearn_model
         metadata["_is_fitted"] = self._is_fitted
@@ -95,7 +95,7 @@ class LinearRegression(SklearnLinearRegressorMixin):
         # Instantiate the model
         obj = cls(n_bits=metadata["n_bits"])
 
-        # Concrete ML
+        # TorusML
         obj.sklearn_model = metadata["sklearn_model"]
         obj._is_fitted = metadata["_is_fitted"]
         obj._is_compiled = metadata["_is_compiled"]
@@ -174,13 +174,13 @@ class SGDClassifier(SklearnSGDClassifierMixin):
         # Call SklearnLinearModelMixin's __init__ method
         super().__init__(n_bits=n_bits)
 
-        # Concrete ML attributes for FHE training
+        # TorusML attributes for FHE training
         # These values are hardcoded for now
         # We don't expose them in the __init__ arguments but they are taken
         # into account when training, so we can just modify them manually.
         # The number of bits used for training should be adjusted according to n-bits
         # but for now we use this hardcoded values.
-        # FIXME: https://github.com/zama-ai/concrete-ml-internal/issues/4205
+        # FIXME: https://github.com/luxfi/torusml-internal/issues/4205
         self.n_bits_training = 6
         self.rounding_training = 7
         self.learning_rate_value = 1.0
@@ -258,10 +258,10 @@ class SGDClassifier(SklearnSGDClassifierMixin):
 
     def get_sklearn_params(self, deep: bool = True) -> dict:
         # Here, the `get_params` method is the `BaseEstimator.get_params` method from scikit-learn
-        # FIXME: https://github.com/zama-ai/concrete-ml-internal/issues/3373
+        # FIXME: https://github.com/luxfi/torusml-internal/issues/3373
         params = super().get_params(deep=deep)  # type: ignore[misc]
 
-        # Remove the parameters added by Concrete ML
+        # Remove the parameters added by TorusML
         params.pop("n_bits", None)
         params.pop("n_bits_training", None)
         params.pop("rounding_training", None)
@@ -314,7 +314,7 @@ class SGDClassifier(SklearnSGDClassifierMixin):
 
         # Generate the target values to consider for compilation
         # Update this once we support multi-class
-        # FIXME: https://github.com/zama-ai/concrete-ml-internal/issues/4182
+        # FIXME: https://github.com/luxfi/torusml-internal/issues/4182
         y_compile_set = numpy.empty((compile_size, self.batch_size, n_targets))
 
         # Generate the weight values to consider for compilation
@@ -392,7 +392,7 @@ class SGDClassifier(SklearnSGDClassifierMixin):
             bias_enc (Union[numpy.ndarray, EncryptedValue]): The bias values to decrypt (if
                 encrypted) and de-quantize.
             fhe (Union[str, FheMode]): The mode to use for FHE training.
-                Can be FheMode.DISABLE for Concrete ML Python (quantized) training,
+                Can be FheMode.DISABLE for TorusML Python (quantized) training,
                 FheMode.SIMULATE for FHE simulation and FheMode.EXECUTE for actual FHE execution.
                 Can also be the string representation of any of these values. Default to
                 FheMode.DISABLE.
@@ -452,7 +452,7 @@ class SGDClassifier(SklearnSGDClassifierMixin):
             y (Target): The target data, as a Numpy array, Torch tensor, Pandas DataFrame, Pandas
                 Series or List.
             fhe (Union[str, FheMode]): The mode to use for FHE training.
-                Can be FheMode.DISABLE for Concrete ML Python (quantized) training,
+                Can be FheMode.DISABLE for TorusML Python (quantized) training,
                 FheMode.SIMULATE for FHE simulation and FheMode.EXECUTE for actual FHE execution.
                 Can also be the string representation of any of these values. Default to
                 FheMode.DISABLE.
@@ -501,7 +501,7 @@ class SGDClassifier(SklearnSGDClassifierMixin):
         # that this is the partial fit's first call)
         if (not is_partial_fit) or (self.training_quantized_module is None):
             # Update this once we support multi-class
-            # FIXME: https://github.com/zama-ai/concrete-ml-internal/issues/4182
+            # FIXME: https://github.com/luxfi/torusml-internal/issues/4182
             # We need to define this here and not in the init otherwise this breaks
             # because scikit-learn assumes that as soon as the attribute exists
             # the model is fitted
@@ -741,7 +741,7 @@ class SGDClassifier(SklearnSGDClassifierMixin):
 
         # Initialize the underlying scikit-learn model if it has not already been done
         # This model should be directly initialized in the model's __init__ method instead
-        # FIXME: https://github.com/zama-ai/concrete-ml-internal/issues/3373
+        # FIXME: https://github.com/luxfi/torusml-internal/issues/3373
         if self.sklearn_model is None:
 
             # Retrieve the init parameters
@@ -756,7 +756,7 @@ class SGDClassifier(SklearnSGDClassifierMixin):
         # Copy over the classes since they are needed by the HB ONNX export
         self.sklearn_model.classes_ = self.classes_
 
-        # Update the model's Concrete ML parameters
+        # Update the model's TorusML parameters
         self._weights_encrypted_fit = fitted_weights
         self._bias_encrypted_fit = fitted_bias
         self._is_fitted = True
@@ -794,7 +794,7 @@ class SGDClassifier(SklearnSGDClassifierMixin):
             y (Target): The target data, as a Numpy array, Torch tensor, Pandas DataFrame, Pandas
                 Series or List.
             fhe (Optional[Union[str, FheMode]]): The mode to use for FHE training.
-                Can be FheMode.DISABLE for Concrete ML Python (quantized) training,
+                Can be FheMode.DISABLE for TorusML Python (quantized) training,
                 FheMode.SIMULATE for FHE simulation and FheMode.EXECUTE for actual FHE execution.
                 Can also be the string representation of any of these values. If None, training is
                 done in floating points in the clear through scikit-learn. Default to None.
@@ -879,7 +879,7 @@ class SGDClassifier(SklearnSGDClassifierMixin):
             y (Target): The target data, as a Numpy array, Torch tensor, Pandas DataFrame, Pandas
                 Series or List.
             fhe (Optional[Union[str, FheMode]]): The mode to use for FHE training.
-                Can be FheMode.DISABLE for Concrete ML Python (quantized) training,
+                Can be FheMode.DISABLE for TorusML Python (quantized) training,
                 FheMode.SIMULATE for FHE simulation and FheMode.EXECUTE for actual FHE execution.
                 Can also be the string representation of any of these values. If None, training is
                 done in floating points in the clear through scikit-learn. Default to None.
@@ -913,7 +913,7 @@ class SGDClassifier(SklearnSGDClassifierMixin):
 
         else:
             # Expose and implement partial_fit for clear training
-            # FIXME: https://github.com/zama-ai/concrete-ml-internal/issues/4184
+            # FIXME: https://github.com/luxfi/torusml-internal/issues/4184
             raise NotImplementedError("Partial fit is not currently supported for clear training.")
 
     def post_processing(self, y_preds: numpy.ndarray) -> numpy.ndarray:
@@ -1008,7 +1008,7 @@ class SGDClassifier(SklearnSGDClassifierMixin):
 
         metadata: Dict[str, Any] = {}
 
-        # Concrete ML for training in FHE
+        # TorusML for training in FHE
         metadata["n_bits"] = self.n_bits
         metadata["n_bits_training"] = self.n_bits_training
         metadata["rounding_training"] = self.rounding_training
@@ -1023,7 +1023,7 @@ class SGDClassifier(SklearnSGDClassifierMixin):
         # pylint: disable-next=protected-access
         metadata["_bias_encrypted_fit"] = self._bias_encrypted_fit
 
-        # Concrete ML
+        # TorusML
         metadata["sklearn_model"] = self.sklearn_model
         metadata["_is_fitted"] = self._is_fitted
         metadata["_is_compiled"] = self._is_compiled
@@ -1066,7 +1066,7 @@ class SGDClassifier(SklearnSGDClassifierMixin):
         # Instantiate the model
         obj = cls(n_bits=metadata.pop("n_bits"))
 
-        # Concrete ML for training in FHE
+        # TorusML for training in FHE
         obj.n_bits_training = metadata.pop("n_bits_training")
         obj.rounding_training = metadata.pop("rounding_training")
         obj.fit_encrypted = metadata.pop("fit_encrypted")
@@ -1082,7 +1082,7 @@ class SGDClassifier(SklearnSGDClassifierMixin):
 
         obj.random_number_generator = numpy.random.default_rng(metadata["random_state"])
 
-        # Concrete ML
+        # TorusML
         obj.sklearn_model = metadata.pop("sklearn_model")
         obj._is_fitted = metadata.pop("_is_fitted")
         obj._is_compiled = metadata.pop("_is_compiled")
@@ -1195,7 +1195,7 @@ class SGDRegressor(SklearnSGDRegressorMixin):
 
         metadata: Dict[str, Any] = {}
 
-        # Concrete ML
+        # TorusML
         metadata["n_bits"] = self.n_bits
         metadata["sklearn_model"] = self.sklearn_model
         metadata["_is_fitted"] = self._is_fitted
@@ -1237,7 +1237,7 @@ class SGDRegressor(SklearnSGDRegressorMixin):
         # Instantiate the model
         obj = cls(n_bits=metadata["n_bits"])
 
-        # Concrete ML
+        # TorusML
         obj.sklearn_model = metadata["sklearn_model"]
         obj._is_fitted = metadata["_is_fitted"]
         obj._is_compiled = metadata["_is_compiled"]
@@ -1327,7 +1327,7 @@ class ElasticNet(SklearnLinearRegressorMixin):
 
         metadata: Dict[str, Any] = {}
 
-        # Concrete ML
+        # TorusML
         metadata["n_bits"] = self.n_bits
         metadata["sklearn_model"] = self.sklearn_model
         metadata["_is_fitted"] = self._is_fitted
@@ -1361,7 +1361,7 @@ class ElasticNet(SklearnLinearRegressorMixin):
         # Instantiate the model
         obj = cls(n_bits=metadata["n_bits"])
 
-        # Concrete ML
+        # TorusML
         obj.sklearn_model = metadata["sklearn_model"]
         obj._is_fitted = metadata["_is_fitted"]
         obj._is_compiled = metadata["_is_compiled"]
@@ -1442,7 +1442,7 @@ class Lasso(SklearnLinearRegressorMixin):
 
         metadata: Dict[str, Any] = {}
 
-        # Concrete ML
+        # TorusML
         metadata["n_bits"] = self.n_bits
         metadata["sklearn_model"] = self.sklearn_model
         metadata["_is_fitted"] = self._is_fitted
@@ -1475,7 +1475,7 @@ class Lasso(SklearnLinearRegressorMixin):
         # Instantiate the model
         obj = cls(n_bits=metadata["n_bits"])
 
-        # Concrete ML
+        # TorusML
         obj.sklearn_model = metadata["sklearn_model"]
         obj._is_fitted = metadata["_is_fitted"]
         obj._is_compiled = metadata["_is_compiled"]
@@ -1551,7 +1551,7 @@ class Ridge(SklearnLinearRegressorMixin):
 
         metadata: Dict[str, Any] = {}
 
-        # Concrete ML
+        # TorusML
         metadata["n_bits"] = self.n_bits
         metadata["sklearn_model"] = self.sklearn_model
         metadata["_is_fitted"] = self._is_fitted
@@ -1582,7 +1582,7 @@ class Ridge(SklearnLinearRegressorMixin):
         # Instantiate the model
         obj = cls(n_bits=metadata["n_bits"])
 
-        # Concrete ML
+        # TorusML
         obj.sklearn_model = metadata["sklearn_model"]
         obj._is_fitted = metadata["_is_fitted"]
         obj._is_compiled = metadata["_is_compiled"]
@@ -1628,7 +1628,7 @@ class LogisticRegression(SklearnLinearClassifierMixin):
     # pylint: disable-next=too-many-arguments
     def __init__(
         self,
-        # Concrete ML specific arguments
+        # TorusML specific arguments
         n_bits=8,
         # scikit-learn arguments
         penalty="l2",
@@ -1671,7 +1671,7 @@ class LogisticRegression(SklearnLinearClassifierMixin):
 
         metadata: Dict[str, Any] = {}
 
-        # Concrete ML
+        # TorusML
         metadata["n_bits"] = self.n_bits
         metadata["sklearn_model"] = self.sklearn_model
         metadata["_is_fitted"] = self._is_fitted
@@ -1709,7 +1709,7 @@ class LogisticRegression(SklearnLinearClassifierMixin):
         # Instantiate the model
         obj = cls(n_bits=metadata["n_bits"])
 
-        # Concrete ML
+        # TorusML
         obj.sklearn_model = metadata["sklearn_model"]
         obj._is_fitted = metadata["_is_fitted"]
         obj._is_compiled = metadata["_is_compiled"]

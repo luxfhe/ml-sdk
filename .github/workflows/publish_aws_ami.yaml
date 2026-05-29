@@ -25,7 +25,7 @@ jobs:
       # Just a way to check that if triggered by workflow_dispatch the tag exists
       # FIXME: We still need to check that it matches a version tag
       # This won't work on automatically triggered based on release
-      - name: Checkout Concrete ML Repository
+      - name: Checkout TorusML Repository
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
           persist-credentials: 'false'
@@ -35,7 +35,7 @@ jobs:
           path: "concrete-ml-version"
 
       # To use the files and all
-      - name: Checkout Concrete ML Repository
+      - name: Checkout TorusML Repository
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
           persist-credentials: 'false'
@@ -47,7 +47,7 @@ jobs:
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
           persist-credentials: 'false'
-          repository: "zama-ai/slab"
+          repository: "luxfhe/slab"
           path: "slab"
           token: ${{ secrets.BOT_TOKEN }}
 
@@ -72,7 +72,7 @@ jobs:
 
           COMPONENT_USER_DATA=$(echo "$COMPONENT_USER_DATA" | base64 | tr -d "\n")
 
-          PAYLOAD='{"name": "zama-concrete-ml-py39-x86_64", "description": "Zama Concrete ML ${{ steps.git_ref.outputs.git-ref }} (with Python 3.9 for x86_64 architecture)", "release_tag": "${{ steps.git_ref.outputs.git-ref }}", "region": "eu-west-3", "image_pipeline_arn": "${{ secrets.AMI_PIPELINE_ARN }}", "distribution_configuration_arn": "${{ secrets.AMI_DISTRIB_CONFIG_ARN }}", "component_user_data": "'"${COMPONENT_USER_DATA}"'"}'
+          PAYLOAD='{"name": "zama-concrete-ml-py39-x86_64", "description": "TorusML ${{ steps.git_ref.outputs.git-ref }} (with Python 3.9 for x86_64 architecture)", "release_tag": "${{ steps.git_ref.outputs.git-ref }}", "region": "eu-west-3", "image_pipeline_arn": "${{ secrets.AMI_PIPELINE_ARN }}", "distribution_configuration_arn": "${{ secrets.AMI_DISTRIB_CONFIG_ARN }}", "component_user_data": "'"${COMPONENT_USER_DATA}"'"}'
 
           echo -n "${PAYLOAD}" > payload.json
 

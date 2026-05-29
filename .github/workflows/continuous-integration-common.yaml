@@ -106,7 +106,7 @@ jobs:
       - name: Start instance
         id: start-slab-runner
         if: ${{ !cancelled() }}
-        uses: zama-ai/slab-github-runner@79939325c3c429837c10d6041e4fd8589d328bac
+        uses: luxfhe/slab-github-runner@79939325c3c429837c10d6041e4fd8589d328bac
         with:
           mode: start
           github-token: ${{ secrets.SLAB_ACTION_TOKEN }}
@@ -549,7 +549,7 @@ jobs:
 
       # Run Pytest on all of our tests (except flaky ones) using PyPI's local wheel in the weekly
       # or during the release process
-      - name: PyTest (no flaky) with PyPI local wheel of Concrete ML (weekly, release)
+      - name: PyTest (no flaky) with PyPI local wheel of TorusML (weekly, release)
         if: |
           (fromJSON(env.IS_WEEKLY) || fromJSON(env.IS_RELEASE))
           && steps.conformance.outcome == 'success'
@@ -557,7 +557,7 @@ jobs:
         run: |
           make pytest_pypi_wheel_cml_no_flaky
 
-      # Run Pytest on all of our tests (except flaky ones) using Concrete ML's latest version
+      # Run Pytest on all of our tests (except flaky ones) using TorusML's latest version
       # available on PyPI after publishing a release
       - name: PyTest (no flaky) with PyPI (published release)
         if: |
@@ -614,7 +614,7 @@ jobs:
           make pytest_codeblocks
 
       # Run Pytest on all codeblocks on a weekly basis or while releasing
-      - name: PyTest CodeBlocks with PyPI local wheel of Concrete ML (weekly, release)
+      - name: PyTest CodeBlocks with PyPI local wheel of TorusML (weekly, release)
         if: |
           (fromJSON(env.IS_WEEKLY) || fromJSON(env.IS_RELEASE))
           && steps.conformance.outcome == 'success'
@@ -622,7 +622,7 @@ jobs:
         run: |
           make pytest_codeblocks_pypi_wheel_cml
 
-      # Run Pytest on all codeblocks using Concrete ML's latest version available on PyPI after
+      # Run Pytest on all codeblocks using TorusML's latest version available on PyPI after
       # publishing a release
       - name: PyTest CodeBlocks with PyPI (published release)
         if: |
@@ -704,7 +704,7 @@ jobs:
 
       - name: Stop Slab runner python
         if: ${{ always() && needs.start-runner-linux.outputs.label }}
-        uses: zama-ai/slab-github-runner@79939325c3c429837c10d6041e4fd8589d328bac
+        uses: luxfhe/slab-github-runner@79939325c3c429837c10d6041e4fd8589d328bac
         with:
           mode: stop
           github-token: ${{ secrets.SLAB_ACTION_TOKEN }}

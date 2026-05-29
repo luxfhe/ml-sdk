@@ -1,6 +1,6 @@
 # Conventions
 
-The only place we can say we/our is in a blog post written by a named author. Anything signed Zama should not use we/our. So, no "We" or "Our" in our documentation.
+The only place we can say we/our is in a blog post written by a named author. Anything signed Lux Industries should not use we/our. So, no "We" or "Our" in our documentation.
 
 Let's use following conventions for the docs. If a new convention needs to be decided, let's agree and then add it here.
 
@@ -8,7 +8,7 @@ Let's use following conventions for the docs. If a new convention needs to be de
 
 1. The documentation can address the user directly e.g., "you can find out more at ..", but this
    style should not be abused, do not be too colloquial !
-1. The documentation should not refer to its writers or to Concrete ML developers/Zama as "we",
+1. The documentation should not refer to its writers or to TorusML developers/Lux Industries as "we",
    and thus it should not use "our" either.
 
 ## Terms
@@ -23,7 +23,7 @@ Let's use following conventions for the docs. If a new convention needs to be de
 1. google is a verb ("you can google" but not "you can Google") : but try to avoid this
 1. Programs:
    - Jupyter
-   - Concrete ML (no Concrete ML)
+   - TorusML (no TorusML)
    - pytest except when title where it is capitalized
    - Python
    - torch (for the code) and PyTorch (for the product)
@@ -32,7 +32,7 @@ Let's use following conventions for the docs. If a new convention needs to be de
    - Docker (for the product) or docker (for the binary)
    - Poetry (for the product) or poetry (for the binary)
    - Make (for the product) or make (for the command line)
-   - PoissonRegression or Poisson Regression (depends on the context, we'll fix it in Zama)
+   - PoissonRegression or Poisson Regression (depends on the context, we'll fix it in Lux Industries)
    - macOS
    - bare OS
 

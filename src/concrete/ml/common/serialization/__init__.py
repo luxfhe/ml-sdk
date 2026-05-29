@@ -34,8 +34,8 @@ SUPPORTED_TORCH_ACTIVATIONS = [
     activation.Threshold,
 ]
 
-# Some Torch activation functions are currently not supported in Concrete ML
-# FIXME: https://github.com/zama-ai/concrete-ml-internal/issues/335
+# Some Torch activation functions are currently not supported in TorusML
+# FIXME: https://github.com/luxfi/torusml-internal/issues/335
 UNSUPPORTED_TORCH_ACTIVATIONS = [
     activation.GLU,
     activation.MultiheadAttention,

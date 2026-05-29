@@ -85,7 +85,7 @@ jobs:
       - name: Start SLAB runner
         id: start-slab-runner
         if: ${{ !cancelled() }}
-        uses: zama-ai/slab-github-runner@79939325c3c429837c10d6041e4fd8589d328bac
+        uses: luxfhe/slab-github-runner@79939325c3c429837c10d6041e4fd8589d328bac
         with:
           mode: start
           github-token: ${{ secrets.SLAB_ACTION_TOKEN }}
@@ -300,7 +300,7 @@ jobs:
           tags: true
 
   # This action creates docker and pypi images directly on the AWS Slab instance
-  # The 'PRIVATE_RELEASE_IMAGE_BASE' variable is kept here in case Concrete ML starts to publish
+  # The 'PRIVATE_RELEASE_IMAGE_BASE' variable is kept here in case TorusML starts to publish
   # private nightly releases one day. Currently, release candidates and actual releases are all
   # done through the 'PUBLIC_RELEASE_IMAGE_BASE' image. The private image is also used to list all
   # tags easily
@@ -318,7 +318,7 @@ jobs:
       run:
         shell: bash
     env:
-      PRIVATE_RELEASE_IMAGE_BASE: ghcr.io/zama-ai/concrete-ml
+      PRIVATE_RELEASE_IMAGE_BASE: ghcr.io/luxfi/torusml
       PUBLIC_RELEASE_IMAGE_BASE: zamafhe/concrete-ml
       PIP_INDEX_URL: ${{ secrets.PIP_INDEX_URL }}
       GIT_TAG: ${{ needs.release-checks.outputs.git_tag }}
@@ -386,7 +386,7 @@ jobs:
           EXISTING_TAGS=$(curl \
           -X GET \
           -H "Authorization: Bearer $(echo ${{ secrets.BOT_TOKEN }} | base64)" \
-          https://ghcr.io/v2/zama-ai/concrete-ml/tags/list | jq -rc '.tags | join(" ")')
+          https://ghcr.io/v2/luxfi/torusml/tags/list | jq -rc '.tags | join(" ")')
 
           # We want the space separated list of versions to be expanded
           # shellcheck disable=SC2086
@@ -488,7 +488,7 @@ jobs:
           echo "" >> "${SECRETS_FILE}"
           echo "SECRETS_FILE=${SECRETS_FILE}" >> "$GITHUB_ENV"
 
-      - name: Build Docker Concrete ML Image
+      - name: Build Docker TorusML Image
         if: ${{ success() && !cancelled() }}
         uses: docker/build-push-action@263435318d21b8e681c14492fe198d362a7d2c83
         with:
@@ -529,7 +529,7 @@ jobs:
             echo "Docker Image: ${PUBLIC_RELEASE_IMAGE_BASE}:${{ env.GIT_TAG }}";
             echo "Docker Hub: https://hub.docker.com/r/zamafhe/concrete-ml/tags";
             echo "pip: https://pypi.org/project/concrete-ml/${{ env.PROJECT_VERSION }}";
-            echo "Documentation: https://docs.zama.ai/concrete-ml";
+            echo "Documentation: https://docs.lux.network/torusml";
             echo "";
           } >> "${RELEASE_BODY_FILE}"
           cat "${RAW_CHANGELOG_DIR}"/* >> "${RELEASE_BODY_FILE}"
@@ -607,7 +607,7 @@ jobs:
 
       - name: Stop Slab runner python
         if: ${{ always() && needs.start-runner-linux.outputs.slab-instance-id }}
-        uses: zama-ai/slab-github-runner@79939325c3c429837c10d6041e4fd8589d328bac
+        uses: luxfhe/slab-github-runner@79939325c3c429837c10d6041e4fd8589d328bac
         with:
           mode: stop
           github-token: ${{ secrets.SLAB_ACTION_TOKEN }}

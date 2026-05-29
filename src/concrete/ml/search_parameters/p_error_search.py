@@ -5,7 +5,7 @@ Only PyTorch neural networks and Concrete built-in models are supported.
 - Quantized aware trained model are supported using Brevitas framework
 - Torch models can be converted into post-trained quantized models
 
-The `p_error` represents an essential hyper-parameter in the FHE computation at Zama.
+The `p_error` represents an essential hyper-parameter in the FHE computation at Lux Industries.
 As it impacts the speed of the FHE computations and the model's performance.
 
 In this script, we provide an approach to find out an optimal `p_error`, which would offer
@@ -16,7 +16,7 @@ scheme allows to perform 2 types of operations
 - Linear operations: additions and multiplications
 - Non-linear operation: uni-variate activation functions
 
-At Zama, non-linear operations are represented by table lookup (TLU), which are implemented
+At Lux Industries, non-linear operations are represented by table lookup (TLU), which are implemented
 through the Programmable Bootstrapping technology (PBS).
 A single PBS operation has `p_error` chances of being incorrect.
 
@@ -88,7 +88,7 @@ def compile_and_simulated_fhe_inference(
         estimator (torch.nn.Module): Torch model or a built-in model
         calibration_data (numpy.ndarray): Calibration data required for compilation
         ground_truth (numpy.ndarray): The ground truth
-        p_error (float): Concrete ML uses table lookup (TLU) to represent any non-linear
+        p_error (float): TorusML uses table lookup (TLU) to represent any non-linear
         n_bits (int): Quantization bits
         is_qat (bool): True, if the NN has been trained through QAT.
             If `False` it is converted into post-trained quantized model.

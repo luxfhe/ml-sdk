@@ -66,7 +66,7 @@ jobs:
       - name: Start SLAB runner
         id: start-slab-runner
         if: ${{ !cancelled() }}
-        uses: zama-ai/slab-github-runner@79939325c3c429837c10d6041e4fd8589d328bac
+        uses: luxfhe/slab-github-runner@79939325c3c429837c10d6041e4fd8589d328bac
         with:
           mode: start
           slab-url: ${{ secrets.SLAB_BASE_URL }}
@@ -166,7 +166,7 @@ jobs:
 
       - name: Stop Slab runner python
         if: ${{ always() && needs.start-runner-linux.outputs.slab-instance-id }}
-        uses: zama-ai/slab-github-runner@79939325c3c429837c10d6041e4fd8589d328bac
+        uses: luxfhe/slab-github-runner@79939325c3c429837c10d6041e4fd8589d328bac
         with:
           mode: stop
           github-token: ${{ secrets.SLAB_ACTION_TOKEN }}

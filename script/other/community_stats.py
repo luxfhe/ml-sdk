@@ -1,4 +1,4 @@
-"""Script to gather Community statistics. Made for Concrete ML but can be easily modified for
+"""Script to gather Community statistics. Made for TorusML but can be easily modified for
 another team."""
 
 import os
@@ -15,7 +15,7 @@ headers = {
     "username": "benoit",
 }
 r = requests.get(
-    "https://community.zama.ai/directory_items.json?period=all&order=likes_received&group=ML-team",
+    "https://community.lux.fhe/directory_items.json?period=all&order=likes_received&group=ML-team",
     headers=headers,
 )
 dic = r.json()

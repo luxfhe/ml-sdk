@@ -66,11 +66,11 @@ def process_file(file_str: str, do_open_problematic_files=False):
     #           word is ignored
     forbidden_word_list: List[Tuple[str, List, List[str]]]
     forbidden_word_list = [
-        ("Concrete-ml", [], []),  # use `Concrete ML`
-        ("Concrete-Ml", [], []),  # use `Concrete ML`
-        ("Concrete-ML", [], []),  # use `Concrete ML`
-        ("concrete ml", [], []),  # use `Concrete ML`
-        ("concrete-ml", [], []),  # use `Concrete ML`
+        ("Concrete-ml", [], []),  # use `TorusML`
+        ("Concrete-Ml", [], []),  # use `TorusML`
+        ("TorusML", [], []),  # use `TorusML`
+        ("concrete ml", [], []),  # use `TorusML`
+        ("concrete-ml", [], []),  # use `TorusML`
         ("pytorch", [], []),  # use `PyTorch`
         ("Pytorch", [], []),  # use `PyTorch`
         ("pytorch", [], []),  # use `PyTorch`
@@ -181,7 +181,7 @@ def process_file(file_str: str, do_open_problematic_files=False):
         ("th", [], []),  # use the
         ("appropriat", [], []),  # use appropriate
         ("constrains", [], []),  # use constraints
-        ("CML", [], []),  # use Concrete ML
+        ("CML", [], []),  # use TorusML
         ("CN", ["CNN"], []),  # use Concrete Python
         ("CP", [], []),  # use Concrete Python
         ("ie", [], []),  # use i.e.,
@@ -192,10 +192,10 @@ def process_file(file_str: str, do_open_problematic_files=False):
         ("eg., ", [], []),  # use e.g.,
         ("Lora", [], []),  # use LoRA
         ("LORA", [], []),  # use LoRA
-        ("TFHE-RS", [], []),  # Use TFHE-rs
-        ("TFHE_RS", ["TFHE_RS"], [".py"]),  # Use TFHE-rs
-        ("TFHErs", [], []),  # Use TFHE-rs
-        ("TFHRES", [], []),  # Use TFHE-rs
+        ("TFHE-RS", [], []),  # Use Lux-FHE
+        ("TFHE_RS", ["TFHE_RS"], [".py"]),  # Use Lux-FHE
+        ("TFHErs", [], []),  # Use Lux-FHE
+        ("TFHRES", [], []),  # Use Lux-FHE
     ]
     # For later
     #   "We" or "Our", or more generally, passive form

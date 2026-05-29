@@ -299,7 +299,7 @@ def test_serialize_valid_split(cross_validation_split, stratified, random_state)
             "Object of type Tensor is not JSON serializable",
         ),
         # Serializing a Circuit object is currently not supported
-        # FIXME: https://github.com/zama-ai/concrete-numpy-internal/issues/1841
+        # FIXME: https://github.com/luxfi/torus-numpy-internal/issues/1841
         pytest.param(
             get_a_fhe_circuit(),
             NotImplementedError,
@@ -346,7 +346,7 @@ def test_error_raises_loads(unsupported_object, expected_error, expected_message
 def test_torch_activations():
     """Test supported and unsupported torch activation list."""
 
-    # Torch activation list defined in Concrete ML
+    # Torch activation list defined in TorusML
     all_torch_activations_cml = [
         activation.__name__
         for activation in SUPPORTED_TORCH_ACTIVATIONS + UNSUPPORTED_TORCH_ACTIVATIONS
@@ -361,6 +361,6 @@ def test_torch_activations():
 
     assert sorted(all_torch_activations_cml) == sorted(all_torch_activations_torch), (
         "Difference found between activations imported from Torch and the ones considered in "
-        "Concrete ML: "
+        "TorusML: "
         f"{list(set(all_torch_activations_cml).symmetric_difference(all_torch_activations_torch))}"
     )
